@@ -1,0 +1,71 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Partidas</h3><hr />
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'partida',
+                'action' => 'add'
+            ), null, true); ?>" class="btn btn-primary">Nova Partida</a>
+            <a href="<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'partida',
+                'action' => 'proccess'
+            ), null, true); ?>" class="btn btn-warning">Partidas Processadas</a><hr />
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-12">
+            <?php if ($this->partidas->count() > 0) : ?>
+            <h4><?php echo $this->partidas->count(); ?> partidas</h4>
+            <table class="table">
+                <?php $total = 0; ?>
+                <?php $apostas = 0; ?>
+                <?php foreach ($this->partidas as $partida) : ?>                
+                <?php 
+                    $total += $this->montante($partida->partida_id); 
+                    $apostas += $this->apostas($partida->partida_id);
+                ?>
+                <tr class="text-center">
+                    <td class="col-md-2"><?php echo $partida->partida_data; ?></td>
+                    <td class="col-md-2">
+                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                    </td>
+                    <td class="col-md-2">X</td>
+                    <td class="col-md-2">
+                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                    </td>
+                    <td class="col-md-2">
+                        <?php echo $this->apostas($partida->partida_id); ?> Apostas
+                        (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                    </td>
+                    <td class="col-md-2">
+                        <a href="" class="btn btn-sm btn-info">Alterar</a>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'partida',
+                            'action' => 'result',
+                            'id' => $partida->partida_id
+                        ), null, true); ?>" class="btn btn-sm btn-success">Resultado</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr class="text-center">
+                    <td colspan="4">TOTAL</td>
+                    <td>
+                        <?php echo $apostas; ?> apostas
+                        (<?php echo $this->currency($total); ?>)
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <?php else : ?>
+            <div class="alert alert-warning">Nenhuma partida</div>
+            <?php endif; ?>
+        </div>
+    </div>    
+</section>

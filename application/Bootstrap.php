@@ -50,7 +50,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * Configura o controller
      */
     protected function _initController() {
-    	$controller = Zend_Controller_Front::getInstance();
+    	$controllerFront = Zend_Controller_Front::getInstance();
+        $controllerFront->registerPlugin(new Plugin_Layout());
+        $controllerFront->registerPlugin(new Plugin_Message());
+        $controllerFront->registerPlugin(new Plugin_Auth());
     }
     
     /**

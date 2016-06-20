@@ -1,7 +1,59 @@
 <section>
     <div class="row">
-        <div class="col-md-12">
-            <h3><?php echo $this->translate("Page Index"); ?></h3>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Apostas X Prêmiações</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr class="text-success">
+                            <td class="col-md-6">APOSTAS:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->apostas); ?></td>
+                        </tr>
+                         <tr class="text-success">
+                            <td class="col-md-6">INICIAL:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->inicial); ?></td>
+                        </tr>
+                        <tr class="text-success">
+                            <td class="col-md-6">BANCA:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->banca); ?></td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td class="col-md-6">PRÊMIOS:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->premios); ?></td>
+                        </tr>
+                        <tr style="font-size: 18px;" class="<?php echo $this->saldo_apostas_premiacoes > 0 ? 'text-success' : 'text-danger'; ?>">
+                            <td class="col-md-6">
+                                SALDO:
+                                <p class="text-muted" style="font-size: 10px;">
+                                    apostas - premios
+                                </p>
+                            </td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->saldo_apostas_premiacoes); ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Depósitos X Resgates</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr class="text-success">
+                            <td class="col-md-6">DEPÓSITOS:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->depositos); ?></td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td class="col-md-6">- RESGATES:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->resgates); ?></td>
+                        </tr>
+                        <tr style="font-size: 17px;" class="<?php echo $this->saldo_depositos_resgates > 0 ? 'text-success' : 'text-danger'; ?>">
+                            <td class="col-md-6">= SALDO:</td>
+                            <td class="col-md-6 text-right"><?php echo $this->currency($this->saldo_depositos_resgates); ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>    
 </section>

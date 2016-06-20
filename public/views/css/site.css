@@ -1,0 +1,38 @@
+body {
+    background: url(../img/background/back-1.jpg) no-repeat center center fixed;
+}
+
+form, .bg-write {
+    background-color: #FFF;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+h1, h2, h3 {
+    background-color: #FFF;  
+}
+
+/* FOOTER */
+footer {
+    padding: 15px;
+    color: #FFF;
+    background: #000; /* fundo branco para navegadores que não suportam rgba */
+    //background: rgba(0,0,0,0.8); /* fundo branco com um pouco de transparência */
+    margin-bottom: 5px;
+}
+
+footer a {
+    color: #FFF;
+    margin: 0 10px;
+}
+
+/* TABLE */
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    
+    vertical-align: middle;    
+}
+
+/* PANEL */
+.panel, .btn {
+    border-radius: 0;
+}

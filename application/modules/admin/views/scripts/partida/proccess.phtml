@@ -1,0 +1,50 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Partidas Processadas</h3><hr />
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filtros</div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <?php if ($this->partidas->count() > 0) : ?>            
+            <h4><?php echo $this->partidas->count(); ?> partidas</h4>
+            <table class="table">
+                <?php foreach ($this->partidas as $partida) : ?>                
+                <tr class="text-center">
+                    <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_MEDIUM); ?></td>
+                    <td class="col-md-1">
+                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" width="40" />
+                    </td>
+                    <td class="col-md-1"><?php echo $partida->partida_placar_mandante; ?></td>
+                    <td class="col-md-1">X</td>
+                    <td class="col-md-1"><?php echo $partida->partida_placar_visitante; ?></td>
+                    <td class="col-md-1">
+                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" width="40" />
+                    </td>
+                    <td class="col-md-2">
+                        <?php echo $this->apostas($partida->partida_id); ?> Apostas
+                        (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                    </td>                    
+                    <td class="col-md-3">                                            
+                        <?php if ($partida->partida_vencedores > 0) : ?>
+                        <?php echo $partida->partida_vencedores; ?> vencedores                        
+                        (<?php echo $this->currency($partida->partida_montante / $partida->partida_vencedores); ?>)
+                        <?php else : ?>
+                        Nenhum vencedor
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php else : ?>
+            <div class="alert alert-warning">Nenhuma partida</div>
+            <?php endif; ?>
+        </div>
+    </div>    
+</section>
