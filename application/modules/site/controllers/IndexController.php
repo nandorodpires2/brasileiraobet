@@ -3,10 +3,11 @@
 class Site_IndexController extends Zend_Controller_Action {
 
     public function init() {
-        //Zend_Debug::dump(Zend_Auth::getInstance()->getIdentity()); die();
+        
     }
 
     public function indexAction() {
+        
         
         /**
          * Partidas (nao realizadas)
@@ -30,7 +31,7 @@ class Site_IndexController extends Zend_Controller_Action {
         $formLogin->submit->setLabel("LOGAR");
         $this->view->formLogin = $formLogin;
         
-        if (Zend_Auth::getInstance()->hasIdentity()) {
+        if (Plugin_Auth::check()) {
             
             $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;
             
@@ -53,6 +54,13 @@ class Site_IndexController extends Zend_Controller_Action {
              */
             $lancamentos = $modelLancamento->getExtrato($usuario_id, 10, "lancamento_data desc");
             $this->view->lancamentos = $lancamentos;
+            
+            /**
+             * Notificacoes
+             */
+            $modelNotificacao = new Model_DbTable_Notificacao();
+            $notificacoes = $modelNotificacao->getNotificacoes($usuario_id, 0);
+            $this->view->notificacoes = $notificacoes;
             
         }
         

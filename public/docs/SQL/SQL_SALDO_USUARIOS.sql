@@ -1,5 +1,6 @@
 /* SALDO USUARIOS */
 select	u.usuario_nome,
+			u.usuario_email,
 			sum(l.lancamento_valor) as saldo
 from		usuario u
 			inner join lancamento l on u.usuario_id = l.usuario_id

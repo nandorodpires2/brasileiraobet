@@ -18,6 +18,18 @@ class Form_Admin_Partida extends App_Forms_Form {
         $modelTime = new Model_DbTable_Time();
         
         /**
+         * partida_serie
+         */        
+        $partida_serie = new Zend_Form_Element_Text("partida_serie");
+        $partida_serie->setLabel("Série: ");
+        $partida_serie->setRequired();
+        $partida_serie->setValue(1);
+        $partida_serie->setAttribs(array(
+            'class' => 'form-control'
+        ));
+        $this->addElement($partida_serie);
+        
+        /**
          * partida_rodada
          */        
         $partida_rodada = new Zend_Form_Element_Text("partida_rodada");

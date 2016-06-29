@@ -36,7 +36,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
      * @param type $realizada
      * @return type
      */
-    public function getPartidas($realizada = null, $vencida = false) {
+    public function getPartidas($realizada = null, $vencida = false, $order = null) {
         $select = $this->getQueryAll();        
         
         if (null !== $realizada) {
@@ -46,12 +46,30 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         if (!$vencida) {
             $select->where("partida_data >= now()");
         }
-                
-        $select->order("partida_data asc");
+        
+        //$select->order("partida_serie asc");
+        //$select->order("partida_rodada asc");                
+        if ($order) {
+            $select->order($order);
+        } else {
+            $select->order("partida_data asc");
+        }
+        
         //echo $select->__toString();
         return $this->fetchAll($select);               
     }
     
+    /**
+     * 
+     */
+    public function getPartidasParcial() {
+        $select = $this->getQueryAll();
+        $select->where("partida_realizada = ?", 0);
+        $select->where("now() between partida_data and date_add(partida_data, INTERVAL 2 HOUR)");
+        
+        return $this->fetchAll($select);
+    }
+
     /**
      * 
      * @return type
@@ -67,7 +85,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
         $query = $this->fetchRow($select);
         
-        return $query->montante;
+        return $query->montante ? $query->montante : 0;
         
     }
     
@@ -83,7 +101,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
         $query = $this->fetchRow($select);
         
-        return $query->montante;
+        return $query->montante ? $query->montante : 0;
         
     }
     

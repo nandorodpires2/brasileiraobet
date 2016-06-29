@@ -27,8 +27,15 @@ class Site_CadastroController extends Zend_Controller_Action {
             if ($formCadastro->isValid($data)) {
                 
                 $data = $formCadastro->getValues();
-                $data['usuario_senha'] = md5($data['usuario_senha']);
-                                
+                
+                // criptografa a senha
+                $pluginPassword = new Plugin_Password($data['usuario_senha']);
+                $data['usuario_senha'] = $pluginPassword->encrypt();
+                
+                // hash de validacao
+                $data['usuario_validar_hash'] = md5(uniqid());
+                unset($data['usuario_senha_repetir']);
+                
                 try {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
@@ -56,11 +63,28 @@ class Site_CadastroController extends Zend_Controller_Action {
                     $usuario = $modelUsuario->getById($usuario_id);
                     
                     /**
+                     * Envia o email para validar a conta
+                     */
+                    $link = Zend_Registry::get("config")->url . "/cadastro/validar/hash/" . $data['usuario_validar_hash'];
+                    $pluginMail = new Plugin_Mail();
+                    $pluginMail->setDataMail("usuario", $usuario);
+                    $pluginMail->setDataMail("link", $link);
+                    $pluginMail->send("usuario-novo.phtml", "Cadastro Recebido", $usuario->usuario_email);
+                    
+                    /**
                      * Autentica
                      */
                     Zend_Auth::getInstance()->getStorage()->write($usuario);
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'success' => 'Cadastro realizado com sucesso'
+                    ));
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'info' => 'Por favor acesse o e-mail informado no cadastro para validar sua conta'
+                    ));
                     
                     $this->_redirect("/");
                     
@@ -68,11 +92,44 @@ class Site_CadastroController extends Zend_Controller_Action {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();
                     
-                    die('error');
+                    die($ex->getMessage());
                 }
                 
             }
         }
+        
+    }
+    
+    public function validarAction() {
+        
+        $this->_helper->viewRenderer->setNoRender();
+        
+        $hash = $this->getRequest()->getParam("hash");
+        
+        $modelUsuario = new Model_DbTable_Usuario();
+        $usuario = $modelUsuario->getByField("usuario_validar_hash", $hash);
+        
+        if (!$usuario) {
+            
+        }
+        
+        try {
+            $modelUsuario->updateById(array(
+                'usuario_validar_hash' => null,
+                'usuario_validado' => 1
+            ), $usuario->usuario_id);
+            
+            $this->_helper->flashMessenger->addMessage(array(
+                'success' => 'Cadastro validado com sucesso!'
+            ));
+            
+        } catch (Exception $ex) {
+            $this->_helper->flashMessenger->addMessage(array(
+                'danger' => 'Não foi possível validar seu cadastro! Favor entre em contato com a administração do sistema.'
+            ));
+        }
+        
+        $this->_redirect('/');
         
     }
     

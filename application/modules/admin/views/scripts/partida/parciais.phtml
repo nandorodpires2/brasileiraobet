@@ -1,0 +1,53 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Parciais</h3><hr />
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-12">
+            <?php if ($this->partidas->count() > 0) : ?>
+            <table class="table">
+                <form method="post">
+                    <tr>
+                        <td colspan="8">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</button>
+                        </td>
+                    </tr>                    
+                    <?php foreach ($this->partidas as $partida) : ?>                
+                    <tr class="text-center">
+                        <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?></td>
+                        <td class="col-md-1">
+                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                        </td>
+                        <td class="col-md-1">
+                            <input type="text" name="placar_mandante[]" value="0" class="form-control text-center" /> 
+                        </td>
+                        <td class="col-md-1">X</td>
+                        <td class="col-md-1">
+                            <input type="text" name="placar_visitante[]" value="0" class="form-control text-center" />
+                        </td>
+                        <td class="col-md-1">
+                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                        </td>
+                        <td class="col-md-3">
+                            <?php echo $this->apostas($partida->partida_id); ?> Apostas
+                            (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                        </td>
+                        <td class="col-md-2">
+                            <?php echo $this->parciais[$partida->partida_id]['vencedores']; ?> vencedores
+                        </td>
+                    </tr>                    
+                    <input type="hidden" name="partida_id[]" value="<?php echo $partida->partida_id; ?>"/>
+                    <?php endforeach; ?>
+                    <tr>
+                        <td colspan="8">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</button>
+                        </td>
+                    </tr>             
+                </form>
+            </table>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

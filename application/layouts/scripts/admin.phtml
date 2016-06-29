@@ -14,6 +14,8 @@
         <!-- CSS -->
         <link href="<?php echo $this->baseUrl("views/css/bootstrap.min.css"); ?>" rel="stylesheet">        
         <link href="<?php echo $this->baseUrl("views/css/bootstrap-theme.min.css"); ?>" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="<?php echo $this->baseUrl("views/css/font-awesome.min.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo $this->baseUrl("views/css/style.css"); ?>" rel="stylesheet">
         <link href="<?php echo $this->baseUrl("views/css/admin.css"); ?>" rel="stylesheet">
 
@@ -27,7 +29,9 @@
 
     </head>
     <body>
+        <?php if (Plugin_Auth::isAdmin()) : ?>
         <?php echo $this->partial('partials/header-admin.phtml'); ?>
+        <?php endif; ?>
         <div class="container" id="content">
             <?php echo $this->layout()->content; ?><hr />                        
         </div> <!-- /container -->        

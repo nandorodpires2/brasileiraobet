@@ -1,8 +1,14 @@
-<section>
+<section class="bg-write">
+    <div class="row">
+        <div class="col-md-12 text-center">  
+            <h3>Cadastro</h3> 
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3 bg-write">  
-            <h3>Faça seu cadastro e ganhe <label class="text-success"><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</label></h3>
+            <h4><label class="text-success">Ganhe <?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</label></h4>
             <?php echo $this->formCadastro; ?>
+            <p class="small text-danger">* campos obrigatórios</p>
             <p class="small">Ao se cadastrar você concorda com a nossa Política de Privacidede, Regulamento e Termo de Uso</p>
         </div>
     </div>

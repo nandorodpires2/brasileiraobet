@@ -20,20 +20,25 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         $select = parent::getQueryAll();
         $select->joinInner(array('partida'), 'aposta.partida_id = partida.partida_id', array('*'));
         $select->joinInner(array('t1' => 'time'), 'partida.time_id_mandante = t1.time_id', array(
+            'time_nome_mandante' => 't1.time_nome',
             'time_escudo_mandante' => 't1.time_escudo'
         ));
         $select->joinInner(array('t2' => 'time'), 'partida.time_id_visitante = t2.time_id', array(
+            'time_nome_visitante' => 't2.time_nome',
             'time_escudo_visitante' => 't2.time_escudo'
         ));
+        $select->joinInner(array('usuario'), 'aposta.usuario_id = usuario.usuario_id', array('*'));
+        
         return $select;
     }
 
     public function get($usuario_id = null) {
         $select = $this->getQueryAll()
-                ->where("aposta_processada = ?", 0);
+                ->where("aposta_processada = ?", 0)
+                ->where("partida.partida_data >= now()");
         
         if ($usuario_id) {
-            $select->where("usuario_id = ?", $usuario_id);
+            $select->where("aposta.usuario_id = ?", $usuario_id);
         }
         
         $select->order("partida.partida_data asc");
@@ -43,7 +48,7 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         
     }
     
-    public function getApostas($partida_id = null, $usuario_id = null) {
+    public function getApostas($partida_id = null, $usuario_id = null, $vencedora = null) {
         $select = $this->getQueryAll();
         
         if ($partida_id) {
@@ -51,7 +56,11 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         }
         
         if ($usuario_id) {
-            $select->where("usuario_id = ?", $usuario_id);
+            $select->where("aposta.usuario_id = ?", $usuario_id);
+        }
+        
+        if (null !== $vencedora) {
+            $select->where("aposta.aposta_vencedora = ?", $vencedora);
         }
         
         return $this->fetchAll($select);
@@ -77,8 +86,16 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         
         $query = $this->fetchRow($select);        
         
-        return $query->montante;
+        return $query->montante ? $query->montante : 0;
                
+    }
+    
+    public function getApostasVencedoras($partida_id) {
+        $select = $this->getQueryAll()
+                ->where("partida.partida_id = ?", $partida_id)
+                ->where("partida_placar_mandante = aposta_placar_mandante and partida_placar_visitante = aposta_placar_visitante");                
+        
+        return $this->fetchAll($select);
     }
     
 }

@@ -14,6 +14,7 @@
 class Site_DepositoController extends Zend_Controller_Action {
     
     public function init() {
+        
         if (!Plugin_Auth::check()) {
             $this->_helper->flashMessenger->addMessage(array(
                 'danger' => 'Você precisa estar logado para acessar esta página!'
@@ -28,21 +29,7 @@ class Site_DepositoController extends Zend_Controller_Action {
          * Form de deposito
          */
         $formDeposito = new Form_Site_Deposito();
-        $formDeposito->submit->setLabel("DEPOSITAR");
-        
-        /**
-         * Busca cartao cadastrado
-         */
-        $modelUsuarioCartao = new Model_DbTable_UsuarioCartao();
-        $where = $modelUsuarioCartao->getDefaultAdapter()->quoteInto("usuario_id = ?", Zend_Auth::getInstance()->getIdentity()->usuario_id);
-        $order = "usuario_cartao_id desc";
-        $cartao = $modelUsuarioCartao->fetchRow($where, $order);
-        
-        // popula os dados do cartao
-        if ($cartao) {
-            $formDeposito->populate($cartao->toArray());
-        }
-        
+        $formDeposito->submit->setLabel("CONTINUAR");        
         $this->view->formDeposito = $formDeposito;
         
         if ($this->getRequest()->isPost()) {
@@ -50,20 +37,21 @@ class Site_DepositoController extends Zend_Controller_Action {
             if ($formDeposito->isValid($data)) {
                 
                 $data = $formDeposito->getValues();                
-                $deposito_valor = $formDeposito->getValue("deposito_valor");
-                unset($data['deposito_valor']);
+                $data['usuario_id'] = Zend_Auth::getInstance()->getIdentity()->usuario_id;
                 
                 try {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
                     
-                    $this->salvarCartao($data);
+                    /**
+                     * Data vencimento boleto
+                     */
+                    $zendDate = new Zend_Date();
+                    $zendDate->addDay(Zend_Registry::get("config")->boleto->vencimento->dias);
+                    $data['deposito_vencimento'] = $zendDate->get("YYYY-MM-dd");
                     
                     $modelDeposito = new Model_DbTable_Deposito();
-                    $modelDeposito->insert(array(
-                        'deposito_valor' => $deposito_valor,
-                        'usuario_id' => Zend_Auth::getInstance()->getIdentity()->usuario_id
-                    ));
+                    $deposito_id = $modelDeposito->insert($data);
                     
                     $this->_helper->flashMessenger->addMessage(array(
                         'success' => 'Depósito realizado com sucesso!'
@@ -71,16 +59,16 @@ class Site_DepositoController extends Zend_Controller_Action {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
                     
-                    $this->_redirect("/");
+                    // grava na sessao
+                    $session = Zend_Registry::get("session");
+                    $session->deposito_id = $deposito_id;
+                    
+                    $this->_redirect("/pagamento");
                     
                 } catch (Exception $ex) {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();
-                    
-                    $this->_helper->flashMessenger->addMessage(array(
-                        'danger' => 'Houve um erro ao fazer o depósito'
-                    ));
-                    
+                                        
                     $this->_redirect("/deposito");
                 }
                 
@@ -88,61 +76,5 @@ class Site_DepositoController extends Zend_Controller_Action {
         }            
         
     }
-    
-    public function resultadoAction() {
         
-        $deposito_id = $this->getRequest()->getParam("id");
-        
-        /**
-         * Dados do deposito
-         */
-        $modelDeposito = new Model_DbTable_Deposito();
-        $deposito = $modelDeposito->getById($deposito_id);
-        
-        try {
-            
-            Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
-            
-            $descricao = "DEPÓSITO COD: {$deposito->deposito_id}";
-            $modelLancamento = new Model_DbTable_Lancamento();
-            $modelLancamento->insert(array(
-                'lancamento_valor' => $deposito->deposito_valor,
-                'lancamento_descricao' => $descricao,
-                'usuario_id' => $deposito->usuario_id
-            ));            
-            
-            $modelDeposito->updateById(array(
-                'deposito_confirmado' => 1
-            ), $deposito_id);
-            
-            Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
-            
-            $this->_redirect("/");
-            
-        } catch (Exception $ex) {
-
-            Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();
-            $this->_helper->flashMessenger->addMessage(array(
-                'danger' => 'Falha ao processar o deposito'
-            ));
-            
-            $this->_redirect("/");
-            
-        }
-        
-    }
-    
-    protected function salvarCartao($data) {
-        
-        $data['usuario_id'] = Zend_Auth::getInstance()->getIdentity()->usuario_id;
-        
-        $modelUsuarioCartao = new Model_DbTable_UsuarioCartao();
-        try {
-            $modelUsuarioCartao->insert($data);
-        } catch (Exception $ex) {
-            throw new Exception($ex->getMessage());
-        }
-         
-    }
-    
 }

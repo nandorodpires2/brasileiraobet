@@ -1,0 +1,48 @@
+<section class="bg-write">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Minha Conta</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->partial('usuario/side-bar.phtml'); ?>
+        </div>
+        <div class="col-md-8">
+            <h4>Meus Resgates</h4>
+            <?php if ($this->resgates->count() > 0) : ?>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3">Data</th>
+                            <th class="col-md-3">Valor</th>
+                            <th class="col-md-3">Data Limite</th>
+                            <th class="col-md-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->resgates as $resgate) : ?>
+                        <tr class="text-center">
+                            <td><?php echo App_Helper_Date::getDate($resgate->resgate_data); ?></td>
+                            <td><?php echo $this->currency($resgate->resgate_valor); ?></td>
+                            <td><?php echo App_Helper_Date::getDate($resgate->resgate_data_limite); ?></td>
+                            <td>
+                                <?php if ($resgate->resgate_processado) : ?>
+                                <span class="text-success">Processado</span><br />
+                                <span class="small text-muted">em <?php echo App_Helper_Date::getDate($resgate->resgate_processado_data); ?></span>
+                                <?php else : ?>
+                                <span class="text-danger">Pendente</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php else : ?>
+            <div class="alert alert-warning">Nenhum registro</div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

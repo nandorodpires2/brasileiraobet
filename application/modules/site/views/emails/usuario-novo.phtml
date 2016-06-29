@@ -1,0 +1,14 @@
+<?php echo $this->partial("header.phtml"); ?>
+<div style="width: 100%">
+    <div class="col-lg-12">
+        <h3>Olá <?php echo $this->usuario->usuario_nome; ?>,</h3>
+        <p>
+           Seu cadastro foi realizado com sucesso. Precisamos agora que você
+           valide sua conta clicando no link abaixo.
+        </p>       
+        <p>
+            <a href="<?php echo $this->link; ?>" target="_blank">Clique aqui para validar seu cadastro</a>
+        </p>
+    </div>
+</div>
+<?php echo $this->partial("footer.phtml"); ?>

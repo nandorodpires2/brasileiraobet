@@ -14,17 +14,20 @@
 class Plugin_Message extends Zend_Controller_Plugin_Abstract {
     
     private $_html;
-
+    
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
         
-        $flashmessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');  
+        $flashmessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');          
         $messages = $flashmessenger->getMessages();
         
-        if (!$messages) {
+        $view = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer')->view;
+        
+        if (!$messages) {   
+            $view->has_message = false;
             return;
         }
         
-        $this->_html = $this->getHeaderHtml();
+        //$this->_html = $this->getHeaderHtml();
         
         foreach ($messages as $message) {
             
@@ -49,9 +52,7 @@ class Plugin_Message extends Zend_Controller_Plugin_Abstract {
              
         }
         
-        $this->_html .= $this->getFooterHtml();
-        
-        $view = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer')->view;        
+        $view->has_message = true;
         $view->messages = $this->_html;
         
     }

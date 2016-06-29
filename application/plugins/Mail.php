@@ -13,7 +13,7 @@
  */
 class Plugin_Mail {
     
-    protected $_sendMailOn = true;
+    protected $_sendMailOn = false;
 
     protected $_zendMail;
     protected $_view;

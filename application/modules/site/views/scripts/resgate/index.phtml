@@ -1,0 +1,23 @@
+<section class="bg-write">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Resgatar</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">              
+            <div class="well text-center">
+                <h4>Saldo disponível: <b class="text-success"><?php echo $this->currency($this->saldo); ?></b></h4>
+            </div>
+            <p class="text-danger">
+                Prezado, o valor mínimo para resgate é de <b><?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?></b>
+            </p>
+            <p class="small text-muted">
+                Será cobrado <b><?php echo Zend_Registry::get("config")->resgate->porcentagem; ?>%</b> do valor resgatado de tarifa administrativa
+            </p>
+            
+            <?php echo $this->formResgate; ?>
+            <p class="small text-center">O valor será creditado na conta informada em até <b><?php echo Zend_Registry::get("config")->resgate->dias; ?> dias</b></p>
+        </div>
+    </div>
+</section>

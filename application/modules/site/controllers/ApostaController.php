@@ -14,7 +14,7 @@
 class Site_ApostaController extends Zend_Controller_Action {
     
     public function init() {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
+        if (!Plugin_Auth::check()) {
             $this->_helper->flashMessenger->addMessage(array(
                 'danger' => 'Você precisa estar logado para acessar esta página!'
             ));
@@ -42,6 +42,15 @@ class Site_ApostaController extends Zend_Controller_Action {
                 $data = $formApostar->getValues();
                 
                 try {
+                
+                    // verifica se pode apostar
+                    $pluginAposta = new Plugin_Aposta($data['partida_id']);
+                    if (!$pluginAposta->allow()) {
+                        $this->_helper->flashMessenger->addMessage(array(
+                            'warning' => 'As apostas para esta partida já estão encerradas!'
+                        ));
+                        $this->_redirect("/");
+                    }
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
                     
@@ -74,8 +83,20 @@ class Site_ApostaController extends Zend_Controller_Action {
                 } catch (Exception $ex) {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();
-                    die($ex->getMessage());
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => $ex->getMessage()
+                    ));
+                    
+                    $this->_redirect("/");
+                    
                 }
+                
+            } else {
+                
+                $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => "Não foi possível realizar sua aposta! Por favor preencha os dados corretamente"
+                ));
                 
             }
             
@@ -90,6 +111,7 @@ class Site_ApostaController extends Zend_Controller_Action {
     }
     
     public function deleteAction() {
+        
         $this->_helper->viewRenderer->setNoRender();
         
         $aposta_id = $this->getRequest()->getParam("id");
@@ -99,6 +121,14 @@ class Site_ApostaController extends Zend_Controller_Action {
          */
         $modelAposta = new Model_DbTable_Aposta();
         $aposta = $modelAposta->getById($aposta_id);
+        
+        $pluginAposta = new Plugin_Aposta($aposta->partida_id);
+        if (!$pluginAposta->allow()) {
+            $this->_helper->flashMessenger->addMessage(array(
+                'warning' => 'As apostas para esta partida já estão encerradas!'
+            ));
+            $this->_redirect("/");
+        }
         
         if (!$aposta && $aposta->usuario_id !== Zend_Auth::getInstance()->getIdentity()->usuario_id) {
             
@@ -145,6 +175,25 @@ class Site_ApostaController extends Zend_Controller_Action {
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }        
+        
+    }
+    
+    protected function checkApostaData($partida_id) {
+        
+        $modelPartida = new Model_DbTable_Partida();
+        $partida = $modelPartida->getById($partida_id);
+        
+        if (!$partida) {
+            return false;
+        }
+        
+        $zendDateNow = new Zend_Date();
+        $zendDatePartida = new Zend_Date($partida->partida_data);        
+        
+        if ($zendDatePartida->isEarlier($zendDateNow)) {
+            return false;
+        }
+        return true;
         
     }
     

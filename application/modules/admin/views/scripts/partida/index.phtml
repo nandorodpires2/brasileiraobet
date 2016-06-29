@@ -15,7 +15,12 @@
                 'module' => 'admin',
                 'controller' => 'partida',
                 'action' => 'proccess'
-            ), null, true); ?>" class="btn btn-warning">Partidas Processadas</a><hr />
+            ), null, true); ?>" class="btn btn-warning">Partidas Processadas</a>
+            <a href="<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'partida',
+                'action' => 'parciais'
+            ), null, true); ?>" class="btn btn-default">Parciais</a><hr />
         </div>
     </div>    
     <div class="row">
@@ -35,7 +40,7 @@
                     <td class="col-md-2">
                         <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
                     </td>
-                    <td class="col-md-2">X</td>
+                    <td class="col-md-1">X</td>
                     <td class="col-md-2">
                         <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
                     </td>
@@ -43,14 +48,14 @@
                         <?php echo $this->apostas($partida->partida_id); ?> Apostas
                         (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
                     </td>
-                    <td class="col-md-2">
+                    <td class="col-md-3">
                         <a href="" class="btn btn-sm btn-info">Alterar</a>
                         <a href="<?php echo $this->url(array(
                             'module' => 'admin',
                             'controller' => 'partida',
                             'action' => 'result',
                             'id' => $partida->partida_id
-                        ), null, true); ?>" class="btn btn-sm btn-success">Resultado</a>
+                        ), null, true); ?>" class="btn btn-sm btn-success">Resultado</a>                      
                     </td>
                 </tr>
                 <?php endforeach; ?>

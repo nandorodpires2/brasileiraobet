@@ -13,7 +13,7 @@
  */
 class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
     
-    public function apostas($partida_id) {
+    public function apostas($partida_id, $tipo = "numero") {
         
         if (!Plugin_Auth::check()) {
             return "";
@@ -24,10 +24,24 @@ class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
         
         $text = "";
         
-        if ($apostas->count() > 0) {
-            $text = "Você fez {$apostas->count()} apostas nesta partida";
-        } else {
-            $text = "Você ainda não apostou nesta partida";
+        if ($tipo === 'numero') {
+
+            if ($apostas->count() > 0) {
+                $text = "Você fez {$apostas->count()} apostas nesta partida";
+            } else {
+                $text = "Você ainda não apostou nesta partida";
+            }
+        } 
+        
+        if ($tipo === 'label') {
+            if ($apostas->count() > 0) {
+                $text = "<label>Suas apostas:</label><br />";
+                foreach ($apostas as $aposta) {
+                    $text .= "<label class='label label-info' style='margin: 0 5px;'>{$aposta->aposta_placar_mandante} X {$aposta->aposta_placar_visitante}</label>";
+                }
+            } else {
+                $text = "Você ainda não apostou nesta partida";
+            }
         }
         
         return $text;

@@ -1,0 +1,47 @@
+<section class="bg-write">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Minha Conta</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->partial('usuario/side-bar.phtml'); ?>
+        </div>
+        <div class="col-md-8">
+            <h4>Meus Prêmios</h4>
+            <?php if ($this->apostas->count() > 0) : ?>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data Aposta</th>                            
+                            <th>Partida</th>                            
+                            <th>Vencedores</th>
+                            <th>Prêmio (cada)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->apostas as $aposta) : ?>
+                        <tr class="text-center" style="font-weight: bold">
+                            <td><?php echo App_Helper_Date::getDate($aposta->aposta_data, Zend_Date::DATETIME_SHORT); ?>h</td>
+                            <td>
+                                <img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_mandante); ?>" class="img" width="30" />
+                                <?php echo $aposta->aposta_placar_mandante; ?>
+                                X
+                                <?php echo $aposta->aposta_placar_visitante; ?>
+                                <img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_visitante); ?>" class="img" width="30" />
+                            </td>
+                            <td><?php echo $aposta->partida_vencedores; ?></td>
+                            <td class="text-success"><?php echo $this->currency($aposta->partida_montante / $aposta->partida_vencedores); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php else : ?>
+            <div class="alert alert-info">Você ainda não ganhou nenhum prêmio. Continue tentando!</div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

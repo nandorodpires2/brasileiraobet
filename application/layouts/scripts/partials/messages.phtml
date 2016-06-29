@@ -1,0 +1,51 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        /**
+         * Center modal
+         * @param {type} $
+         * @returns {undefined}
+         */
+        (function ($) {
+            "use strict";
+            function centerModal() {
+                $(this).css('display', 'block');
+                var $dialog = $(this).find(".modal-dialog"),
+                        offset = ($(window).height() - $dialog.height()) / 2,
+                        bottomMargin = parseInt($dialog.css('marginBottom'), 10);
+
+                // Make sure you don't hide the top part of the modal w/ a negative margin if it's longer than the screen height, and keep the margin equal to the bottom margin of the modal
+                if (offset < bottomMargin)
+                    offset = bottomMargin;
+                $dialog.css("margin-top", offset);
+            }
+
+            $(document).on('show.bs.modal', '#modal-messages', centerModal);
+
+            $(window).on("resize", function () {
+                $('#modal-messages:visible').each(centerModal);
+            });
+        }(jQuery));
+
+        $("#modal-messages").modal("show");
+
+    });
+
+
+</script>
+<?php if ($this->has_message) : ?>
+    <div class="modal fade" id="modal-messages" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                        
+                    </div>
+                    <?php echo $this->messages; ?>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>                
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<?php endif; ?>

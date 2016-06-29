@@ -17,7 +17,8 @@ class Admin_IndexController extends Zend_Controller_Action {
         /**
          * Resgates
          */
-        $resgates = 0;
+        $modelResgate = new Model_DbTable_Resgate();
+        $resgates = $modelResgate->getMontante();
         
         $modelAposta = new Model_DbTable_Aposta();        
         

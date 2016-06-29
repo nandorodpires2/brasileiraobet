@@ -53,8 +53,9 @@ class Admin_PartidaController extends Zend_Controller_Action {
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
                     
                     $modelPartida = new Model_DbTable_Partida();
-                    $partida_id = $modelPartida->insert($data);                    
-                    //$this->populate($partida_id);
+                    $partida_id = $modelPartida->insert($data);     
+                    
+                    $this->populate($partida_id);
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
                     
@@ -106,17 +107,17 @@ class Admin_PartidaController extends Zend_Controller_Action {
          * Adicionando elementos (placares)
          */
         $partida_placar_mandante = new Zend_Form_Element_Text("partida_placar_mandante");
-        $partida_placar_mandante->setLabel("Placar Mandante: ");
+        $partida_placar_mandante->setLabel("Placar {$partida->time_mandante_nome}: ");
         $partida_placar_mandante->setAttrib("class", "form-control");
         $partida_placar_mandante->setRequired();
-        $partida_placar_mandante->setOrder(3);        
+        $partida_placar_mandante->setOrder(4);        
         $formPartida->addElement($partida_placar_mandante);
-        
+
         $partida_placar_visitante = new Zend_Form_Element_Text("partida_placar_visitante");
-        $partida_placar_visitante->setLabel("Placar Visitante: ");
+        $partida_placar_visitante->setLabel("Placar {$partida->time_visitante_nome}: ");
         $partida_placar_visitante->setAttrib("class", "form-control");
         $partida_placar_visitante->setRequired();
-        $partida_placar_visitante->setOrder(5);        
+        $partida_placar_visitante->setOrder(6);        
         $formPartida->addElement($partida_placar_visitante);
                 
         $formPartida->populate($partida->toArray());
@@ -149,14 +150,43 @@ class Admin_PartidaController extends Zend_Controller_Action {
                     $ganhadores = array();
                     
                     foreach ($apostas as $aposta) {
+                        
+                        $modelNotificacao = new Model_DbTable_Notificacao();
+                        
                         $updateAposta = array();
                         if ($aposta->aposta_placar_mandante == $partida->partida_placar_mandante && 
                             $aposta->aposta_placar_visitante == $partida->partida_placar_visitante) {
                             
                             $ganhadores[]['usuario_id'] = $aposta->usuario_id;       
                             $updateAposta['aposta_vencedora'] = 1;
+                            
+                            // notifica
+                            $conteudo = " 
+                                Parabéns! Sua aposta na partida 
+                                {$aposta->time_nome_mandante} {$aposta->aposta_placar_mandante} X {$aposta->aposta_placar_visitante} {$aposta->time_nome_visitante}
+                                foi vencedora
+                            ";                            
+                            $notificacao = array(
+                                'usuario_id' => $aposta->usuario_id,
+                                'notificacao_conteudo' => $conteudo
+                            );
+                            $modelNotificacao->insert($notificacao);
+                            
                         } else {
                             $updateAposta['aposta_vencedora'] = 0;
+                            
+                            // notifica
+                            $conteudo = " 
+                                Sua aposta na partida 
+                                {$aposta->time_nome_mandante} {$aposta->aposta_placar_mandante} X {$aposta->aposta_placar_visitante} {$aposta->time_nome_visitante}
+                                infelismente não foi vencedora
+                            ";
+                            $notificacao = array(
+                                'usuario_id' => $aposta->usuario_id,
+                                'notificacao_conteudo' => $conteudo
+                            );
+                            $modelNotificacao->insert($notificacao);
+                            
                         }
                         $updateAposta['aposta_processada'] = 1;
                         
@@ -185,10 +215,6 @@ class Admin_PartidaController extends Zend_Controller_Action {
                         $modelLancamento->insert($data);
                     }
                     
-                    /**
-                     * Notifica os usuarios
-                     */
-                    
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
                     
                     $this->_redirect("admin/partida");
@@ -204,6 +230,44 @@ class Admin_PartidaController extends Zend_Controller_Action {
         
         
     }
+
+    public function parciaisAction() {
+        /**
+         * Busca as partidas
+         */
+        $modelPartida = new Model_DbTable_Partida();
+        $partidas = $modelPartida->getPartidasParcial();
+        $this->view->partidas = $partidas;
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+
+            $parciais = array();
+            
+            foreach ($data['partida_id'] as $key => $value) {
+                
+                $parciais[$value]['vencedores'] = 0;
+                
+                $placar_mandante = $data['placar_mandante'][$key];
+                $placar_visitante = $data['placar_visitante'][$key];
+                
+                $modelAposta = new Model_DbTable_Aposta();
+                $apostas = $modelAposta->getApostas($value);
+                
+                foreach ($apostas as $aposta) {
+                    if ($aposta->aposta_placar_mandante == $placar_mandante && 
+                        $aposta->aposta_placar_visitante == $placar_visitante) {
+                        $parciais[$value]['vencedores']++;
+                    }
+                }                
+                
+            }
+            
+            $this->view->parciais = $parciais;
+            
+        }
+        
+    }
     
     /**
      * 
@@ -214,7 +278,7 @@ class Admin_PartidaController extends Zend_Controller_Action {
          * Busca as partidas
          */
         $modelPartida = new Model_DbTable_Partida();
-        $partidas = $modelPartida->getPartidas(1, true);
+        $partidas = $modelPartida->getPartidas(1, true, "partida_data desc");
         $this->view->partidas = $partidas;
         
     }
@@ -238,6 +302,11 @@ class Admin_PartidaController extends Zend_Controller_Action {
      * 
      */
     private function populate($partida_id) {
+        
+        if (!Zend_Registry::get("config")->aposta->populate) {
+            return;
+        }
+        
        $modelAposta = new Model_DbTable_Aposta();
        
        /**

@@ -27,7 +27,16 @@ class Model_DbTable_Deposito extends App_Db_Table_Abstract {
                 ->where("deposito_confirmado = ?", 1);
         
         $query = $this->fetchRow($select);   
-        return $query->montante;
+        return $query->montante ? $query->montante : 0;
+    }
+    
+    public function getDepositosUsuario($usuario_id) {
+        
+        $select = $this->getQueryAll()
+                ->where("usuario_id = ?", $usuario_id);
+        
+        return $this->fetchAll($select);
+        
     }
     
 }

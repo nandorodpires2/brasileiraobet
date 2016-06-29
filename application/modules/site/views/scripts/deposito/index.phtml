@@ -1,47 +1,43 @@
-<section>
+<section class="bg-write"> 
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 bg-write">  
-            <h3>Fazer um depósito</h3>
-            <form method="post" action="">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->deposito_valor; ?>       
-                        </div>
-                    </div>
+        <div class="col-md-12 text-center">  
+              <h3>Depositar</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row bs-wizard" style="border-bottom:0;">
+            <div class="col-xs-4 bs-wizard-step active">
+                <div class="text-center bs-wizard-stepnum">Valor Depósito</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">
+                    Informe o valor desejado
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->usuario_cartao_numero; ?>       
-                        </div>
-                    </div>
+            </div>
+
+            <div class="col-xs-4 bs-wizard-step disabled">
+                <div class="text-center bs-wizard-stepnum">Pagamento</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">
+                    Gerar boleto
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->usuario_cartao_codigo; ?>       
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->usuario_cartao_mes; ?>       
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->usuario_cartao_ano; ?>       
-                        </div>
-                    </div>
+            </div>
+
+            <div class="col-xs-4 bs-wizard-step disabled">
+                <div class="text-center bs-wizard-stepnum">Conclusão</div>
+                <div class="progress"><div class="progress-bar"></div></div>
+                <a href="#" class="bs-wizard-dot"></a>
+                <div class="bs-wizard-info text-center">
+                    Conclusão da solicitação
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <?php echo $this->formDeposito->submit; ?>       
-                        </div>
-                    </div>
-                </div>
-            </form>                 
+            </div>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3"> 
+            <hr />
+            <?php echo $this->formDeposito; ?>
         </div>
     </div>
 </section>
