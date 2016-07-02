@@ -63,6 +63,8 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
             $select->where("aposta.aposta_vencedora = ?", $vencedora);
         }
         
+        $select->order("partida_data desc");
+        
         return $this->fetchAll($select);
     }
 
@@ -94,6 +96,21 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         $select = $this->getQueryAll()
                 ->where("partida.partida_id = ?", $partida_id)
                 ->where("partida_placar_mandante = aposta_placar_mandante and partida_placar_visitante = aposta_placar_visitante");                
+        
+        return $this->fetchAll($select);
+    }
+    
+    public function getApostasVencedorasParcial($partida_id) {
+        $select = $this->getQueryAll()
+                ->joinLeft("parcial", "partida.partida_id = parcial.partida_id", array(
+                    'parcial_id',
+                    'parcial_placar_mandante',
+                    'parcial_placar_visitante',
+                    'parcial_vencedores',
+                    'parcial_atualizacao'
+                ))
+                ->where("partida.partida_id = ?", $partida_id)
+                ->where("parcial_placar_mandante = aposta_placar_mandante and parcial_placar_visitante = aposta_placar_visitante");                
         
         return $this->fetchAll($select);
     }

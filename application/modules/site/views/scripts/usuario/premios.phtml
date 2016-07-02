@@ -9,7 +9,9 @@
             <?php echo $this->partial('usuario/side-bar.phtml'); ?>
         </div>
         <div class="col-md-8">
-            <h4>Meus Prêmios</h4>
+            <div class="well text-success bolder text-center">
+                Total Prêmios: <?php echo $this->currency($this->total_premios); ?>
+            </div>
             <?php if ($this->apostas->count() > 0) : ?>
             <div class="table-responsive">
                 <table class="table">

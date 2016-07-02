@@ -17,7 +17,8 @@
             <table class="table">
                 <?php foreach ($this->partidas as $partida) : ?>                
                 <tr class="text-center">
-                    <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_MEDIUM); ?></td>
+                    <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
+                    <td class="col-md-1"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_MEDIUM); ?></td>
                     <td class="col-md-1">
                         <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" width="40" />
                     </td>
@@ -31,13 +32,16 @@
                         <?php echo $this->apostas($partida->partida_id); ?> Apostas
                         (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
                     </td>                    
-                    <td class="col-md-3">                                            
+                    <td class="col-md-2">                                            
                         <?php if ($partida->partida_vencedores > 0) : ?>
                         <a href="" data-toggle="modal" data-target="#modal-ganhadores-<?php echo $partida->partida_id; ?>"><?php echo $partida->partida_vencedores; ?> vencedores</a>                        
                         (<?php echo $this->currency($partida->partida_montante / $partida->partida_vencedores); ?>)
                         <?php else : ?>
                         Nenhum vencedor
                         <?php endif; ?>
+                    </td>
+                    <td class="col-md-1">
+                        <a href="" class="btn btn-sm btn-warning">Reprocessar</a>
                     </td>
                     <!-- MODAL DE APOSTA -->
                     <div class="modal fade" id="modal-ganhadores-<?php echo $partida->partida_id; ?>" tabindex="-1" role="dialog">

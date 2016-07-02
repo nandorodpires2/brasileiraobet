@@ -18,6 +18,14 @@ class Model_DbTable_Deposito extends App_Db_Table_Abstract {
     
     protected function getQueryAll() {
         $select = parent::getQueryAll();
+        $select->columns(array(
+            'deposito_status' => new Zend_Db_Expr(
+                "case deposito_status
+                    when 'PAYMENT_CREATED' then 'Aguardando Pagamento'
+                    when 'PAYMENT_RECEIVED' then 'Pago'
+                end"
+            )
+        ));
         return $select;
     }
 

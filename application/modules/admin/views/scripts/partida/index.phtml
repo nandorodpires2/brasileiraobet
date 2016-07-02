@@ -36,6 +36,7 @@
                     $apostas += $this->apostas($partida->partida_id);
                 ?>
                 <tr class="text-center">
+                    <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
                     <td class="col-md-2"><?php echo $partida->partida_data; ?></td>
                     <td class="col-md-2">
                         <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
@@ -48,7 +49,7 @@
                         <?php echo $this->apostas($partida->partida_id); ?> Apostas
                         (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
                     </td>
-                    <td class="col-md-3">
+                    <td class="col-md-2">
                         <a href="" class="btn btn-sm btn-info">Alterar</a>
                         <a href="<?php echo $this->url(array(
                             'module' => 'admin',

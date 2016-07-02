@@ -36,7 +36,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
      * @param type $realizada
      * @return type
      */
-    public function getPartidas($realizada = null, $vencida = false, $order = null) {
+    public function getPartidas($realizada = null, $vencida = false, $order = null, $limit = null) {
         $select = $this->getQueryAll();        
         
         if (null !== $realizada) {
@@ -55,6 +55,10 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
             $select->order("partida_data asc");
         }
         
+        if (null !== $limit) {
+            $select->limit($limit);
+        }
+        
         //echo $select->__toString();
         return $this->fetchAll($select);               
     }
@@ -64,6 +68,13 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
      */
     public function getPartidasParcial() {
         $select = $this->getQueryAll();
+        $select->joinLeft("parcial", "partida.partida_id = parcial.partida_id", array(
+            'parcial_id',
+            'parcial_placar_mandante',
+            'parcial_placar_visitante',
+            'parcial_vencedores',
+            'parcial_atualizacao'
+        ));
         $select->where("partida_realizada = ?", 0);
         $select->where("now() between partida_data and date_add(partida_data, INTERVAL 2 HOUR)");
         

@@ -25,6 +25,15 @@ class Site_IndexController extends Zend_Controller_Action {
         $this->view->formApostar = $formApostar;
         
         /**
+         * Form editar
+         */
+        $formApostarAlterar = new Form_Site_Apostar();
+        $formApostarAlterar->addElement("hidden", "aposta_id", array());
+        $formApostarAlterar->submit->setLabel("ALTERAR APOSTA");
+        $formApostarAlterar->setElementDecorators(array('ViewHelper','Errors'));
+        $this->view->formApostarAlterar = $formApostarAlterar;
+        
+        /**
          * Form login
          */
         $formLogin = new Form_Site_Login();

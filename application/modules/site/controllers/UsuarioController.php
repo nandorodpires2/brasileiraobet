@@ -119,6 +119,12 @@ class Site_UsuarioController extends Zend_Controller_Action {
         $apostas = $modelAposta->getApostas(null, $usuario_id, 1);
         $this->view->apostas = $apostas;
         
+        $total_premios = 0;
+        foreach ($apostas as $aposta) {
+            $total_premios += $aposta->partida_montante / $aposta->partida_vencedores;
+        }
+        $this->view->total_premios = $total_premios;
+        
     }
     
 }

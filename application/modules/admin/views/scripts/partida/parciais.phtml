@@ -14,18 +14,24 @@
                             <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</button>
                         </td>
                     </tr>                    
-                    <?php foreach ($this->partidas as $partida) : ?>                
+                    <?php foreach ($this->partidas as $partida) : ?> 
+                    <tr>
+                        <td colspan="8" class="small text-muted text-center">
+                            Última atualização: 
+                            <?php echo App_Helper_Date::getDate($partida->parcial_atualizacao, Zend_Date::TIME_MEDIUM); ?>h
+                        </td>
+                    </tr>
                     <tr class="text-center">
                         <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?></td>
                         <td class="col-md-1">
                             <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
                         </td>
                         <td class="col-md-1">
-                            <input type="text" name="placar_mandante[]" value="0" class="form-control text-center" /> 
+                            <input type="text" name="placar_mandante[]" value="<?php echo $partida->parcial_placar_mandante; ?>" class="form-control text-center" /> 
                         </td>
                         <td class="col-md-1">X</td>
                         <td class="col-md-1">
-                            <input type="text" name="placar_visitante[]" value="0" class="form-control text-center" />
+                            <input type="text" name="placar_visitante[]" value="<?php echo $partida->parcial_placar_visitante; ?>" class="form-control text-center" />
                         </td>
                         <td class="col-md-1">
                             <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
@@ -35,16 +41,17 @@
                             (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
                         </td>
                         <td class="col-md-2">
-                            <?php echo $this->parciais[$partida->partida_id]['vencedores']; ?> vencedores
+                            <?php echo $partida->parcial_vencedores > 0 ? $partida->parcial_vencedores . ' vencedores' : 'nenhum vencedor'; ?> 
+                            <?php if ($partida->parcial_vencedores > 0) : ?>
+                            <p class="small">
+                                <?php $premio_cada = $this->montante($partida->partida_id) / $partida->parcial_vencedores; ?>
+                                ( <?php echo $this->currency($premio_cada); ?> p/ cada )
+                            </p>
+                            <?php endif; ?>
                         </td>
-                    </tr>                    
+                    </tr>     
                     <input type="hidden" name="partida_id[]" value="<?php echo $partida->partida_id; ?>"/>
-                    <?php endforeach; ?>
-                    <tr>
-                        <td colspan="8">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</button>
-                        </td>
-                    </tr>             
+                    <?php endforeach; ?>           
                 </form>
             </table>
             <?php endif; ?>

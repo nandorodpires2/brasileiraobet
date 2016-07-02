@@ -33,15 +33,26 @@ class Admin_UsuarioController extends Zend_Controller_Action {
             
             $uniqid = uniqid();
             $data = array(
-                'usuario_nome' => 'USUÁRIO MAQUINA ' . $uniqid,
-                'usuario_email' => "usuario{$uniqid}@maquina.com",
+                'usuario_nome' => 'USUÁRIO VIRTUAL ' . $uniqid,
+                'usuario_email' => "usuario{$uniqid}@virtual.com",
                 'usuario_maquina' => 1
             );
             $modelUsuario = new Model_DbTable_Usuario();
             
             try {
                 
-                $modelUsuario->insert($data);
+                $usuario_id = $modelUsuario->insert($data);
+                
+                /**
+                 * Bonus
+                 */
+                $bonus = array(
+                    'lancamento_descricao' => 'CRÉDITO CADASTRO',
+                    'usuario_id' => $usuario_id,
+                    'lancamento_valor' => Zend_Registry::get("config")->bonus->cadastro
+                );
+                $modelLancamento = new Model_DbTable_Lancamento();
+                $modelLancamento->insert($bonus);
                 
             } catch (Exception $ex) {
                 Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();

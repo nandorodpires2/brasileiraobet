@@ -106,7 +106,69 @@ class Site_ApostaController extends Zend_Controller_Action {
         
     }
     
-    public function alterAction() {
+    public function alterarAction() {
+        $this->_helper->viewRenderer->setNoRender();
+        
+        /**
+         * Form apostar
+         */
+        $formApostar = new Form_Site_Apostar(); 
+        $formApostar->addElement("hidden", "aposta_id");
+                
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if ($formApostar->isValid($data)) {
+                
+                $data = $formApostar->getValues();
+                
+                try {
+                
+                    // verifica se pode apostar
+                    $pluginAposta = new Plugin_Aposta($data['partida_id']);
+                    if (!$pluginAposta->allow()) {
+                        $this->_helper->flashMessenger->addMessage(array(
+                            'warning' => 'As apostas para esta partida já estão encerradas!'
+                        ));
+                        $this->_redirect("/");
+                    }
+                    
+                    Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
+                                      
+                    /**
+                     * cadastra a aposta
+                     */
+                    $modelAposta = new Model_DbTable_Aposta();
+                    $modelAposta->updateById($data, $data['aposta_id']);                  
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'success' => 'Aposta alterada com sucesso!'
+                    ));
+                    
+                    Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
+                    
+                } catch (Exception $ex) {
+                    
+                    Zend_Db_Table_Abstract::getDefaultAdapter()->rollBack();
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => $ex->getMessage()
+                    ));
+                    
+                    $this->_redirect("/");
+                    
+                }
+                
+            } else {
+                
+                $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => "Não foi possível realizar sua aposta! Por favor preencha os dados corretamente."
+                ));
+                
+            }
+            
+            $this->_redirect("/");
+            
+        }
         
     }
     

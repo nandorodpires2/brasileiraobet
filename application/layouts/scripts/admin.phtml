@@ -29,6 +29,10 @@
 
     </head>
     <body>
+        <?php echo $this->partial('partials/messages.phtml', array(
+            'has_message' => $this->has_message,
+            'messages' => $this->messages
+        )); ?>
         <?php if (Plugin_Auth::isAdmin()) : ?>
         <?php echo $this->partial('partials/header-admin.phtml'); ?>
         <?php endif; ?>
