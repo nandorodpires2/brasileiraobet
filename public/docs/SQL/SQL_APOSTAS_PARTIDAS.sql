@@ -10,7 +10,7 @@ from		aposta a
 			inner join usuario u on a.usuario_id = u.usuario_id
 			inner join time t1 on p.time_id_mandante = t1.time_id
 			inner join time t2 on p.time_id_visitante = t2.time_id
-where		p.partida_rodada = 12
+where		p.partida_rodada = 13
 			and p.partida_serie = 1
 order by p.partida_id,
 			concat(a.aposta_placar_mandante, ' - ', a.aposta_placar_visitante) asc,			 
