@@ -27,7 +27,7 @@ class Site_ResgateController extends Zend_Controller_Action {
          */
         $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;
         $modelLancamento = new Model_DbTable_Lancamento();
-        $saldo = $modelLancamento->getSaldoUsuario($usuario_id);
+        $saldo = $modelLancamento->getSaldoUsuario($usuario_id, 0);
         
         if ($saldo < Zend_Registry::get("config")->resgate->minimo) {
             $this->_helper->flashMessenger->addMessage(array(

@@ -3,7 +3,7 @@
 class Site_IndexController extends Zend_Controller_Action {
 
     public function init() {
-        
+                
     }
 
     public function indexAction() {
@@ -53,10 +53,14 @@ class Site_IndexController extends Zend_Controller_Action {
 
             /**
              * Saldo Usuario
-             */            
+             */                        
             $modelLancamento = new Model_DbTable_Lancamento();
+            //saldo para apostas
             $saldo = $modelLancamento->getSaldoUsuario($usuario_id);
             $this->view->saldo = $saldo;
+            // saldo para resgate
+            $saldo_resgate = $modelLancamento->getSaldoUsuario($usuario_id, 0);
+            $this->view->saldo_resgate = $saldo_resgate;
             
             /**
              * Extrato

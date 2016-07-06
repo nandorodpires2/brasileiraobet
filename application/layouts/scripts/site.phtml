@@ -33,8 +33,8 @@
             'has_message' => $this->has_message,
             'messages' => $this->messages
         )); ?>
-        <div class="container" id="content">
-            <?php echo $this->partial('partials/header.phtml'); ?>
+        <?php echo $this->partial('partials/header.phtml'); ?>
+        <div class="container" id="content">            
             <?php echo $this->layout()->content; ?>                   
         </div> <!-- /container -->        
         <?php echo $this->partial('partials/footer.phtml'); ?>

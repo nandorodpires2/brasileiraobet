@@ -95,7 +95,7 @@
                         'controller' => 'deposito',
                         'action' => 'index'
                     ), null, true); ?>" class="btn btn-primary btn-block"><i class="fa fa-money"></i> DEPOSITAR</a>
-                    <?php if ($this->saldo >= Zend_Registry::get("config")->resgate->minimo) : ?>
+                    <?php if ($this->saldo_resgate >= Zend_Registry::get("config")->resgate->minimo) : ?>
                     <a href="<?php echo $this->url(array(
                         'controller' => 'resgate',
                         'action' => 'index'

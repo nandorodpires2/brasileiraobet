@@ -36,8 +36,9 @@
                     $apostas += $this->apostas($partida->partida_id);
                 ?>
                 <tr class="text-center">
+                    <td class="col-md-1">Série <?php echo $partida->partida_serie == 1 ? 'A' : 'B'; ?></td>
                     <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
-                    <td class="col-md-2"><?php echo $partida->partida_data; ?></td>
+                    <td class="col-md-1"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h</td>
                     <td class="col-md-2">
                         <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
                     </td>
@@ -61,7 +62,7 @@
                 </tr>
                 <?php endforeach; ?>
                 <tr class="text-center">
-                    <td colspan="4">TOTAL</td>
+                    <td colspan="6">TOTAL</td>
                     <td>
                         <?php echo $apostas; ?> apostas
                         (<?php echo $this->currency($total); ?>)
