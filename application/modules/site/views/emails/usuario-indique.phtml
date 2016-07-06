@@ -1,0 +1,17 @@
+<?php echo $this->partial("header.phtml"); ?>
+<div style="width: 100%">
+    <div class="col-lg-12">
+        <h3 style="color: #EE1289">Olá <?php echo $this->indique_nome; ?>,</h3>
+        <p>
+            <?php echo $this->usuario_nome; ?> indicou você para se cadastrar
+            no <b>BrasileirãoBet</b>.
+        </p>       
+        <p>
+            Um site de apostas do Campeonato Brasileiro que está fazendo o maior sucesso!
+        </p>
+        <p>
+            Acesse e confira! <a href="<?php echo Zend_Registry::get('config')->url; ?>"><?php echo Zend_Registry::get('config')->url; ?></a>
+        </p>
+    </div>
+</div>
+<?php echo $this->partial("footer.phtml"); ?>

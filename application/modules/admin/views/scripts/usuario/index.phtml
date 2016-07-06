@@ -1,0 +1,94 @@
+<style>
+    .btn-acoes {
+        margin: 10px 0;
+    }
+</style>
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Usuários</h3><hr />
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"><?php echo $this->usuarios->getTotalItemCount(); ?> usuários cadastrados</div>
+                <div class="panel-body">
+                    <?php if ($this->usuarios->count() > 0) : ?>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th class="text-center">Apostas</th>
+                                    <th class="text-right">Prêmios</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($this->usuarios as $usuario) : ?>
+                                <tr>
+                                    <td><?php echo $usuario->usuario_nome; ?></td>
+                                    <td><?php echo $usuario->usuario_email; ?></td>
+                                    <td class="text-center"><?php echo $usuario->usuario_apostas; ?></td>
+                                    <td class="text-right"><?php echo $this->currency($usuario->usuario_premios); ?></td>
+                                    <td class="text-center">
+                                        <a href="" data-toggle="modal" data-target="#modal-usuario-<?php echo $usuario->usuario_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Ações</a>
+                                    </td>
+                                </tr>
+                                <!-- MODAL DE + ACOES -->
+                                <div class="modal fade" id="modal-usuario-<?php echo $usuario->usuario_id; ?>" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">
+                                                    <i class="fa fa-user"></i> <?php echo $usuario->usuario_nome; ?>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row text-center">
+                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                        <i class="fa fa-envelope"></i> <?php echo $usuario->usuario_email; ?>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                        <i class="fa fa-money"></i> <?php echo $this->currency($usuario->usuario_saldo); ?>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="row btn-acoes">
+                                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                        <a href="<?php echo $this->url(array(
+                                                            'module' => 'admin',
+                                                            'controller' => 'usuario',
+                                                            'action' => 'add-credit',
+                                                            'id' => $usuario->usuario_id
+                                                        ), 'default', true); ?>" class="btn btn-sm btn-success btn-block"><i class="fa fa-plus"></i> Crédito</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row btn-acoes">
+                                                    <div class="col-l2 col-md-12 col-sm-12 col-xs-12">
+                                                        <a href="<?php echo $this->url(array(
+                                                            
+                                                        ), 'default', true); ?>" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> Excluir Usuário</a>
+                                                    </div>
+                                                </div>
+                                            </div>                            
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        
+                        <?php echo $this->paginator; ?>
+                    </div>
+                    <?php else : ?>
+                    <div class="alert alert-warning">Nenhum usuário cadastrado</div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>    
+</section>

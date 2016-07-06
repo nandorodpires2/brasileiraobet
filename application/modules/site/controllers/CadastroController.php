@@ -78,6 +78,11 @@ class Site_CadastroController extends Zend_Controller_Action {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
                     
+                    /**
+                     * Verifica se houve alguma indicacao para o usuario
+                     */
+                    $this->checkIndicacao($usuario);
+                    
                     $this->_helper->flashMessenger->addMessage(array(
                         'success' => 'Cadastro realizado com sucesso'
                     ));
@@ -130,6 +135,73 @@ class Site_CadastroController extends Zend_Controller_Action {
         }
         
         $this->_redirect('/');
+        
+    }
+    
+    protected function checkIndicacao($indicado) {
+        
+        // verifica se tem indicacao
+        $modelIndique = new Model_DbTable_Indique();
+        $indicacao = $modelIndique->hasIndicacao($indicado->usuario_email);
+        
+        if ($indicacao) {
+            
+            // busca os dados do usuario que indicou
+            $modelUsuario = new Model_DbTable_Usuario();
+            $usuario = $modelUsuario->getById($indicacao->usuario_id);
+            
+            /**
+             * Verifica se o usuario ja atingiu o limite de bonus 
+             * O limite de bonus é a soma:
+             * -> bonus de cadastro
+             * -> bonus de indicacao
+             */
+            $modelLancamento = new Model_DbTable_Lancamento();
+            $total_bonus = $modelLancamento->getTotalBonus($usuario->usuario_id);
+            
+            if ($total_bonus >= Zend_Registry::get("config")->bonus->limite) {
+                return;
+            }
+            
+            // setar o bonus pra quem inicou
+            $lancamento = array(
+                'lancamento_valor' => Zend_Registry::get("config")->bonus->indicacao,
+                'lancamento_descricao' => "BÔNUS INDICAÇÃO DE AMIGO ({$indicado->usuario_nome})",
+                'usuario_id' => $usuario->usuario_id
+            );            
+            $modelLancamento->insert($lancamento);
+            
+            // notifica quem indicou
+            $modelNotificacao = new Model_DbTable_Notificacao();
+            $conteudo = " 
+                <p class='text-success'>Parabéns!</p>
+                {$indicado->usuario_nome} aceitou sua indicação.                
+            ";                            
+            $notificacao = array(
+                'usuario_id' => $usuario->usuario_id,
+                'notificacao_conteudo' => $conteudo
+            );
+            $modelNotificacao->insert($notificacao);            
+            
+            // enviar o email para quem indicou
+            $subjet = $usuario->usuario_nome. " aceitou sua indicação";
+            $pluginMail = new Plugin_Mail();
+            $pluginMail->setDataMail('indicado', $indicado);
+            $pluginMail->setDataMail('usuario', $usuario);
+            $pluginMail->send("usuario-indique-aceito.phtml", $subjet, $usuario->usuario_email);
+            
+            // atualiza a tabela de indicacao
+            $update = array(
+                'indique_aceito' => 1,
+                'indique_data_aceito' => date("Y-m-d H:i:s")
+            );
+            $modelIndique->updateById($update, $indicacao->indique_id);
+            
+            return true;
+            
+        }
+        
+        return;
         
     }
     

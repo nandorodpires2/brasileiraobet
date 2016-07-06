@@ -1,0 +1,17 @@
+<?php echo $this->partial("header.phtml"); ?>
+<div style="width: 100%">
+    <div class="col-lg-12">
+        <h3 style="color: #EE1289">Olá <?php echo $this->usuario->usuario_nome; ?>,</h3>
+        <h4 style="color: green">Parabéns!</h4>
+        <p>
+            Sua indicação para <?php echo $this->indicado->usuario_nome; ?> foi aceita.
+        </p>       
+        <p>
+            Seu bônus já foi creditado na sua conta.
+        </p>
+        <p>
+            Agradecemos muito pelo seu apoio.
+        </p>
+    </div>
+</div>
+<?php echo $this->partial("footer.phtml"); ?>

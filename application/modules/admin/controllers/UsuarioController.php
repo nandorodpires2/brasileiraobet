@@ -19,6 +19,24 @@ class Admin_UsuarioController extends Zend_Controller_Action {
     
     public function indexAction() {
         
+        $items = 10;        
+        $page = $this->getRequest()->getParam('page',1);
+        
+        /**
+         * Busca os usuarios
+         */
+        $modelUsuario = new Model_DbTable_Usuario();
+        $usuarios = $modelUsuario->getQuery();        
+        
+        $paginator = Zend_Paginator::factory($usuarios);
+        $paginator->setItemCountPerPage($items);
+        $paginator->setCurrentPageNumber($page);
+        Zend_Paginator::setDefaultScrollingStyle('Sliding');
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('partial/pagination.phtml');
+        
+        $this->view->usuarios = $paginator;
+        $this->view->assign('paginator', $paginator);
+        
     }
 
     public function maquinaAction() {

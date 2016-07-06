@@ -1,0 +1,74 @@
+<?php
+
+    $limite_bonus = $this->currency(Zend_Registry::get("config")->bonus->limite);
+
+?>
+<style>
+    .regras {
+        list-style: circle !important;
+    }
+</style>
+<section class="bg-write"> 
+    <div class="row">
+        <div class="col-md-12 text-center">  
+              <h3>Indique um amigo</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">  
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>
+                        Indique um amigo e ganhe 
+                        <b class="text-success"><?php echo $this->currency(Zend_Registry::get("config")->bonus->indicacao); ?></b>
+                        de BÔNUS
+                    </h4>
+                    <p>Veja como é fácil:</p>
+                    <ul>
+                        <li><i class="fa fa-arrow-right"></i> Informe o nome e email do seu amigo;</li>
+                        <li><i class="fa fa-arrow-right"></i> Ele receberá um email com o convite;</li>
+                        <li><i class="fa fa-arrow-right"></i> Ao se cadastrar você receberá os bônus;</li>                        
+                    </ul>
+                    <p>Simples assim!</p>
+                    <hr />
+                    <p class="text-center small">
+                        <a href="#" data-toggle="modal" data-target="#modal-regras-promocao">Confira as regras gerais desta promoção</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">  
+            <div class="well">
+                <?php echo $this->form; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL DE REGRAS DA PROMOCAO -->
+<div class="modal fade" id="modal-regras-promocao" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Regras Gerais da Promoção</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-right text-muted small">Atualizado em 05/07/2016 17:00h</p>
+                <p>Seguem as regras gerais desta promoção:</p>
+                <ul>
+                    <li class="regras">Não cumulativa com outras promoções;</li>
+                    <li class="regras">O crédito dos bônus depende do cadastro do amigo com o email informado na indicação;</li>
+                    <li class="regras">O crédito depende do limite de bonificação por usuário que hoje é de <b><?php echo $limite_bonus; ?>;</b>*</li>
+                    <!--<li>Quaisquer outras dúvidas <a href="">entre em contato;</a></li>-->
+                </ul>
+                <hr />
+                
+                <p class="small text-muted">
+                    * Entende-se limite de bonificação: bônus de cadastro + soma de bônus por inidicação.
+                </p>
+                
+            </div>                            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

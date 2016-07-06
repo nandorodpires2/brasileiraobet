@@ -20,10 +20,26 @@ h1, h2, h3 {
     
 }
 
+h3 {
+    color: #5bc0de;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 50px;
+    text-decoration: underline;
+    text-transform: uppercase    
+}
+
 /* LIST GROUP */
 .list-group a {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+/* NAVBAR MENU */
+.navbar-default {
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
 }
 
 /* FOOTER */

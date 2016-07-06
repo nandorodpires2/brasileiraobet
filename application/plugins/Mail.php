@@ -13,7 +13,7 @@
  */
 class Plugin_Mail {
     
-    protected $_sendMailOn = false;
+    protected $_sendMailOn;
 
     protected $_zendMail;
     protected $_view;
@@ -22,6 +22,8 @@ class Plugin_Mail {
     protected $_layoutMail;
     
     public function __construct() {
+        
+        $this->_sendMailOn = Zend_Registry::get("config")->mail->sendon;
         
         $this->_zendMail = new Zend_Mail('utf-8');
         $this->_view = new Zend_View();
@@ -73,6 +75,27 @@ class Plugin_Mail {
         
     }
     
+    public function inQueue($layout, $subjet, $data, $recipient) {
+    
+        if (!class_exists("Model_DbTable_Email")) {
+            throw new Exception("Model Email não existe");
+        }
+        
+        try {
+            $modelEmail = new Model_DbTable_Email();
+            $insert = array(
+                'email_layout' => $layout,
+                'email_titulo' => $subjet,
+                'email_destinatario' => $recipient,
+                'email_parametros' => $data
+            );
+            $modelEmail->insert($insert);
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+        
+    }
+
     public function setViewEmailPath($path = null) {
         if ($path) {            
             $this->_viewEmailPath = $path;
