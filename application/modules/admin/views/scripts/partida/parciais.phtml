@@ -7,53 +7,84 @@
     <div class="row">
         <div class="col-md-12">
             <?php if ($this->partidas->count() > 0) : ?>
-            <table class="table">
-                <form method="post">
-                    <tr>
-                        <td colspan="8">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Atualizar</button>
-                        </td>
-                    </tr>                    
-                    <?php foreach ($this->partidas as $partida) : ?> 
-                    <tr>
-                        <td colspan="8" class="small text-muted text-center">
-                            Última atualização: 
-                            <?php echo App_Helper_Date::getDate($partida->parcial_atualizacao, Zend_Date::TIME_MEDIUM); ?>h
-                        </td>
-                    </tr>
-                    <tr class="text-center">
-                        <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?></td>
-                        <td class="col-md-1">
-                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
-                        </td>
-                        <td class="col-md-1">
-                            <input type="text" name="placar_mandante[]" value="<?php echo $partida->parcial_placar_mandante; ?>" class="form-control text-center" /> 
-                        </td>
-                        <td class="col-md-1">X</td>
-                        <td class="col-md-1">
-                            <input type="text" name="placar_visitante[]" value="<?php echo $partida->parcial_placar_visitante; ?>" class="form-control text-center" />
-                        </td>
-                        <td class="col-md-1">
-                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
-                        </td>
-                        <td class="col-md-3">
-                            <?php echo $this->apostas($partida->partida_id); ?> Apostas
-                            (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
-                        </td>
-                        <td class="col-md-2">
-                            <?php echo $partida->parcial_vencedores > 0 ? $partida->parcial_vencedores . ' vencedores' : 'nenhum vencedor'; ?> 
-                            <?php if ($partida->parcial_vencedores > 0) : ?>
-                            <p class="small">
-                                <?php $premio_cada = $this->montante($partida->partida_id) / $partida->parcial_vencedores; ?>
-                                ( <?php echo $this->currency($premio_cada); ?> p/ cada )
-                            </p>
-                            <?php endif; ?>
-                        </td>
-                    </tr>     
-                    <input type="hidden" name="partida_id[]" value="<?php echo $partida->partida_id; ?>"/>
-                    <?php endforeach; ?>           
-                </form>
-            </table>
+            <div class="table-responsive">
+                <table class="table">
+                    <form method="post">
+                        <tr>
+                            <td colspan="10">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-refresh"></i> Atualizar</button>
+                            </td>
+                        </tr>                    
+                        <?php foreach ($this->partidas as $partida) : ?> 
+                        <tr>
+                            <td colspan="8" class="small text-muted text-center">
+                                Última atualização: 
+                                <?php echo App_Helper_Date::getDate($partida->parcial_atualizacao, Zend_Date::TIME_MEDIUM); ?>h
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <td class="col-md-2"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?></td>
+                            <td class="col-md-1">
+                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                            </td>
+                            <td class="col-md-1">
+                                <input type="text" name="placar_mandante[]" value="<?php echo $partida->parcial_placar_mandante; ?>" class="form-control text-center" /> 
+                            </td>
+                            <td class="col-md-1">X</td>
+                            <td class="col-md-1">
+                                <input type="text" name="placar_visitante[]" value="<?php echo $partida->parcial_placar_visitante; ?>" class="form-control text-center" />
+                            </td>
+                            <td class="col-md-1">
+                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                            </td>
+                            <td class="col-md-2">
+                                <?php echo $this->apostas($partida->partida_id); ?> Apostas
+                                (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                            </td>
+                           
+                            <?php $pluginPremio = new Plugin_Premio($partida->partida_id); ?>                                
+                            <td class="col-md-1">
+                                <?php if ($partida->parcial_vencedores_premio1 > 0) : ?>
+                                <p class="small">
+                                    1º Prêmio: <?php echo $this->currency($pluginPremio->getPrimeiroPremio()); ?><br/><br />
+                                    <?php echo $partida->parcial_vencedores_premio1; ?> vencedores <br />
+                                    <?php $premio1 = $pluginPremio->getPrimeiroPremio() / $partida->parcial_vencedores_premio1; ?> 
+                                    <?php echo $this->currency($premio1); ?> 
+                                </p>
+                                <?php else : ?>
+                                <p class="small">Nenhum vencedor 1º Prêmio</p>
+                                <?php endif; ?>
+                            </td>
+                            <td class="col-md-1">                                
+                                <?php if ($partida->parcial_vencedores_premio2 > 0) : ?>
+                                <p class="small">
+                                    2º Prêmio: <?php echo $this->currency($pluginPremio->getSegundoPremio()); ?><br /><br />
+                                    <?php echo $partida->parcial_vencedores_premio2; ?> vencedores <br />
+                                    <?php $premio2 = $pluginPremio->getSegundoPremio() / $partida->parcial_vencedores_premio2; ?> 
+                                    <?php echo $this->currency($premio2); ?> 
+                                </p>
+                                <?php else : ?>
+                                <p class="small">Nenhum vencedor 2º Prêmio</p>                                
+                                <?php endif; ?>
+                            </td>
+                            <td class="col-md-1">                                
+                                <?php if ($partida->parcial_vencedores_premio3 > 0) : ?>
+                                <p class="small">
+                                    3º Prêmio: <?php echo $this->currency($pluginPremio->getTerceiroPremio()); ?><br /><br />
+                                    <?php echo $partida->parcial_vencedores_premio33; ?> vencedores <br />
+                                    <?php $premio3 = $pluginPremio->getTerceiroPremio() / $partida->parcial_vencedores_premio3; ?> 
+                                    <?php echo $this->currency($premio3); ?> 
+                                </p>
+                                <?php else : ?>
+                                <p class="small">Nenhum vencedor 3º Prêmio</p>
+                                <?php endif; ?>
+                            </td>
+                        </tr>     
+                        <input type="hidden" name="partida_id[]" value="<?php echo $partida->partida_id; ?>"/>
+                        <?php endforeach; ?>           
+                    </form>
+                </table>
+            </div>
             <?php endif; ?>
         </div>
     </div>

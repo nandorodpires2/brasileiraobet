@@ -54,7 +54,10 @@ class Site_PagamentoController extends Zend_Controller_Action {
         $deposito = $modelDeposito->getById($deposito_id);
         
         if (!$deposito) {
-            
+            $this->_helper->flashMessenger->addMessage(array(
+                'danger' => 'Falha na requisição!'
+            ));
+            $this->_redirect("/");
         }
         
         $this->view->deposito = $deposito;        
@@ -63,11 +66,23 @@ class Site_PagamentoController extends Zend_Controller_Action {
     
     public function boletoAction() {
         
-        //$this->_redirect("pagamento/conclusao");
+        if (APPLICATION_PATH == 'development') {
+            $this->_redirect("pagamento/conclusao");            
+        }
         
         $this->_helper->viewRenderer->setNoRender();
-     
-        $deposito_id = Zend_Registry::get("session")->deposito_id;
+        
+        $deposito_id = null;
+        if (Zend_Registry::get("session")->deposito_id) {
+            $deposito_id = Zend_Registry::get("session")->deposito_id;
+        } elseif ($this->getRequest()->getParam("id")){
+            $deposito_id = $this->getRequest()->getParam("id");
+        }
+        
+        if (!$deposito_id){
+            
+        }
+        
         
         /**
          * Dados do deposito

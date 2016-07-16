@@ -1,0 +1,26 @@
+<?php echo $this->partial("header.phtml"); ?>
+<div style="width: 100%">
+    <div class="col-lg-12">
+        <h3 style="color: #EE1289">Oi <?php echo $this->usuario['usuario_nome']; ?>,</h3>
+        <p>As seguintes partidas já vão começar!!! Corra e aposte!</p>       
+        
+        <?php foreach ($this->partidas as $partida) : ?>
+            
+        <?php $pluginPremio = new Plugin_Premio($partida['partida_id']); ?>
+            
+        <table style="width: 100%">
+            <tr>
+                <td><?php echo App_Helper_Date::getTime($partida['partida_data']); ?>h</td>                
+                <td><?php echo $partida['time_mandante_nome']; ?></td>
+                <td>X</td>
+                <td><?php echo $partida['time_visitante_nome']; ?></td>                
+                <td>Valor: <?php echo $this->currency($partida['partida_valor']); ?></td>
+                <td>1º Prêmio: <?php echo $this->currency($pluginPremio->getPrimeiroPremio()); ?>*</td>                    
+            </tr>
+        </table>
+        <?php endforeach; ?>
+        <p style="font-size: 10px">* valor calculado até o presente momento</p>
+           
+    </div>
+</div>
+<?php echo $this->partial("footer.phtml"); ?>

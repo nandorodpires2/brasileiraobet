@@ -1,59 +1,135 @@
+<style>
+    h1 {
+        font-size: 60px;
+        color: #122b40;        
+        font-weight: bold;
+    }
+    
+    h2 {
+        font-size: 40px;
+        color: #255625;
+        font-weight: bold;
+    }
+    
+    h4 {
+        font-size: 27px;
+        color: #255625;
+        font-weight: bold;
+    }
+    
+    h5 {
+        font-size: 18px;
+        color: #255625;
+        font-weight: bold;
+    }
+    
+    .panel-body {
+        font-weight: bold;
+    }
+    
+    .total {
+        font-size: 20px;
+        text-align: center;
+    }
+    
+</style>
 <section>
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Apostas X Prêmiações</div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr class="text-success">
-                            <td class="col-md-6">APOSTAS:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->apostas); ?></td>
-                        </tr>
-                         <tr class="text-success">
-                            <td class="col-md-6">INICIAL:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->inicial); ?></td>
-                        </tr>
-                        <tr class="text-success">
-                            <td class="col-md-6">BANCA:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->banca); ?></td>
-                        </tr>
-                        <tr class="text-danger">
-                            <td class="col-md-6">PRÊMIOS:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->premios); ?></td>
-                        </tr>
-                        <tr style="font-size: 18px;" class="<?php echo $this->saldo_apostas_premiacoes > 0 ? 'text-success' : 'text-danger'; ?>">
-                            <td class="col-md-6">
-                                SALDO:
-                                <p class="text-muted" style="font-size: 10px;">
-                                    apostas - premios
-                                </p>
-                            </td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->saldo_apostas_premiacoes); ?></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Depósitos X Resgates</div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tr class="text-success">
-                            <td class="col-md-6">DEPÓSITOS:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->depositos); ?></td>
-                        </tr>
-                        <tr class="text-danger">
-                            <td class="col-md-6">- RESGATES:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->resgates); ?></td>
-                        </tr>
-                        <tr style="font-size: 17px;" class="<?php echo $this->saldo_depositos_resgates > 0 ? 'text-success' : 'text-danger'; ?>">
-                            <td class="col-md-6">= SALDO:</td>
-                            <td class="col-md-6 text-right"><?php echo $this->currency($this->saldo_depositos_resgates); ?></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        <div class="col-md-12">
+            <h3>Dashboard</h3><hr />
         </div>
     </div>    
+    <div class="row">
+        
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        
+            <div class="row">
+                <!-- APOSTAS -->
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Apostas</div>
+                        <div class="panel-body text-center">
+                            <h1><?php echo $this->apostas->count(); ?></h1>
+                            <h4><?php echo $this->currency($this->montante_apostas); ?></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- FINANCEIRO -->
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Financeiro</div>
+                        <div class="panel-body text-center">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <p>Depóstios</p>
+                                    <h4><?php echo $this->currency($this->depositos); ?></h4>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p>Resgates</p>
+                                    <h4 class="text-danger"><?php echo $this->currency($this->resgates); ?></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 <?php echo $this->saldo_financeiro < 0 ? 'text-danger' : ''; ?>">
+                                    <h2 class="<?php echo $this->saldo_financeiro < 0 ? 'text-danger' : ''; ?>">
+                                        <?php echo $this->currency($this->saldo_financeiro); ?>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PREMIACOES -->
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Premiações</div>
+                <div class="panel-body text-center">
+                    <p>1ºPrêmio</p>
+                    <h4><?php echo $this->currency($this->premio1); ?></h4>
+                    <hr />
+                    <p>1ºPrêmio</p>
+                    <h4><?php echo $this->currency($this->premio2); ?></h4>
+                    <hr />
+                    <p>1ºPrêmio</p>
+                    <h4><?php echo $this->currency($this->premio3); ?></h4>
+                    <hr />
+                    <h2><?php echo $this->currency($this->premio_total); ?></h2>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MAIORES VENCEDORES -->
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Maiores Vencedores</div>
+                <div class="panel-body">
+                    <?php if ($this->apostasVencedoras->count() > 0) : ?>
+                        <?php foreach($this->apostasVencedoras as $key => $apostaVencedora) : ?>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+                                <label>
+                                    <span><?php echo ++$key; ?>º - </span>
+                                    <?php echo $apostaVencedora->usuario_nome; ?>
+                                </label>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+                                <h5><?php echo $this->currency($apostaVencedora->aposta_total_premio); ?></h5>
+                            </div>
+                            <div class="col-lg-12"><hr /></div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                    <div class="alert alert-warning">Nenhum vencedor</div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </section>

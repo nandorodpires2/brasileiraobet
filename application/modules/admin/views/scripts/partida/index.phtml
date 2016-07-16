@@ -1,75 +1,177 @@
+<style>
+    .btn {
+        margin: 5px 0;
+    }
+</style>
 <section>
     <div class="row">
         <div class="col-md-12">
             <h3>Partidas</h3><hr />
         </div>
     </div>    
-    <div class="row">
-        <div class="col-md-12 text-right">
+    
+    <?php if ($this->rodadas->count() > 0) : ?>
+    <div class="row">        
+        <div class="col-lg-12">
+            <div class="alert alert-warning">
+                <p>Enviar mensagem para os usuários das partidas abertas</p>
+                <?php foreach ($this->rodadas as $rodada) : ?>                
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'partida',
+                    'action' => 'aberta',
+                    'rodada' => $rodada->partida_rodada
+                ), 'default', true); ?>" class="btn btn-success btn-block">Rodada #<?php echo $rodada->partida_rodada; ?></a>                
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+        
+    <div class="row">        
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
             <a href="<?php echo $this->url(array(
                 'module' => 'admin',
                 'controller' => 'partida',
                 'action' => 'add'
-            ), null, true); ?>" class="btn btn-primary">Nova Partida</a>
+            ), null, true); ?>" class="btn btn-primary btn-block">Nova Partida</a>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
             <a href="<?php echo $this->url(array(
                 'module' => 'admin',
                 'controller' => 'partida',
                 'action' => 'proccess'
-            ), null, true); ?>" class="btn btn-warning">Partidas Processadas</a>
+            ), null, true); ?>" class="btn btn-warning btn-block">Partidas Processadas</a>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
             <a href="<?php echo $this->url(array(
                 'module' => 'admin',
                 'controller' => 'partida',
                 'action' => 'parciais'
-            ), null, true); ?>" class="btn btn-default">Parciais</a><hr />
-        </div>
+            ), null, true); ?>" class="btn btn-default btn-block">Parciais</a><hr />
+        </div>        
     </div>    
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12">            
             <?php if ($this->partidas->count() > 0) : ?>
             <h4><?php echo $this->partidas->count(); ?> partidas</h4>
-            <table class="table">
-                <?php $total = 0; ?>
-                <?php $apostas = 0; ?>
-                <?php foreach ($this->partidas as $partida) : ?>                
-                <?php 
-                    $total += $this->montante($partida->partida_id); 
-                    $apostas += $this->apostas($partida->partida_id);
-                ?>
-                <tr class="text-center">
-                    <td class="col-md-1">Série <?php echo $partida->partida_serie == 1 ? 'A' : 'B'; ?></td>
-                    <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
-                    <td class="col-md-1"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h</td>
-                    <td class="col-md-2">
-                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
-                    </td>
-                    <td class="col-md-1">X</td>
-                    <td class="col-md-2">
-                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
-                    </td>
-                    <td class="col-md-2">
-                        <?php echo $this->apostas($partida->partida_id); ?> Apostas
-                        (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
-                    </td>
-                    <td class="col-md-2">
-                        <a href="" class="btn btn-sm btn-info">Alterar</a>
-                        <a href="<?php echo $this->url(array(
-                            'module' => 'admin',
-                            'controller' => 'partida',
-                            'action' => 'result',
-                            'id' => $partida->partida_id
-                        ), null, true); ?>" class="btn btn-sm btn-success">Resultado</a>                      
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-                <tr class="text-center">
-                    <td colspan="6">TOTAL</td>
-                    <td>
-                        <?php echo $apostas; ?> apostas
-                        (<?php echo $this->currency($total); ?>)
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
+            <div class="table-responsive">
+                <table class="table">
+                    <?php $total = 0; ?>
+                    <?php $apostas = 0; ?>
+                    <?php foreach ($this->partidas as $partida) : ?>                
+                    <?php 
+                        $total += $this->montante($partida->partida_id); 
+                        $apostas += $this->apostas($partida->partida_id);
+                    ?>
+                    <tr class="text-center">
+                        <td class="col-md-1">Série <?php echo $partida->partida_serie == 1 ? 'A' : 'B'; ?></td>
+                        <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
+                        <td class="col-md-1"><?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h</td>
+                        <td class="col-md-2">
+                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                        </td>
+                        <td class="col-md-1">X</td>
+                        <td class="col-md-2">
+                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                        </td>
+                        <td class="col-md-2">
+                            <?php echo $this->apostas($partida->partida_id); ?> Apostas
+                            (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                        </td>
+                        <td class="col-md-2">                            
+                            <a href="#" data-toggle="modal" data-target="#modal-resultado-<?php echo $partida->partida_id; ?>" class="btn btn-sm btn-success">Resultado</a>                      
+                            <a href="#" data-toggle="modal" data-target="#modal-acoes-<?php echo $partida->partida_id; ?>" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> Ações</a>
+                        </td>
+                    </tr>
+                    <!-- MODAL DE + ACOES -->
+                    <div class="modal fade" id="modal-acoes-<?php echo $partida->partida_id; ?>" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">
+                                        <i class="fa fa-plus"></i> 
+                                        Ações (<?php echo $partida->time_mandante_nome . ' X ' . $partida->time_visitante_nome; ?>)
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row btn-acoes">
+                                        <?php if (Zend_Registry::get("config")->aposta->populate) : ?>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <a href="<?php echo $this->url(array(
+                                                'module' => 'admin',
+                                                'controller' => 'partida',
+                                                'action' => 'gera-aposta',
+                                                'id' => $partida->partida_id
+                                            ), 'default', true); ?>" class="btn btn-sm btn-warning btn-block">Gerar Apostas Aleatórias</a>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>                                    
+                                </div>                            
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    
+                    <!-- MODAL DE RESULTADOS -->
+                    <div class="modal fade" id="modal-resultado-<?php echo $partida->partida_id; ?>" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">
+                                        Resultado Partida
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <?php $url = $this->url(array(
+                                        'module' => 'admin',
+                                        'controller' => 'partida',
+                                        'action' => 'result'
+                                    ), 'default', true); ?>
+                                    <form method="post" action="<?php echo $url; ?>">
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-2 text-center">
+                                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                                            </div>
+                                            <div class="col-lg-2 text-center">
+                                                <input type="text" class="form-control text-center bolder" name="partida_placar_mandante" />
+                                            </div>
+                                            <div class="col-lg-2 text-center bolder">X</div>
+                                            <div class="col-lg-2 text-center">
+                                                <input type="text" class="form-control text-center bolder" name="partida_placar_visitante" />
+                                            </div>
+                                            <div class="col-lg-2 text-center">
+                                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                                            </div>
+                                            <div class="col-lg-1"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <hr />
+                                                <input type="submit" name="submit" class="btn btn-success btn-block" value="Cadastrar Resultado" />
+                                                <input type="hidden" name="partida_id" value="<?php echo $partida->partida_id; ?>" />
+                                            </div>                                            
+                                        </div>
+                                    </form>
+                                    
+                                </div>                            
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    
+                    <?php endforeach; ?>
+                    <tr class="text-center">
+                        <td colspan="6">TOTAL</td>
+                        <td>
+                            <?php echo $apostas; ?> apostas
+                            (<?php echo $this->currency($total); ?>)
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
             <?php else : ?>
             <div class="alert alert-warning">Nenhuma partida</div>
             <?php endif; ?>

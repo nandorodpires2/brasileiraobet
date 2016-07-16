@@ -1,0 +1,35 @@
+<section class="bg-write"> 
+    <div class="row">
+        <div class="col-md-12 text-center">  
+              <h3>Empréstimo</h3>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 text-center">  
+            <h4>
+                Quer apostar nas partidas e não tem saldo? Solicite um empréstimo 
+                pagando uma pequena taxa de <?php echo Zend_Registry::get('config')->emprestimo->taxa; ?>%
+                do valor solicitado.                
+            </h4>
+            <hr />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">  
+            <div class="well bolder">
+                <p>LIMITE: <?php echo $this->currency(Zend_Registry::get('config')->emprestimo->limite); ?></p>
+                <p>DISPONÍVEL: <?php echo $this->currency($this->disponivel); ?></p>
+            </div>
+        </div>
+        <div class="col-md-6">  
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <?php echo $this->form; ?>
+                </div>
+            </div>            
+        </div>
+    </div>
+    
+</section>

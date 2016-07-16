@@ -41,6 +41,15 @@ class Site_ApostaController extends Zend_Controller_Action {
                 
                 $data = $formApostar->getValues();
                 
+                // grava o resultado para verificacao posteriormente dos vencedores
+                if ($data['aposta_placar_mandante'] == $data['aposta_placar_visitante']) {
+                    $data['aposta_resultado'] = "E";
+                } elseif ($data['aposta_placar_mandante'] > $data['aposta_placar_visitante']) {
+                    $data['aposta_resultado'] = "VM";
+                } else {
+                    $data['aposta_resultado'] = "VV";
+                }
+                
                 try {
                 
                     // verifica se pode apostar

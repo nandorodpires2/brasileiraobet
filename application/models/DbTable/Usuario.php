@@ -28,10 +28,10 @@ class Model_DbTable_Usuario extends App_Db_Table_Abstract {
             ")
         ));
         
-        // total premio
+        // total 1 premio
         $select->columns(array(
             'usuario_premios' => new Zend_Db_Expr("(
-                select  ifnull(sum(partida.partida_montante / partida.partida_vencedores), 0)
+                select  ifnull(sum(partida.partida_valor_premio1 / partida.partida_vencedores_premio1), 0)
                 from    aposta
                         inner join partida on aposta.partida_id = partida.partida_id
                 where   usuario.usuario_id = aposta.usuario_id
@@ -42,7 +42,7 @@ class Model_DbTable_Usuario extends App_Db_Table_Abstract {
         // saldo atual
         $select->columns(array(
             'usuario_saldo' => new Zend_Db_Expr(" 
-                (select  sum(lancamento_valor)
+                (select  ifnull(sum(lancamento_valor), 0)
                 from    lancamento
                 where   usuario.usuario_id = lancamento.usuario_id)
             ")

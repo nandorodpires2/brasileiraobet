@@ -10,4 +10,3 @@ where		u.usuario_nome like '%VIRTUAL%'
 group by u.usuario_id
 having 	sum(l.lancamento_valor) >= 3
 order by sum(l.lancamento_valor) desc
->>>>>>> 40ef115b182208522d95214e568438129b201e69

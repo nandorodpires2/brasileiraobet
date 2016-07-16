@@ -1,0 +1,153 @@
+[13/07/2016 19:10:28] Tarefa iniciada; 
+[13/07/2016 19:10:29] email 41 - nandorodpires@gmail.com enviado; 
+[13/07/2016 19:10:29] Tarefa finalizada. 
+[13/07/2016 19:15:24] Tarefa iniciada; 
+[13/07/2016 19:15:25] email 22 - nandorodpires@gmail.com enviado; 
+[13/07/2016 19:15:25] Tarefa finalizada. 
+[13/07/2016 19:16:02] Tarefa iniciada; 
+[13/07/2016 19:16:02] Nenhum email a enviar. 
+[13/07/2016 19:16:02] Tarefa finalizada. 
+[13/07/2016 19:18:02] Tarefa iniciada; 
+[13/07/2016 19:18:02] Nenhum email a enviar. 
+[13/07/2016 19:18:02] Tarefa finalizada. 
+[13/07/2016 19:19:01] Tarefa iniciada; 
+[13/07/2016 19:19:02] email 22 - nandorodpires@gmail.com enviado; 
+[13/07/2016 19:19:02] Tarefa finalizada. 
+[13/07/2016 20:10:01] Tarefa iniciada; 
+[13/07/2016 20:10:01] email 32 - nandorodpires@gmail.com enviado; 
+[13/07/2016 20:10:01] Tarefa finalizada. 
+[13/07/2016 21:10:02] Tarefa iniciada; 
+[13/07/2016 21:10:02] Nenhum email a enviar. 
+[13/07/2016 21:10:02] Tarefa finalizada. 
+[13/07/2016 22:10:01] Tarefa iniciada; 
+[13/07/2016 22:10:01] Nenhum email a enviar. 
+[13/07/2016 22:10:01] Tarefa finalizada. 
+[13/07/2016 23:10:02] Tarefa iniciada; 
+[13/07/2016 23:10:02] Nenhum email a enviar. 
+[13/07/2016 23:10:02] Tarefa finalizada. 
+[14/07/2016 00:10:01] Tarefa iniciada; 
+[14/07/2016 00:10:01] Nenhum email a enviar. 
+[14/07/2016 00:10:01] Tarefa finalizada. 
+[14/07/2016 03:10:03] Tarefa iniciada; 
+[14/07/2016 03:10:03] Nenhum email a enviar. 
+[14/07/2016 03:10:03] Tarefa finalizada. 
+[14/07/2016 04:10:02] Tarefa iniciada; 
+[14/07/2016 04:10:02] Nenhum email a enviar. 
+[14/07/2016 04:10:02] Tarefa finalizada. 
+[14/07/2016 05:10:01] Tarefa iniciada; 
+[14/07/2016 05:10:01] Nenhum email a enviar. 
+[14/07/2016 05:10:01] Tarefa finalizada. 
+[14/07/2016 06:10:01] Tarefa iniciada; 
+[14/07/2016 06:10:01] Nenhum email a enviar. 
+[14/07/2016 06:10:01] Tarefa finalizada. 
+[14/07/2016 07:10:01] Tarefa iniciada; 
+[14/07/2016 07:10:01] Nenhum email a enviar. 
+[14/07/2016 07:10:01] Tarefa finalizada. 
+[14/07/2016 08:10:02] Tarefa iniciada; 
+[14/07/2016 08:10:02] Nenhum email a enviar. 
+[14/07/2016 08:10:02] Tarefa finalizada. 
+[14/07/2016 09:10:01] Tarefa iniciada; 
+[14/07/2016 09:10:01] Nenhum email a enviar. 
+[14/07/2016 09:10:01] Tarefa finalizada. 
+[14/07/2016 10:10:01] Tarefa iniciada; 
+[14/07/2016 10:10:01] Nenhum email a enviar. 
+[14/07/2016 10:10:01] Tarefa finalizada. 
+[14/07/2016 11:10:03] Tarefa iniciada; 
+[14/07/2016 11:10:03] Nenhum email a enviar. 
+[14/07/2016 11:10:03] Tarefa finalizada. 
+[14/07/2016 12:10:02] Tarefa iniciada; 
+[14/07/2016 12:10:02] Nenhum email a enviar. 
+[14/07/2016 12:10:02] Tarefa finalizada. 
+[14/07/2016 13:10:02] Tarefa iniciada; 
+[14/07/2016 13:10:02] Nenhum email a enviar. 
+[14/07/2016 13:10:02] Tarefa finalizada. 
+[14/07/2016 14:10:03] Tarefa iniciada; 
+[14/07/2016 14:10:03] Nenhum email a enviar. 
+[14/07/2016 14:10:03] Tarefa finalizada. 
+[14/07/2016 15:10:01] Tarefa iniciada; 
+[14/07/2016 15:10:01] Nenhum email a enviar. 
+[14/07/2016 15:10:01] Tarefa finalizada. 
+[14/07/2016 16:10:02] Tarefa iniciada; 
+[14/07/2016 16:10:02] Nenhum email a enviar. 
+[14/07/2016 16:10:02] Tarefa finalizada. 
+[14/07/2016 17:10:01] Tarefa iniciada; 
+[14/07/2016 17:10:01] Nenhum email a enviar. 
+[14/07/2016 17:10:01] Tarefa finalizada. 
+[14/07/2016 18:10:03] Tarefa iniciada; 
+[14/07/2016 18:10:03] Nenhum email a enviar. 
+[14/07/2016 18:10:03] Tarefa finalizada. 
+[14/07/2016 19:10:02] Tarefa iniciada; 
+[14/07/2016 19:10:02] Nenhum email a enviar. 
+[14/07/2016 19:10:02] Tarefa finalizada. 
+[14/07/2016 20:10:01] Tarefa iniciada; 
+[14/07/2016 20:10:02] Nenhum email a enviar. 
+[14/07/2016 20:10:02] Tarefa finalizada. 
+[14/07/2016 21:10:01] Tarefa iniciada; 
+[14/07/2016 21:10:01] Nenhum email a enviar. 
+[14/07/2016 21:10:01] Tarefa finalizada. 
+[14/07/2016 22:10:01] Tarefa iniciada; 
+[14/07/2016 22:10:01] Nenhum email a enviar. 
+[14/07/2016 22:10:01] Tarefa finalizada. 
+[14/07/2016 23:10:02] Tarefa iniciada; 
+[14/07/2016 23:10:02] Nenhum email a enviar. 
+[14/07/2016 23:10:02] Tarefa finalizada. 
+[15/07/2016 00:10:02] Tarefa iniciada; 
+[15/07/2016 00:10:02] Nenhum email a enviar. 
+[15/07/2016 00:10:02] Tarefa finalizada. 
+[15/07/2016 01:10:01] Tarefa iniciada; 
+[15/07/2016 01:10:01] Nenhum email a enviar. 
+[15/07/2016 01:10:01] Tarefa finalizada. 
+[15/07/2016 02:10:01] Tarefa iniciada; 
+[15/07/2016 02:10:01] Nenhum email a enviar. 
+[15/07/2016 02:10:01] Tarefa finalizada. 
+[15/07/2016 03:10:02] Tarefa iniciada; 
+[15/07/2016 03:10:02] Nenhum email a enviar. 
+[15/07/2016 03:10:02] Tarefa finalizada. 
+[15/07/2016 04:10:02] Tarefa iniciada; 
+[15/07/2016 04:10:02] Nenhum email a enviar. 
+[15/07/2016 04:10:02] Tarefa finalizada. 
+[15/07/2016 05:10:01] Tarefa iniciada; 
+[15/07/2016 05:10:01] Nenhum email a enviar. 
+[15/07/2016 05:10:01] Tarefa finalizada. 
+[15/07/2016 06:10:01] Tarefa iniciada; 
+[15/07/2016 06:10:01] Nenhum email a enviar. 
+[15/07/2016 06:10:01] Tarefa finalizada. 
+[15/07/2016 07:10:02] Tarefa iniciada; 
+[15/07/2016 07:10:02] Nenhum email a enviar. 
+[15/07/2016 07:10:02] Tarefa finalizada. 
+[15/07/2016 08:10:01] Tarefa iniciada; 
+[15/07/2016 08:10:01] Nenhum email a enviar. 
+[15/07/2016 08:10:01] Tarefa finalizada. 
+[15/07/2016 09:10:01] Tarefa iniciada; 
+[15/07/2016 09:10:01] Nenhum email a enviar. 
+[15/07/2016 09:10:01] Tarefa finalizada. 
+[15/07/2016 10:10:02] Tarefa iniciada; 
+[15/07/2016 10:10:02] Nenhum email a enviar. 
+[15/07/2016 10:10:02] Tarefa finalizada. 
+[15/07/2016 11:10:01] Tarefa iniciada; 
+[15/07/2016 11:10:01] Nenhum email a enviar. 
+[15/07/2016 11:10:01] Tarefa finalizada. 
+[15/07/2016 12:10:01] Tarefa iniciada; 
+[15/07/2016 12:10:01] Nenhum email a enviar. 
+[15/07/2016 12:10:01] Tarefa finalizada. 
+[15/07/2016 13:10:02] Tarefa iniciada; 
+[15/07/2016 13:10:02] email 45 - fernando@olyva.com.br enviado; 
+[15/07/2016 13:10:02] Tarefa finalizada. 
+[15/07/2016 14:10:02] Tarefa iniciada; 
+[15/07/2016 14:10:02] Nenhum email a enviar. 
+[15/07/2016 14:10:02] Tarefa finalizada. 
+[15/07/2016 15:10:02] Tarefa iniciada; 
+[15/07/2016 15:10:02] Nenhum email a enviar. 
+[15/07/2016 15:10:02] Tarefa finalizada. 
+[15/07/2016 16:10:02] Tarefa iniciada; 
+[15/07/2016 16:10:02] Nenhum email a enviar. 
+[15/07/2016 16:10:02] Tarefa finalizada. 
+[15/07/2016 17:10:02] Tarefa iniciada; 
+[15/07/2016 17:10:02] Nenhum email a enviar. 
+[15/07/2016 17:10:02] Tarefa finalizada. 
+[15/07/2016 18:10:02] Tarefa iniciada; 
+[15/07/2016 18:10:02] Nenhum email a enviar. 
+[15/07/2016 18:10:02] Tarefa finalizada. 
+[15/07/2016 19:00:02] Tarefa iniciada; 
+[15/07/2016 19:00:02] Nenhum email a enviar. 
+[15/07/2016 19:00:02] Tarefa finalizada. 

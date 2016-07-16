@@ -38,11 +38,12 @@ class Admin_AuthController extends Zend_Controller_Action {
                 $db = Zend_Registry::get('db');               
                 $authAdapter = new Zend_Auth_Adapter_DbTable($db);
                 
+                $pluginPassword = new Plugin_Password($senha);
                 $authAdapter->setTableName('admin')
                         ->setIdentityColumn('admin_email')
                         ->setCredentialColumn('admin_senha')
                         ->setIdentity($email)
-                        ->setCredential(md5($senha));
+                        ->setCredential($pluginPassword->encrypt());
                 //$authAdapter->getDbSelect()->where("autenticacao_ativo = ?", 1);
 
                 $auth = Zend_Auth::getInstance();                

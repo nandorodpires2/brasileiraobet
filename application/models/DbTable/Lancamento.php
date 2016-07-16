@@ -24,7 +24,7 @@ class Model_DbTable_Lancamento extends App_Db_Table_Abstract {
     public function getSaldoUsuario($usuario_id, $bonus = null) {
         $select = $this->select()
                 ->from($this->_name, array(
-                    'saldo' => new Zend_Db_Expr("sum(lancamento_valor)")
+                    'saldo' => new Zend_Db_Expr("ifnull(sum(lancamento_valor), 0)")
                 ))
                 ->where("usuario_id = ?", $usuario_id);
         

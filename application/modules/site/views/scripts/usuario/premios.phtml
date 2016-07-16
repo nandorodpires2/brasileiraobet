@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-8">
             <div class="well text-success bolder text-center">
-                Total Prêmios: <?php echo $this->currency($this->total_premios); ?>
+                Total Prêmios: <?php echo $this->currency($this->total_premiacao); ?>
             </div>
             <?php if ($this->apostas->count() > 0) : ?>
             <div class="table-responsive">
@@ -18,9 +18,8 @@
                     <thead>
                         <tr>
                             <th>Data Aposta</th>                            
-                            <th>Partida</th>                            
-                            <th>Vencedores</th>
-                            <th>Prêmio (cada)</th>
+                            <th>Partida</th>
+                            <th>Prêmio</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,8 +33,10 @@
                                 <?php echo $aposta->aposta_placar_visitante; ?>
                                 <img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_visitante); ?>" class="img" width="30" />
                             </td>
-                            <td><?php echo $aposta->partida_vencedores; ?></td>
-                            <td class="text-success"><?php echo $this->currency($aposta->partida_montante / $aposta->partida_vencedores); ?></td>
+                            <td>
+                                <?php echo $this->currency($aposta->aposta_premio); ?>
+                                ( <?php echo $aposta->aposta_vencedora_premio ? $aposta->aposta_vencedora_premio : 1; ?>º )                                                                
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

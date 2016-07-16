@@ -19,6 +19,7 @@
                             <th class="col-md-3">Valor</th>
                             <th class="col-md-3">Vencimento</th>
                             <th class="col-md-3">Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,6 +29,21 @@
                             <td><?php echo $this->currency($deposito->deposito_valor); ?></td>
                             <td><?php echo App_Helper_Date::getDate($deposito->deposito_vencimento); ?></td>
                             <td><?php echo $deposito->deposito_status; ?></td>
+                            <td>
+                                
+                                <?php if ($deposito->deposito_status === 'Aguardando Pagamento') : ?>
+                                <a href="<?php echo $deposito->deposito_url; ?>" target="_blank" class="btn btn-sm btn-primary">2º via boleto</a>
+                                <?php endif; ?>
+                                
+                                <?php if ($deposito->deposito_status === 'Gerar Boleto') : ?>
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'pagamento',
+                                    'action' => 'boleto',
+                                    'id' => $deposito->deposito_id
+                                ), 'default', true); ?>" class="btn btn-sm btn-success">Gerar Boleto</a>
+                                <?php endif; ?>
+                                
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

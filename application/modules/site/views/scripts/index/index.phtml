@@ -91,16 +91,34 @@
                     <p class="small text-center">
                         <a href="" data-toggle="modal" data-target="#modal-extrato">Ver Extrato</a>
                     </p>
+                    
+                    <!-- EMPRESTIMO -->
+                    <?php if ($this->saldo <= Zend_Registry::get('config')->emprestimo->saldo->minimo) : ?>
+                    <a href="<?php echo $this->url(array(
+                        'controller' => 'emprestimo',
+                        'action' => 'index'
+                    ), null, true); ?>" class="btn btn-warning btn-block"><i class="fa fa-money"></i> EMPRÉSTIMO
+                        <label class="label label-success small">Novo</label>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <!-- DEPOSITO -->
                     <a href="<?php echo $this->url(array(
                         'controller' => 'deposito',
                         'action' => 'index'
                     ), null, true); ?>" class="btn btn-primary btn-block"><i class="fa fa-money"></i> DEPOSITAR</a>
+                    
+                    <!-- RESGATE -->                    
                     <?php if ($this->saldo_resgate >= Zend_Registry::get("config")->resgate->minimo) : ?>
                     <a href="<?php echo $this->url(array(
                         'controller' => 'resgate',
                         'action' => 'index'
                     ), null, true); ?>" class="btn btn-info btn-block"><i class="fa fa-money"></i> RESGATAR</a>
+                    <?php else : ?>
+                    <a href="#" disabled class="btn btn-danger btn-block"><i class="fa fa-money"></i> RESGATAR*</a>
+                    <p class="small text-muted">* Saldo mínimo: <?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?> em premiação</p>
                     <?php endif; ?>
+                    
                     <!-- MODAL DE APOSTA -->
                     <div class="modal fade" id="modal-extrato" tabindex="-1" role="dialog">
                         <div class="modal-dialog">
@@ -282,8 +300,9 @@
                         <div class="row">
                             <div class="col-lg-4 text-center">                                
                                 <div class="thumbnail" style="padding: 15px;">
-                                    <h4 class="text-success text-center bolder" style="font-size: 25px;">
-                                        Prêmio: <?php echo $this->currency($this->montante($partida->partida_id)); ?>
+                                    <h4 class="text-center">
+                                        1º prêmio: 
+                                        <span class="text-success bolder" style="font-size: 25px;"><?php echo $this->currency($this->montante($partida->partida_id)); ?></span>
                                     </h4>
                                     <span class="text-center small">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></span>
                                 </div>

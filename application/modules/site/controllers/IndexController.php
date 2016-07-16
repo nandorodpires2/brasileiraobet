@@ -3,17 +3,21 @@
 class Site_IndexController extends Zend_Controller_Action {
 
     public function init() {
-                
+        
     }
 
     public function indexAction() {
-        
         
         /**
          * Partidas (nao realizadas)
          */
         $modelPartida = new Model_DbTable_Partida();
-        $partidas = $modelPartida->getPartidas(0);
+        $where = array(
+            'vencida' => 0,
+            'realizada' => 0,
+            'processada' => 0
+        );
+        $partidas = $modelPartida->getPartidas($where);
         $this->view->partidas = $partidas;
         
         /**

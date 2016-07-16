@@ -32,23 +32,41 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
     }
 
     /**
+     * Busca os registros das partidas
      * 
-     * @param type $realizada
-     * @return type
+     * @param array $where Índices válidos (vencida, realizada, processada e custom) - custom deve ser uma string personalizada
+     * @param type $order ordenar os registros
+     * @param type $limit limite de registros
+     * @return Zend_Db_Table_Rowset
      */
-    public function getPartidas($realizada = null, $vencida = false, $order = null, $limit = null) {
+    public function getPartidas(array $where = null, $order = null, $limit = null) {
+        
         $select = $this->getQueryAll();        
         
-        if (null !== $realizada) {
-            $select->where("partida_realizada = ?", $realizada);
+        if ($where && is_array($where)) {
+            
+            // vencidas
+            if (isset ($where['vencida'])) {
+                $select->where("partida_data >= now()");
+            }
+            
+            // realizadas
+            if (isset($where['realizada']) && null !== $where['realizada']) {
+                $select->where("partida_realizada = ?", $where['realizada']);
+            }
+            
+            // processadas
+            if (isset($where['processada']) && null !== $where['processada']) {
+                $select->where("partida_processada = ?", $where['processada']);
+            }
+            
+            // string (texto personalizado para where)
+            if (isset($where['custom']) && null !== $where['custom']) {
+                $select->where($where['custom']);
+            }
+            
         }
         
-        if (!$vencida) {
-            $select->where("partida_data >= now()");
-        }
-        
-        //$select->order("partida_serie asc");
-        //$select->order("partida_rodada asc");                
         if ($order) {
             $select->order($order);
         } else {
@@ -59,7 +77,6 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
             $select->limit($limit);
         }
         
-        //echo $select->__toString();
         return $this->fetchAll($select);               
     }
     
@@ -72,7 +89,9 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
             'parcial_id',
             'parcial_placar_mandante',
             'parcial_placar_visitante',
-            'parcial_vencedores',
+            'parcial_vencedores_premio1',
+            'parcial_vencedores_premio2',
+            'parcial_vencedores_premio3',
             'parcial_atualizacao'
         ));
         $select->where("partida_realizada = ?", 0);
@@ -89,7 +108,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
         $select = $this->select()
                 ->from($this->_name, array(
-                    'montante' => new Zend_Db_Expr("sum(partida_montante)")
+                    'montante' => new Zend_Db_Expr("sum(partida_valor_premio1)")
                 ))
                 ->where("partida_vencedores > ?", 0)
                 ->where("partida_realizada = ?", 1);
@@ -100,19 +119,16 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
     }
     
-    /**
-     * 
-     */
-    public function getTotalPremioInicial() {
+    public function getPartidasRodadas() {
         
         $select = $this->select()
-                ->from($this->_name, array(
-                    'montante' => new Zend_Db_Expr("sum(partida_valor * partida_fator_inicial)")
-                ));
+                ->from($this->_name)
+                ->columns('partida_rodada')
+                ->where('partida_realizada = ?', 0)
+                ->group('partida_rodada')
+                ->having("count(*) = ?", 10);
         
-        $query = $this->fetchRow($select);
-        
-        return $query->montante ? $query->montante : 0;
+        return $this->fetchAll($select);
         
     }
     

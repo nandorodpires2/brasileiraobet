@@ -18,19 +18,14 @@ class Form_Site_Deposito extends App_Forms_Form {
         /**
          * deposito_valor
          */
+        $modelDepositoValor = new Model_DbTable_DepositoValor();
         $deposito_valor = new Zend_Form_Element_Select("deposito_valor");
         $deposito_valor->setLabel("Selecione o valor desejado:");
         $deposito_valor->setRequired();
         $deposito_valor->setAttribs(array(
             'class' => 'form-control'
         ));
-        $deposito_valor->setMultiOptions(array(
-            30 => 'R$30,00',
-            50 => 'R$50,00',
-            100 => 'R$100,00',
-            250 => 'R$250,00',
-            500 => 'R$500,00',
-        ));
+        $deposito_valor->setMultiOptions($modelDepositoValor->fetchPairs());
         $this->addElement($deposito_valor);
         
         /**

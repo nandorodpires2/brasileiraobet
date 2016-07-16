@@ -123,13 +123,15 @@ class Admin_UsuarioController extends Zend_Controller_Action {
         
         Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
         
+        $pluginPassword = new Plugin_Password('123456');
         for ($i = 0; $i < $qtde_usuarios; $i++) {
             
             $uniqid = uniqid();
             $data = array(
                 'usuario_nome' => 'USUÁRIO VIRTUAL ' . $uniqid,
                 'usuario_email' => "usuario{$uniqid}@virtual.com",
-                'usuario_maquina' => 1
+                'usuario_maquina' => 1,
+                'usuario_senha' => $pluginPassword->encrypt()
             );
             $modelUsuario = new Model_DbTable_Usuario();
             

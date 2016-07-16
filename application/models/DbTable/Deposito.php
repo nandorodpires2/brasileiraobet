@@ -23,6 +23,8 @@ class Model_DbTable_Deposito extends App_Db_Table_Abstract {
                 "case deposito_status
                     when 'PAYMENT_CREATED' then 'Aguardando Pagamento'
                     when 'PAYMENT_RECEIVED' then 'Pago'
+                    when 'PAYMENT_OVERDUE' then 'Vencido'
+                    else 'Gerar Boleto'
                 end"
             )
         ));
