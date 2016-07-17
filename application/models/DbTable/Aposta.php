@@ -127,7 +127,7 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-    public function getApostasVencedorasParcial($partida_id, $premio = 1) {
+    public function getApostasVencedorasParcial($partida_id, $premio = 1, $usuario_id = null) {
         $select = $this->getQueryAll()
                 ->joinLeft("parcial", "partida.partida_id = parcial.partida_id", array(
                     'parcial_id',
@@ -152,6 +152,10 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
                 break;
             default:
                 break;
+        }
+        
+        if ($usuario_id) {
+            $select->where("aposta.usuario_id = ?", $usuario_id);
         }
                 
         return $this->fetchAll($select);

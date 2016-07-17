@@ -29,7 +29,7 @@ class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
             if ($apostas->count() > 0) {
                 $text = "Você fez {$apostas->count()} apostas nesta partida";
             } else {
-                $text = "Você ainda não apostou nesta partida";
+                $text = "Você não apostou nesta partida";
             }
         } 
         

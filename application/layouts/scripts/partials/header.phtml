@@ -24,10 +24,17 @@
                         'controller' => 'index',
                         'action' => 'index'
                     ), null, true); ?>">Partidas</a>
-                </li>                            
+                </li>                
             </ul>   
             <?php if (Plugin_Auth::check()) : ?>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'site',
+                        'controller' => 'resultado',
+                        'action' => 'index'
+                    ), null, true); ?>">Resultados</a>
+                </li>
                 <li>
                     <a href="<?php echo $this->url(array(
                         'module' => 'site',
