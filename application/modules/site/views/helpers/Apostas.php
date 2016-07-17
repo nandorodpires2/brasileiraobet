@@ -29,7 +29,7 @@ class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
             if ($apostas->count() > 0) {
                 $text = "Você fez {$apostas->count()} apostas nesta partida";
             } else {
-                $text = "Você ainda não apostou nesta partida";
+                $text = "Você não fez apostas nesta partida";
             }
         } 
         
@@ -40,7 +40,7 @@ class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
                     $text .= "<label class='label label-info' style='margin: 0 5px;'>{$aposta->aposta_placar_mandante} X {$aposta->aposta_placar_visitante}</label>";
                 }
             } else {
-                $text = "Você ainda não apostou nesta partida";
+                $text = "Você não fez apostas nesta partida";
             }
         }
         
