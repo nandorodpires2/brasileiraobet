@@ -13,7 +13,11 @@ from		aposta a
 			inner join usuario u on a.usuario_id = u.usuario_id
 			inner join time t1 on p.time_id_mandante = t1.time_id
 			inner join time t2 on p.time_id_visitante = t2.time_id
+<<<<<<< HEAD
 where		p.partida_realizada = 0 
+=======
+where		p.partida_realizada = 1
+>>>>>>> 03eec1df805958ca7dc69e1642db5e08a95207e0
 order by p.partida_serie asc,
 			p.partida_data asc,
 			concat(a.aposta_placar_mandante, ' - ', a.aposta_placar_visitante) asc,

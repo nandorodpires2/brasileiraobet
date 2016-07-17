@@ -30,6 +30,11 @@ class Zend_View_Helper_Apostas extends Zend_View_Helper_Abstract {
                 $text = "Você fez {$apostas->count()} apostas nesta partida";
             } else {
                 $text = "Você não fez apostas nesta partida";
+<<<<<<< .mine
+                $text = "Você não fez apostas nesta partida";
+=======
+                $text = "Você não apostou nesta partida";
+>>>>>>> .theirs
             }
         } 
         
