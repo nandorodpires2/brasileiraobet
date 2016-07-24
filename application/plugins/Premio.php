@@ -57,19 +57,19 @@ class Plugin_Premio {
     }
 
     protected function setPrimeiroPremio() {
-        $primeiroPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio1/100);        
+        $primeiroPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio1/100) * $this->partida->partida_coringa_valor;        
         $this->primeiroPremio = $primeiroPremio;
         return $this;
     }
 
     protected function setSegundoPremio() {
-        $segundoPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio2/100);        
+        $segundoPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio2/100) * $this->partida->partida_coringa_valor;        
         $this->segundoPremio = $segundoPremio;
         return $this;
     }
 
     protected function setTerceiroPremio() {
-        $terceiroPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio3/100);        
+        $terceiroPremio = ($this->inicial() + $this->montante()) * ($this->partida->partida_perc_premio3/100) * $this->partida->partida_coringa_valor;        
         $this->terceiroPremio = $terceiroPremio;
         return $this;
     }

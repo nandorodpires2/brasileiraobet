@@ -260,3 +260,18 @@
 [15/07/2016 19:54:02][Porcessar] Tarefa finalizada. 
 [15/07/2016 19:55:02] Tarefa iniciada; 
 [15/07/2016 19:55:02][Porcessar] Tarefa finalizada. 
+[19/07/2016 14:28:26] Tarefa iniciada; 
+[19/07/2016 14:28:26][Porcessar] Partida [54] processada. 
+[19/07/2016 14:28:26][Porcessar] Partida [54] processada. 
+[19/07/2016 14:28:27][Porcessar] Partida [55] processada. 
+[19/07/2016 14:28:26][Porcessar] Partida [54] processada. 
+[19/07/2016 14:28:27][Porcessar] Partida [55] processada. 
+[19/07/2016 14:28:27][Porcessar] Tarefa finalizada. 
+[22/07/2016 15:41:50] Tarefa iniciada; 
+[22/07/2016 15:41:50][Porcessar] Partida [63] processada. 
+[22/07/2016 15:41:50][Porcessar] Partida [63] processada. 
+[22/07/2016 15:41:50][Porcessar] Tarefa finalizada. 
+[23/07/2016 07:57:18] Tarefa iniciada; 
+[23/07/2016 07:57:20][Porcessar] Partida [63] processada. 
+[23/07/2016 07:57:20][Porcessar] Partida [63] processada. 
+[23/07/2016 07:57:20][Porcessar] Tarefa finalizada. 

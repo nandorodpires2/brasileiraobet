@@ -21,10 +21,10 @@ class Model_DbTable_Resgate extends App_Db_Table_Abstract {
         return $select;
     }
     
-    public function getMontante() {
+    public function getMontante($processado = 1) {
         $select = $this->getQueryAll()
                 ->columns(array('montante' => new Zend_Db_Expr("sum(resgate_valor)")))
-                ->where("resgate_processado = ?", 1);
+                ->where("resgate_processado = ?", $processado);
         
         $query = $this->fetchRow($select);   
         return $query->montante ? $query->montante : 0;

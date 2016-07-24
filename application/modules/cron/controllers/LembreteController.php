@@ -57,9 +57,6 @@ class Cron_LembreteController extends Zend_Controller_Action {
             
             foreach ($usuarios as $usuario) {
                 
-                $modelAposta = new Model_DbTable_Aposta();
-                $apostas = $modelAposta->
-                
                 $pluginMail = new Plugin_Mail();
                 $paramns = serialize(array(
                     'usuario' => $usuario,

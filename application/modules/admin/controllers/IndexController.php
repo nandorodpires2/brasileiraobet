@@ -15,59 +15,51 @@ class Admin_IndexController extends Zend_Controller_Action {
         $apostas = $modelAposta->getApostas();
         $this->view->apostas = $apostas;
         
-        $montante_apostas = 0;
-        $premio1 = 0;
-        $premio2 = 0;
-        $premio3 = 0;
-        $premio_total = 0;
-        
-        foreach ($apostas as $aposta) {
-            
+        $montante_apostas = 0;        
+        foreach ($apostas as $aposta) {            
             // montante das apostas
             $montante_apostas += $aposta->partida_valor;
-            
-            // calculando as premiacoes
-            if ($aposta->aposta_vencedora) {
-                if ($aposta->aposta_vencedora_premio == 1) {
-                    $premio1 += $aposta->partida_valor;
-                }
-                if ($aposta->aposta_vencedora_premio == 2) {
-                    $premio2 += $aposta->partida_valor;
-                }
-                if ($aposta->aposta_vencedora_premio == 3) {
-                    $premio3 += $aposta->partida_valor;
-                }
-                
-                $premio_total += $aposta->partida_valor;
-                
-            }
-            
         }
+        
         $this->view->montante_apostas = $montante_apostas;
         
         /**
          * Premiacoes
          */
-        $this->view->premio1 = $premio1;
-        $this->view->premio2 = $premio2;
-        $this->view->premio3 = $premio3; 
-        $this->view->premio_total = $premio_total;
+        $premio1 = $modelAposta->getTotalPremio(1);
+        $premio2 = $modelAposta->getTotalPremio(2);
+        $premio3 = $modelAposta->getTotalPremio(3);
+        $premio_total = $modelAposta->getTotalPremio();
+        
+        $this->view->premio1 = $premio1->premio;
+        $this->view->premio2 = $premio2->premio;
+        $this->view->premio3 = $premio3->premio; 
+        $this->view->premio_total = $premio_total->premio;
         
         /**
          * Depositos
          */
+        //realizado
         $modelDeposito = new Model_DbTable_Deposito();
         $depositos = $modelDeposito->getMontante();
         $this->view->depositos = $depositos;
+        // previsto
+        $depositos_previsto = $modelDeposito->getMontante(0);
+        $this->view->depositos_previsto = $depositos_previsto + $depositos;
         
         /**
          * Resgates
          */
+        // realizado
         $modelResgate = new Model_DbTable_Resgate();
         $resgates = $modelResgate->getMontante();
         $this->view->resgates = $resgates;        
+        // previsto
+        $resgates_previsto = $modelResgate->getMontante(0);
+        $this->view->resgates_previsto = $resgates_previsto + $resgates;
         
         $this->view->saldo_financeiro = $depositos - $resgates;
+        $this->view->saldo_financeiro_previsto = $this->view->depositos_previsto - $this->view->resgates_previsto;
         
         /**
          * Maiores vencedores

@@ -234,7 +234,10 @@ class Admin_PartidaController extends Zend_Controller_Action {
          * Busca as partidas da rodada
          */
         $modelPartida = new Model_DbTable_Partida();
-        $partidas = $modelPartida->fetchAll("partida_rodada = {$partida_rodada}");
+        $partidas = $modelPartida->fetchAll("
+            partida_rodada = {$partida_rodada}
+            and partida_serie = 1
+        ");
         
         if ($partidas->count() !== 10) {
             $this->_helper->flashMessenger->addMessage(array(
@@ -255,7 +258,7 @@ class Admin_PartidaController extends Zend_Controller_Action {
                 'usuario_nome' => $usuario->usuario_nome,
                 'partida_rodada' => $partida_rodada
             ));
-            $pluginMail->inQueue('partidas-abertas-apostar', 'Já pode apostar!!!!', $paramns, $usuario->usuario_email);
+            $pluginMail->inQueue('partidas-abertas-apostar.phtml', 'Já pode apostar!!!!', $paramns, $usuario->usuario_email);
         }
         
         $this->_helper->flashMessenger->addMessage(array(

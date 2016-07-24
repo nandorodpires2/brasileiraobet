@@ -31,10 +31,10 @@ class Model_DbTable_Deposito extends App_Db_Table_Abstract {
         return $select;
     }
 
-    public function getMontante() {
+    public function getMontante($confirmado = 1) {
         $select = $this->getQueryAll()
                 ->columns(array('montante' => new Zend_Db_Expr("sum(deposito_valor)")))
-                ->where("deposito_confirmado = ?", 1);
+                ->where("deposito_confirmado = ?", $confirmado);
         
         $query = $this->fetchRow($select);   
         return $query->montante ? $query->montante : 0;
@@ -43,7 +43,8 @@ class Model_DbTable_Deposito extends App_Db_Table_Abstract {
     public function getDepositosUsuario($usuario_id) {
         
         $select = $this->getQueryAll()
-                ->where("usuario_id = ?", $usuario_id);
+                ->where("usuario_id = ?", $usuario_id)
+                ->where("deposito_status is not null");
         
         return $this->fetchAll($select);
         

@@ -66,17 +66,20 @@
                                 <div class="col-xs-6">
                                     <p>Depóstios</p>
                                     <h4><?php echo $this->currency($this->depositos); ?></h4>
+                                    <p class="text-muted">Previsto: <?php echo $this->currency($this->depositos_previsto); ?></p>
                                 </div>
                                 <div class="col-xs-6">
                                     <p>Resgates</p>
                                     <h4 class="text-danger"><?php echo $this->currency($this->resgates); ?></h4>
+                                    <p class="text-muted">Previsto: <?php echo $this->currency($this->resgates_previsto); ?></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 <?php echo $this->saldo_financeiro < 0 ? 'text-danger' : ''; ?>">
                                     <h2 class="<?php echo $this->saldo_financeiro < 0 ? 'text-danger' : ''; ?>">
-                                        <?php echo $this->currency($this->saldo_financeiro); ?>
+                                        <?php echo $this->currency($this->saldo_financeiro); ?>                                        
                                     </h2>
+                                    <p class="text-muted">Previsto: <?php echo $this->currency($this->saldo_financeiro_previsto); ?></p>
                                 </div>
                             </div>
                         </div>

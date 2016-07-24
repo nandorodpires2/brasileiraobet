@@ -4,7 +4,7 @@
         <!-- SIDE BAR -->
         <div class="col-md-3">            
             <?php if (Plugin_Auth::check()) : ?>
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">Minha Conta</div>
                 <div class="panel-body">
                     <div class="row">
@@ -84,7 +84,7 @@
                     </div><!-- /.modal -->
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">Saldo</div>
                 <div class="panel-body">
                     <h1 class="text-center text-success"><b><?php echo $this->currency($this->saldo); ?></b></h1>
@@ -245,7 +245,7 @@
                 </div>
             </div>
             <?php else : ?>
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">Acesse sua conta</div>
                 <div class="panel-body">
                     <?php echo $this->formLogin; ?>
@@ -254,12 +254,12 @@
                     </p>
                 </div>
             </div>
-            <div class="panel panel-success">
+            <div class="panel panel-info">
                 <div class="panel-heading">Cadastre-se grátis</div>
                 <div class="panel-body text-center">
                     <p>
                         Faça seu cadastro e ganhe 
-                    <h2 class="text-success"><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</h2>
+                    <h2><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</h2>
                     </p>
                     <p>
                         <a href="<?php echo $this->url(array("controller" => "cadastro", "action" => "index")); ?>" class="btn btn-primary">CADASTRAR</a>
@@ -273,54 +273,77 @@
         <div class="col-md-9">            
             <?php if ($this->partidas->count() > 0) : ?>            
                 <?php foreach ($this->partidas as $partida) : ?>                
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <label>
-                            <?php echo $this->serie($partida->partida_serie); ?> - 
-                            <?php echo $partida->partida_rodada; ?>ª Rodada -
-                            <?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h
-                        </label>
-                    </div>
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <table class="table">
-                            <tr class="text-center">
-                                <td class="col-md-2">
-                                    <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
-                                </td>
-                                <td class="col-md-3" id="time_mandante_nome" style="font-size: 20px;"><b><?php echo $partida->time_mandante_nome; ?></b></td>
-                                <td class="col-md-2" style="font-size: 20px;"><b>X</b></td>
-                                <td class="col-md-3" id="time_visitante_nome" style="font-size: 20px;"><b><?php echo $partida->time_visitante_nome; ?></b></td>
-                                <td class="col-md-2">
-                                    <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
-                                </td>                            
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="panel-footer">
                         <div class="row">
-                            <div class="col-lg-4 text-center">                                
-                                <div class="thumbnail" style="padding: 15px;">
-                                    <h4 class="text-center">
-                                        1º prêmio: 
-                                        <span class="text-success bolder" style="font-size: 25px;"><?php echo $this->currency($this->montante($partida->partida_id)); ?></span>
-                                    </h4>
-                                    <span class="text-center small">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></span>
+                            
+                            
+                            
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12 text-center">
+                                
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>
+                                            <?php echo $this->serie($partida->partida_serie); ?> - 
+                                            <?php echo $partida->partida_rodada; ?>ª Rodada -
+                                            <?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h
+                                        </label>
+
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tr class="text-center">
+                                                    <td class="col-md-2">
+                                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                                                    </td>
+                                                    <td class="col-md-3" id="time_mandante_nome" style="font-size: 20px;"><b><?php echo $partida->time_mandante_nome; ?></b></td>
+                                                    <td class="col-md-2" style="font-size: 20px;"><b>X</b></td>
+                                                    <td class="col-md-3" id="time_visitante_nome" style="font-size: 20px;"><b><?php echo $partida->time_visitante_nome; ?></b></td>
+                                                    <td class="col-md-2">
+                                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                                                    </td>                            
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!--<h5>Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></h5>-->                            
-                            </div>                            
-                            <?php if (Plugin_Auth::check()) : ?>                            
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-4">
-                                <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
-                                <a href="" class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
+                                
+                                <div class="row">                         
+                                    <?php if (Plugin_Auth::check()) : ?>                                                                
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
+                                        <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
+                                    </div>
+                                    <?php else : ?>
+                                    <div class="col-lg-12 text-center">
+                                        <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>                                
+                                
+                            </div> 
+                            
+                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12 text-center">
+                                <div class="thumbnail <?php echo $partida->partida_coringa_valor > 1 ? 'bg-success' : ''; ?>" style="padding: 15px;">
+                                    <h1>
+                                        <span class="text-info">                                                                             
+                                            <?php echo $this->currency($this->montante($partida->partida_id)); ?>*
+                                        </span>
+                                    </h1>
+                                    <p>
+                                        <span class="text-center small bolder">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></span>
+                                    </p>
+                                    <p class="small text-muted">                                        
+                                        * Valor do 1ª prêmio. Apostas computadas até o presente momento.
+                                        <?php if ($partida->partida_coringa_valor > 1) : ?>                                                                                                                  
+                                        Aposta coringa: prêmio multiplicado <?php echo $partida->partida_coringa_valor; ?>X 
+                                        <?php endif; ?>   
+                                        
+                                    </p>
+                                </div>  
                             </div>
-                            <?php else : ?>
-                            <div class="col-lg-8 text-right">
-                                <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
-                            </div>
-                            <?php endif; ?>
-                        </div>                    
-                    </div>
+                            
+                        </div>                        
+                    </div>                    
                 </div> 
             
                 <!-- MODAL DE APOSTA -->

@@ -50,6 +50,13 @@ class Site_DepositoController extends Zend_Controller_Action {
                     $zendDate->addDay(Zend_Registry::get("config")->boleto->vencimento->dias);
                     $data['deposito_vencimento'] = $zendDate->get("YYYY-MM-dd");
                     
+                    /**
+                     * Valor do bonus
+                     */
+                    $modelDepositoValor = new Model_DbTable_DepositoValor();
+                    $depositoValor = $modelDepositoValor->getByField("deposito_valor", $data['deposito_valor']);
+                    $data['deposito_valor_bonus'] = $depositoValor->deposito_valor_bonus;
+                                        
                     $modelDeposito = new Model_DbTable_Deposito();
                     $deposito_id = $modelDeposito->insert($data);
                     

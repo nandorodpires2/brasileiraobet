@@ -18,19 +18,19 @@ class Cron_TesteController extends Zend_Controller_Action {
         $server = $this->getRequest()->getServer('REMOTE_ADDR');        
         $cron_server = Zend_Registry::get("config")->cron->server;
         
-        Zend_Debug::dump($server);
-        Zend_Debug::dump($cron_server);
-        
         if (!Plugin_Cron::checkAccess()) {
             die('sem permissao');
         }
-        
-        echo 'passou';
         
     }
 
     public function indexAction() {
         $this->disabled();
+        
+        $pluginMail = new Plugin_Mail();
+        $data = "TESTE [" . date("Y-m-d H:i:s") . "]";
+        $pluginMail->send('padrao.phtml', $data, 'nandorodpires@gmail.com');
+        
     }
 
     private function disabled() {

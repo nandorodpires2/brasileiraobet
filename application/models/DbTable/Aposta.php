@@ -183,5 +183,20 @@ class Model_DbTable_Aposta extends App_Db_Table_Abstract {
         //echo $select->__toString(); die();
         return $this->fetchAll($select);
     }
+    
+    public function getTotalPremio($premio = null) {
+        
+        $select = $this->select()
+                ->from($this->_name)
+                ->columns(array('premio' => 'sum(aposta_vencedora_valor)'))                
+                ->where("aposta_vencedora = ?", 1);
+        
+        if ($premio) {
+            $select->where("aposta_vencedora_premio = ?", $premio);
+        }
+        
+        return $this->fetchRow($select);
+        
+    }
 
 }

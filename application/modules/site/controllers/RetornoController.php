@@ -79,11 +79,26 @@ class Site_RetornoController extends Zend_Controller_Action {
             $descricao = "DEPÓSITO COD: {$deposito->deposito_id}";
             $modelLancamento = new Model_DbTable_Lancamento();
             $modelLancamento->insert(array(
-                'lancamento_valor' => $deposito->deposito_valor + $deposito->deposito_cupom_valor,
+                'lancamento_valor' => $deposito->deposito_valor + $deposito->deposito_valor_bonus + $deposito->deposito_cupom_valor,
                 'lancamento_descricao' => $descricao,
                 'usuario_id' => $deposito->usuario_id
             ));            
 
+            /**
+             * Gera uma notificacao
+             */
+            $zendCurrency = new Zend_Currency();
+            $valor_deposito = $zendCurrency->toCurrency($deposito->deposito_valor);
+            $modelNotificacao = new Model_DbTable_Notificacao();
+            $conteudo = " 
+                Seu depósito no valor de {$valor_deposito} foi confirmado. 
+            ";
+            $notificacao = array(
+                'usuario_id' => $deposito->usuario_id,
+                'notificacao_conteudo' => $conteudo
+            );
+            $modelNotificacao->insert($notificacao);            
+            
             //$this->checkPromocao($deposito->deposito_cupom);
 
             $modelDeposito->updateById(array(

@@ -6,7 +6,8 @@
         </div>
     </div>
     
-    <?php if ($this->parciais->count() > 0) : ?> 
+    <?php //if ($this->parciais->count() > 0) : ?> 
+    <?php if (1 == 2) : ?> 
     <div class="row">
         <div class="col-md-12">  
             <div class="panel panel-default">
@@ -55,12 +56,11 @@
         
         <div class="col-md-12">  
             <div class="panel panel-default">
-                <div class="panel-heading">Finalizadas</div>
+                <div class="panel-heading">Partidas Finalizadas</div>
                 <div class="panel-body">
                     
                     <div class="table-responsive">
                         <?php if ($this->partidas->count() > 0) : ?>            
-                        <h4><?php echo $this->partidas->count(); ?> partidas</h4>
                         <table class="table">
                             <?php foreach ($this->partidas as $partida) : ?>                
                             <tr class="text-center">
@@ -96,13 +96,12 @@
                                             <div class="modal-body">
 
                                                 <div class="row">
+                                                    
                                                     <div class="col-lg-12">
-                                                        <?php echo $this->apostas($partida->partida_id, 'label'); ?>
+                                                        <h4>Premiações:</h4>
                                                         <hr />
                                                     </div>
-                                                </div>                                                
-                                                
-                                                <div class="row">
+                                                    
                                                     <?php if ($partida->partida_valor_premio1) : ?>
                                                     <div class="col-lg-4">
                                                         <div class="well text-center">
@@ -149,6 +148,36 @@
                                                     <?php endif; ?>
 
                                                 </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <hr />
+                                                        <?php $apostas = $this->apostas($partida->partida_id, 'object'); ?>                                                        
+                                                        <h4>Suas Apostas:</h4>
+                                                        
+                                                        <?php if ($apostas->count() === 0) : ?>
+                                                        Você não apostou nesta partida
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php foreach ($apostas as $aposta) : ?>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <?php echo $aposta->time_nome_mandante; ?>
+                                                                <?php echo $aposta->aposta_placar_mandante; ?>
+                                                                X
+                                                                <?php echo $aposta->aposta_placar_visitante; ?>
+                                                                <?php echo $aposta->time_nome_visitante; ?>
+                                                                :
+                                                                <?php if ($aposta->aposta_vencedora) : ?>
+                                                                <b>Aposta vencedora do <?php echo $aposta->aposta_vencedora_premio; ?>º prêmio.</b>
+                                                                <?php else : ?>
+                                                                <b>Aposta não foi vencedora em nenhum prêmio</b>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                </div>                                                
 
                                             </div>                            
                                         </div><!-- /.modal-content -->

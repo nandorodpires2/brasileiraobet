@@ -27,8 +27,8 @@ class Model_DbTable_DepositoValor extends App_Db_Table_Abstract {
         $valores = $this->fetchAll("deposito_valor_ativo = 1");
         
         $zendCurrency = new Zend_Currency();
-        foreach ($valores as $valor) {
-            $options[$valor->deposito_valor] = $zendCurrency->toCurrency($valor->deposito_valor);
+        foreach ($valores as $valor) {                       
+            $options[$valor->deposito_valor] = $zendCurrency->toCurrency($valor->deposito_valor) . " + " . $zendCurrency->toCurrency($valor->deposito_valor_bonus) . " BÔNUS";
         }
         
         return $options;
