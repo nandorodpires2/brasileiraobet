@@ -39,15 +39,16 @@ class Site_UsuarioController extends Zend_Controller_Action {
          * Form
          */
         $form = new Form_Site_Cadastro();
+        
+        $form->removeElement('usuario_senha');
+        $form->removeElement('usuario_senha_repetir');
+        $form->removeElement("usuario_maioridade");
+        $form->usuario_email->removeValidator('email');
+        
+        $usuario->usuario_datanascimento = $usuario->usuario_datanascimento ? App_Helper_Date::getDate($usuario->usuario_datanascimento, Zend_Date::DATE_MEDIUM) : null;
+                
         $form->populate($usuario->toArray());
         $form->submit->setLabel("ALTERAR");
-        
-        $form->removeElement("usuario_maioridade");
-        
-        $form->usuario_senha->setRequired(false);
-        $form->usuario_senha_repetir->setRequired(false);
-        
-        $form->usuario_email->removeValidator('email');
         
         $this->view->form = $form;
         
@@ -56,15 +57,9 @@ class Site_UsuarioController extends Zend_Controller_Action {
             if ($form->isValid($data)) {
                 $data = $form->getValues();
                 
-                unset($data['usuario_senha_repetir']);
-                
-                if (empty($data['usuario_senha'])) {
-                    unset($data['usuario_senha']);
-                } else {
-                    $pluginPassword = new Plugin_Password($data['usuario_senha']);
-                    $data['usuario_senha'] = $pluginPassword->encrypt();
-                }
-                
+                // formating date value
+                $data['usuario_datanascimento'] = App_Helper_Date::getDateDb($data['usuario_datanascimento']);
+                                
                 try {
                     $modelUsuario->updateById($data, $usuario_id);
                     

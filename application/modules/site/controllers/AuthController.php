@@ -70,8 +70,15 @@ class Site_AuthController extends Zend_Controller_Action {
                     
                 }
                 
+            } else {
+            
+                $this->_helper->flashMessenger->addMessage(array(
+                    'warning' => "Por favor preencha os campos de usuário e senha!"
+                ));
+
+                $this->_redirect("/");
             }
-        }
+        } 
         
     }
     

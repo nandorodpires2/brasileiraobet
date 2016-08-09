@@ -6,10 +6,13 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3 bg-write">  
+            <?php if (Zend_Registry::get("config")->bonus->cadastro > 0) : ?>
             <h4><label class="text-success">Ganhe <?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</label></h4>
+            <?php endif; ?>
+            <p>Preencha os campos abaixo...</p>
             <?php echo $this->formCadastro; ?>
             <p class="small text-danger">* campos obrigatórios</p>
-            <p class="small">Ao se cadastrar você concorda com a nossa Política de Privacidede, Regulamento e Termo de Uso</p>
+            <p class="small">Ao se cadastrar você concorda com a nossa <a href="" data-toggle="modal" data-target="#modal-politica">Política de Privacidede, Regulamento e Termo de Uso</a></p>
         </div>
     </div>
 </section>

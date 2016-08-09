@@ -17,7 +17,8 @@ class Model_DbTable_Resgate extends App_Db_Table_Abstract {
     protected $_primary = "resgate_id";
     
     protected function getQueryAll() {
-        $select = parent::getQueryAll();
+        $select = parent::getQueryAll()
+                ->joinInner("usuario", "resgate.usuario_id = usuario.usuario_id", array('*'));
         return $select;
     }
     
@@ -38,10 +39,24 @@ class Model_DbTable_Resgate extends App_Db_Table_Abstract {
     public function getResgatesUsuario($usuario_id) {
         
         $select = $this->getQueryAll()
-                ->where("usuario_id = ?", $usuario_id);
+                ->where("usuario.usuario_id = ?", $usuario_id);
         
         return $this->fetchAll($select);
         
+    }
+    
+    public function getQuery($where = null, $order = null, $limit = 0) {
+        $select = $this->getQueryAll();
+        
+        if ($where) {
+            $select->where($where);
+        }                
+        
+        if ($order) {
+            $select->order($order);
+        }
+        
+        return $select;
     }
     
 }

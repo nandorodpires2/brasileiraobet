@@ -275,3 +275,7 @@
 [23/07/2016 07:57:20][Porcessar] Partida [63] processada. 
 [23/07/2016 07:57:20][Porcessar] Partida [63] processada. 
 [23/07/2016 07:57:20][Porcessar] Tarefa finalizada. 
+[27/07/2016 13:46:57] Tarefa iniciada; 
+[27/07/2016 13:46:57][Porcessar] Partida [74] processada. 
+[27/07/2016 13:46:57][Porcessar] Partida [74] processada. 
+[27/07/2016 13:46:57][Porcessar] Tarefa finalizada. 

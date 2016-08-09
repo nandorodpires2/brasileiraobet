@@ -235,7 +235,7 @@ class Site_ApostaController extends Zend_Controller_Action {
         
         $data = array(
             'usuario_id' => Zend_Auth::getInstance()->getIdentity()->usuario_id,
-            'lancamento_descricao' => 'DÉBITO APOSTA PARTIDA #' . $partida->partida_id,
+            'lancamento_descricao' => "DÉBITO APOSTA PARTIDA {$partida->time_mandante_nome} X {$partida->time_visitante_nome}",
             'partida_id' => $partida->partida_id,
             'lancamento_valor' => $partida->partida_valor * -1
         );

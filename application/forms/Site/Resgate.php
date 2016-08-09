@@ -23,48 +23,55 @@ class Form_Site_Resgate extends App_Forms_Form {
         $resgate_valor->setAttribs(array(
             'class' => 'form-control'
         ));
+        $resgate_valor->addValidator(new Form_Validate_ResgateValor);
+        $resgate_valor->setDecorators(App_Forms_Decorators::$simpleElementDecorators);
         $resgate_valor->setRequired();
         $this->addElement($resgate_valor);
         
         /**
-         * usuario_conta_banco
+         * resgate_conta_banco
          */
-        $usuario_conta_banco = new Zend_Form_Element_Select("usuario_conta_banco");
-        $usuario_conta_banco->setLabel("Banco: ");
-        $usuario_conta_banco->setAttribs(array(
+        $resgate_conta_banco = new Zend_Form_Element_Select("resgate_conta_banco");
+        $resgate_conta_banco->setLabel("Banco: ");
+        $resgate_conta_banco->setAttribs(array(
             'class' => 'form-control'
         ));
-        $usuario_conta_banco->setMultiOptions(array(
+        $resgate_conta_banco->setMultiOptions(array(
             '' => 'Selecione um banco',
             'Bradesco S/A' => 'Bradesco S/A',
             'Caixa Econômica Federal' => 'Caixa Econômica Federal',
             'Banco do Brasil S/A' => 'Banco do Brasil S/A',
             'Itaú S/A' => 'Itaú S/A',
         ));
-        $usuario_conta_banco->setRequired();
-        $this->addElement($usuario_conta_banco);
+        $resgate_conta_banco->setRequired();
+        $resgate_conta_banco->setDecorators(App_Forms_Decorators::$simpleElementDecorators);
+        $this->addElement($resgate_conta_banco);
         
         /**
-         * usuario_conta_agencia
+         * resgate_conta_agencia
          */
-        $usuario_conta_agencia = new Zend_Form_Element_Text("usuario_conta_agencia");
-        $usuario_conta_agencia->setLabel("Agência: ");
-        $usuario_conta_agencia->setAttribs(array(
-            'class' => 'form-control'
+        $resgate_conta_agencia = new Zend_Form_Element_Text("resgate_conta_agencia");
+        $resgate_conta_agencia->setLabel("Agência: ");
+        $resgate_conta_agencia->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder' => 'Agência sem dígito'
         ));
-        $usuario_conta_agencia->setRequired();
-        $this->addElement($usuario_conta_agencia);
+        $resgate_conta_agencia->setRequired();
+        $resgate_conta_agencia->setDecorators(App_Forms_Decorators::$simpleElementDecorators);
+        $this->addElement($resgate_conta_agencia);
         
         /**
-         * usuario_conta_numero
+         * resgate_conta_numero
          */
-        $usuario_conta_numero = new Zend_Form_Element_Text("usuario_conta_numero");
-        $usuario_conta_numero->setLabel("Conta: ");
-        $usuario_conta_numero->setAttribs(array(
-            'class' => 'form-control'
+        $resgate_conta_numero = new Zend_Form_Element_Text("resgate_conta_numero");
+        $resgate_conta_numero->setLabel("Conta: ");
+        $resgate_conta_numero->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder' => 'Conta com dígito'
         ));
-        $usuario_conta_numero->setRequired();
-        $this->addElement($usuario_conta_numero);
+        $resgate_conta_numero->setRequired();
+        $resgate_conta_numero->setDecorators(App_Forms_Decorators::$simpleElementDecorators);
+        $this->addElement($resgate_conta_numero);
         
         parent::init();
     }

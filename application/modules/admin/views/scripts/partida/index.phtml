@@ -120,6 +120,17 @@
                                     </div>
                                     
                                     <div class="row btn-acoes">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <a href="<?php echo $this->url(array(
+                                                'module' => 'admin',
+                                                'controller' => 'partida',
+                                                'action' => 'edit',
+                                                'id' => $partida->partida_id
+                                            ), 'default', true); ?>" class="btn btn-sm btn-info btn-block">Editar Partida</a>
+                                        </div>
+                                    </div>                                                                        
+                                    
+                                    <div class="row btn-acoes">
                                         <?php if (Zend_Registry::get("config")->aposta->populate) : ?>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <a href="<?php echo $this->url(array(

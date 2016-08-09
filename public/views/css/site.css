@@ -16,7 +16,7 @@ table tr th {
     margin-bottom: 10px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5 {
     word-wrap: break-word;
      -webkit-hyphens: auto;
      -moz-hyphens: auto;
@@ -32,8 +32,12 @@ h1 {
     font-weight: bolder;
 }
 
+h2 {
+    
+}
+
 h3 {
-    color: #5bc0de;
+    color: #0e82a4;
     font-weight: bold;
     width: 100%;
     padding: 10px 0;
@@ -44,6 +48,13 @@ h3 {
 
 h4 {
     
+}
+
+h5 {
+    font-weight: bold;
+    padding: 7px 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
 /* CORINGA */
@@ -58,9 +69,43 @@ h4 {
 }
 
 /* NAVBAR MENU */
+.navbar-default .navbar-brand {
+    color: rgba(14, 130, 164, 1);
+}
 .navbar-default {
-    color: #fff;
-    background-color: rgba(0,0,0,0.4);
+    font-size: 17px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-width: 0px;
+    border-radius: 0px;
+}
+.navbar-default .navbar-nav > li > a {
+    color: rgba(14, 130, 164, 1);
+    background-color: rgba(255, 255, 255, 1);
+}
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(14, 130, 164, 1);
+}
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(14, 130, 164, 1);
+}
+.navbar-default .navbar-toggle {
+    border-color: #0e82a4;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #0e82a4;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #0e82a4;
+}
+.navbar-default .navbar-toggle:hover .icon-bar,
+.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #ffffff;
 }
 
 /* THUMBS */
@@ -71,13 +116,11 @@ h4 {
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.56);
 }
 
-/* FORMS */
-.form-control {
-    border-radius: 0;
-    height: 40px;
-}
-.form-control:focus {
-    border-color: #255625;
+/**/
+.btn-primary {
+    background-image: linear-gradient(to bottom, #0e82a4 0px, #265a88 100%);
+    background-repeat: repeat-x;
+    border-color: #245580;
 }
 
 /* BACKGROUNDS */
@@ -150,10 +193,21 @@ footer a {
 }
 
 /* PAGE INDEX */
+#buttom-apostar-mobile {
+    display: none;
+}
 @media (max-width: 768px) {
     #time_mandante_nome, #time_visitante_nome  {
         display: none;
     }
+    
+    #buttom-apostar-desktop {
+        display: none;
+    }
+    #buttom-apostar-mobile {
+        display: block;
+    }
+    
 }
 
 /**/

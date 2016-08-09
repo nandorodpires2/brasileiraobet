@@ -95,6 +95,69 @@ class Admin_PartidaController extends Zend_Controller_Action {
     
     public function editAction() {
         
+        $partida_id = $this->getRequest()->getParam("id");
+        
+        /**
+         * Busca os dados da partida
+         */
+        $modelPartida = new Model_DbTable_Partida();
+        $partida = $modelPartida->getById($partida_id);
+        
+        // form 
+        $form = new Form_Admin_Partida();
+        
+        // ADICIONANDO ALGUNS CAMPOS
+        $form->addElement('text', 'partida_coringa_valor', array(
+            'label' => 'Coringa Valor',
+            'value' => $partida->partida_coringa_valor,
+            'class' => 'form-control',
+            'order' => 4
+        ));
+        
+        // VALIDANDO ALGUMAS REGRAS
+        // se tem apostas nao podera mudar o valor
+        $modelAposta = new Model_DbTable_Aposta();
+        $apostas = $modelAposta->getApostas($partida_id);
+        if ($apostas->count() > 0) {
+            $form->removeElement("partida_valor");
+        }
+        
+        // FORMATANDO ALGUNS CAMPOS
+        $horario = App_Helper_Date::getTime($partida->partida_data);
+        $form->partida_horario->setValue($horario);
+        
+        $form->populate($partida->toArray());
+        $form->submit->setLabel("ALTERAR PARTIDA");
+        $this->view->form = $form;
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if ($form->isValid($data)) {
+                
+                $data = $form->getValues();
+                
+                // formatando a data da partida
+                $data['partida_data'] = $this->dateMatchFormat($data['partida_data'], $data['partida_horario']);
+                unset($data['partida_horario']);
+                
+                try {
+                    $modelPartida->updateById($data, $partida_id);
+                    
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'success' => 'Partida alterada com sucesso'
+                    ));
+                    $this->_redirect("admin/partida");
+                    
+                } catch (Exception $ex) {
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => $ex->getMessage()
+                    ));
+                    $this->_redirect("admin/partida");
+                }
+                
+            }
+        }
+        
     }
     
     public function deleteAction() {

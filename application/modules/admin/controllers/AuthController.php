@@ -62,7 +62,10 @@ class Admin_AuthController extends Zend_Controller_Action {
                     $this->_redirect($redirect);
                     
                 } else {
-                    die('error');
+                    $this->_helper->flashMessenger->addMessage(array(
+                        'danger' => 'Login e/ou senhas inválidos!'
+                    ));
+                    $this->_redirect($redirect);
                 }
                 
             }

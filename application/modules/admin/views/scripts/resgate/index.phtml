@@ -1,0 +1,108 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Resgates</h3><hr />
+        </div>
+    </div>    
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#pendente" aria-controls="home" role="tab" data-toggle="tab">
+                            <label>Pendentes</label> 
+                            <span class="badge"><?php echo $this->pendentes->getTotalItemCount(); ?></span> 
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#realizado" aria-controls="profile" role="tab" data-toggle="tab">
+                            <label>Realizados</label> 
+                            <span class="badge"><?php echo $this->realizados->getTotalItemCount(); ?></span> 
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- PENDENTES -->
+                    <div role="tabpanel" class="tab-pane active" id="pendente">
+                        <?php if ($this->pendentes->count() > 0) : ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-2 text-center">Data</th>
+                                        <th class="col-md-4">Usuário</th>
+                                        <th class="col-md-2 text-right">Valor</th>
+                                        <th class="col-md-2 text-center">Data Limite</th>
+                                        <th class="col-md-2 text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->pendentes as $pendente) : ?>
+                                    <tr>
+                                        <td class="text-center"><?php echo App_Helper_Date::getDate($pendente->resgate_data); ?></td>
+                                        <td><?php echo $pendente->usuario_nome; ?></td>
+                                        <td class="text-right"><?php echo $this->currency($pendente->resgate_valor); ?></td>
+                                        <td class="text-center"><?php echo App_Helper_Date::getDate($pendente->resgate_data_limite); ?></td>
+                                        <td class="text-center">
+                                            <a href="<?php echo $this->url(array(
+                                                'module' => 'admin',
+                                                'controller' => 'resgate',
+                                                'action' => 'processado',
+                                                'id' => $pendente->resgate_id
+                                            ), 'default', true); ?>" class="btn btn-sm btn-warning">Processado</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php echo $this->paginatorPendentes; ?>
+                        </div>
+                        <?php else : ?>
+                        <div class="alert alert-warning">Nenhum registro</div>
+                        <?php endif; ?>
+                    </div>
+                    <!-- REALIZADOS -->
+                    <div role="tabpanel" class="tab-pane" id="realizado">
+                        <div role="tabpanel" class="tab-pane active" id="realizado">
+                            <?php if ($this->realizados->count() > 0) : ?>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-2 text-center">Data</th>
+                                            <th class="col-md-4">Usuário</th>
+                                            <th class="col-md-2 text-right">Valor</th>
+                                            <th class="col-md-2 text-center">Data Processado</th>
+                                            <th class="col-md-2 text-center"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($this->realizados as $realizado) : ?>
+                                        <tr>
+                                            <td class="text-center"><?php echo App_Helper_Date::getDate($realizado->resgate_data); ?></td>
+                                            <td><?php echo $realizado->usuario_nome; ?></td>
+                                            <td class="text-right"><?php echo $this->currency($realizado->resgate_valor); ?></td>
+                                            <td class="text-center"><?php echo App_Helper_Date::getDate($realizado->resgate_processado_data); ?></td>
+                                            <td class="text-center">
+                                                
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                <?php echo $this->paginatorPendentes; ?>
+                            </div>
+                            <?php else : ?>
+                            <div class="alert alert-warning">Nenhum registro</div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

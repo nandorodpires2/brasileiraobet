@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -12,7 +12,12 @@
                 'module' => 'site',
                 'controller' => 'index',
                 'action' => 'index'
-            ), null, true); ?>"><img src="<?php echo $this->baseUrl('views/img/brasileiraobet.png'); ?>" class="img img-responsive" /></a>
+            ), null, true); ?>">
+                BRASILEIRÃOBET
+                <!--
+                <img src="<?php echo $this->baseUrl('views/img/brasileiraobet3.png'); ?>" class="img img-responsive" />
+                -->
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -26,6 +31,13 @@
                     ), null, true); ?>">Partidas</a>
                 </li>                
             </ul>   
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="" data-toggle="modal" data-target="#modal-como-funciona"> Como Funciona?</a>
+                </li>                           
+            </ul>  
+            
             <?php if (Plugin_Auth::check()) : ?>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -33,7 +45,7 @@
                         'module' => 'site',
                         'controller' => 'resultado',
                         'action' => 'index'
-                    ), null, true); ?>"> Resultados</a>
+                    ), null, true); ?>">Resultados</a>
                 </li>
                 <li>
                     <a href="<?php echo $this->url(array(
@@ -44,6 +56,8 @@
                 </li>                            
             </ul>     
             <?php endif; ?>
+            
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+

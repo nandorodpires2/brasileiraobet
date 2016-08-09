@@ -40,6 +40,30 @@ class Form_Site_Cadastro extends App_Forms_Form {
             'class' => 'form-control',
         ));
         $this->addElement($usuario_email);
+        
+        /**
+         * usuario_cpf
+         */
+        $usuario_cpf = new Zend_Form_Element_Text("usuario_cpf");
+        $usuario_cpf->setLabel("CPF:");
+        $usuario_cpf->setRequired(false);
+        $usuario_cpf->setDecorators(App_Forms_Decorators::$simpleElementDecorators);                
+        $usuario_cpf->setAttribs(array(
+            'class' => 'form-control',
+        ));
+        $this->addElement($usuario_cpf);
+        
+        /**
+         * usuario_datanascimento
+         */
+        $usuario_datanascimento = new Zend_Form_Element_Text("usuario_datanascimento");
+        $usuario_datanascimento->setLabel("Data de nascimento:");
+        $usuario_datanascimento->setRequired(false);
+        $usuario_datanascimento->setDecorators(App_Forms_Decorators::$simpleElementDecorators);        
+        $usuario_datanascimento->setAttribs(array(
+            'class' => 'form-control',
+        ));
+        $this->addElement($usuario_datanascimento);
          
         /**
          * usuario_senha

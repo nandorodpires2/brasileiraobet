@@ -1,0 +1,15 @@
+<?php echo $this->partial("header.phtml"); ?>
+<div style="width: 100%">
+    <div class="col-lg-12">
+        <h3 style="color: #EE1289">Olá <?php $this->resgate->usuario_nome; ?>,</h3>
+        <p>
+            Sua solicitação de resgate no valor de <?php echo $this->currency($this->resgate->resgate_valor); ?>
+            foi processado.
+        </p>       
+        <p>
+            Confira o crédito na conta informada*.
+        </p>
+        <p style="font-size: 85%; color: #777;">* Lembrando que o crédito poderá ocorrer em até 2 (dois) dias úteis após a data da transferência.</p>
+    </div>
+</div>
+<?php echo $this->partial("footer.phtml"); ?>

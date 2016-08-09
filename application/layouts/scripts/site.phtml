@@ -16,11 +16,13 @@
         <link href="<?php echo $this->baseUrl("views/css/bootstrap-theme.min.css"); ?>" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="<?php echo $this->baseUrl("views/css/font-awesome.min.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo $this->baseUrl("views/css/style.css"); ?>" rel="stylesheet">
         <link href="<?php echo $this->baseUrl("views/css/site.css"); ?>" rel="stylesheet">
 
         <!-- Js -->
         <script src="<?php echo $this->baseUrl("views/js/jquery.min.js"); ?>"></script>
         <script src="<?php echo $this->baseUrl("views/js/bootstrap.min.js"); ?>"></script>
+        <script src="<?php echo $this->baseUrl("views/js/jquery.maskMoney.js"); ?>"></script>
         <script src="<?php echo $this->baseUrl("views/js/jquery.maskedinput.js"); ?>"></script>
         <script src="<?php echo $this->baseUrl("views/js/application.js"); ?>"></script>
 
@@ -28,16 +30,30 @@
 
     </head>
     <body>
-        <?php //echo $this->messages; ?> 
+        
+        <!-- message (modal) -->
         <?php echo $this->partial('partials/messages.phtml', array(
             'has_message' => $this->has_message,
             'messages' => $this->messages
         )); ?>
+        
+        <!-- header -->        
         <?php echo $this->partial('partials/header.phtml'); ?>
+        
+        <!-- container -->
         <div class="container" id="content">            
             <?php echo $this->layout()->content; ?>                   
         </div> <!-- /container -->        
+        
+        <!-- footer -->
         <?php echo $this->partial('partials/footer.phtml'); ?>
+        
+        <!-- politica de privacidade -->
+        <?php echo $this->partial('partials/politica.phtml'); ?>
+        
+        <!-- politica de privacidade -->
+        <?php echo $this->partial('partials/como-funciona.phtml'); ?>
+        
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

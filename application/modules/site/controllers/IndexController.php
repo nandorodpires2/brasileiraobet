@@ -5,6 +5,12 @@ class Site_IndexController extends Zend_Controller_Action {
     public function init() {
         
     }
+    
+    public function mailAction() {
+        $this->_helper->viewRenderer->setNoRender();
+        $pluginMail = new Plugin_Mail();
+        $pluginMail->send('padrao.phtml', 'Teste', 'nandorodpires@gmail.com');
+    }
 
     public function indexAction() {
         

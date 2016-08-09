@@ -1,12 +1,35 @@
 <div class="container">
-    <footer class="small">
-        <div class="row">
-            <div class="col-md-6">
-                <a href="" class="">Política de Privacidade</a>                        
-                <a href="" class="">Termo de Uso</a>                        
+    <footer>
+        <div id="site-map">
+            <div class="row">            
+                <div class="col-md-12 text-center">                
+                    <p>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'resultado',
+                            'action' => 'index'
+                        ), null, true); ?>">Resultados</a>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'indique',
+                            'action' => 'index'
+                        ), null, true); ?>">Indique um amigo</a>
+                        <a href="" data-toggle="modal" data-target="#modal-como-funciona">Como funciona?</a>
+                    </p>
+                    <p class="small">
+                        <a href="" data-toggle="modal" data-target="#modal-politica">Política de Privacidede, Regulamento e Termo de Uso</a>                                                 
+                    </p>
+                </div>
             </div>
-            <div class="col-md-6 text-right">
-                <?php echo $this->translate("Todos os direitos reservados"); ?>
+        </div>        
+        <div class="row">
+            <div class="col-md-12 text-center small">
+                <p>© Copyright - BrasileirãoBet - todos os direiros reservados</p>
+            </div>                    
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center small">
+                Jogue com responsabilidade. Necessário ser maior de 18 anos.
             </div>                    
         </div>
     </footer>

@@ -75,7 +75,16 @@ class Plugin_Premio {
     }
 
     private function inicial() {        
-        $inicial = ($this->partida->partida_valor * (int)$this->partida->partida_fator_inicial);
+        
+        $inicial = 0;
+        
+        //$limite = $this->partida->partida_valor * 5;
+        $limite = 10000000000;
+        
+        if ($this->montante() < $limite) {   
+            $inicial = ($this->partida->partida_valor * (int)$this->partida->partida_fator_inicial);
+        }
+        
         return $inicial;        
     }
     

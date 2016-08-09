@@ -20,6 +20,8 @@ class Site_CadastroController extends Zend_Controller_Action {
     public function indexAction() {
         
         $formCadastro = new Form_Site_Cadastro();
+        $formCadastro->removeElement('usuario_cpf');
+        $formCadastro->removeElement('usuario_datanascimento');
         $this->view->formCadastro = $formCadastro;
         
         if ($this->getRequest()->isPost()) {
@@ -46,16 +48,20 @@ class Site_CadastroController extends Zend_Controller_Action {
                     $modelUsuario = new Model_DbTable_Usuario();
                     $usuario_id = $modelUsuario->insert($data);
                     
-                    /**
-                     * Bonus
-                     */
-                    $bonus = array(
-                        'lancamento_descricao' => 'CRÉDITO CADASTRO',
-                        'usuario_id' => $usuario_id,
-                        'lancamento_valor' => Zend_Registry::get("config")->bonus->cadastro
-                    );
-                    $modelLancamento = new Model_DbTable_Lancamento();
-                    $modelLancamento->insert($bonus);
+                    if (Zend_Registry::get("config")->bonus->cadastro > 0) { 
+                    
+                        /**
+                         * Bonus
+                         */
+                        $bonus = array(
+                            'lancamento_descricao' => 'CRÉDITO CADASTRO',
+                            'usuario_id' => $usuario_id,
+                            'lancamento_valor' => Zend_Registry::get("config")->bonus->cadastro
+                        );
+                        $modelLancamento = new Model_DbTable_Lancamento();
+                        $modelLancamento->insert($bonus);
+                    
+                    }
                     
                     /**
                      * Dados do usuario

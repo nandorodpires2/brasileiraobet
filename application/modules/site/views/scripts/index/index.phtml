@@ -1,6 +1,5 @@
 <section>    
     <div class="row">
-        
         <!-- SIDE BAR -->
         <div class="col-md-3">            
             <?php if (Plugin_Auth::check()) : ?>
@@ -257,10 +256,20 @@
             <div class="panel panel-info">
                 <div class="panel-heading">Cadastre-se grátis</div>
                 <div class="panel-body text-center">
+                    <?php if (Zend_Registry::get("config")->bonus->cadastro > 0) : ?>
                     <p>
-                        Faça seu cadastro e ganhe 
-                    <h2><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</h2>
+                        <label>Faça seu cadastro e ganhe</label> 
+                        <h2><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</h2>
                     </p>
+                    <?php else : ?>
+                    <p>
+                        <label>
+                            Faça seu cadastro <span class="bolder text-danger">GRÁTIS</span>.
+                            É rápidinho!!!
+                        </label>
+                        
+                    </p>
+                    <?php endif; ?>
                     <p>
                         <a href="<?php echo $this->url(array("controller" => "cadastro", "action" => "index")); ?>" class="btn btn-primary">CADASTRAR</a>
                     </p>
@@ -275,12 +284,8 @@
                 <?php foreach ($this->partidas as $partida) : ?>                
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="row">
-                            
-                            
-                            
-                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12 text-center">
-                                
+                        <div class="row">                            
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12 text-center" style="border-right: 1px solid #3c763d">                                
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <label>
@@ -305,11 +310,10 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="row">                         
+                                </div>                                
+                                <div class="row" id="buttom-apostar-desktop">                         
                                     <?php if (Plugin_Auth::check()) : ?>                                                                
-                                    <div class="col-lg-8 col-lg-offset-2">
+                                    <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
                                         <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
                                         <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
                                     </div>
@@ -318,12 +322,11 @@
                                         <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
                                     </div>
                                     <?php endif; ?>
-                                </div>                                
-                                
-                            </div> 
-                            
+                                </div>  
+                            </div>                             
                             <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12 text-center">
-                                <div class="thumbnail <?php echo $partida->partida_coringa_valor > 1 ? 'bg-success' : ''; ?>" style="padding: 15px;">
+                                <div class=" <?php echo $partida->partida_coringa_valor > 1 ? 'bg-success' : ''; ?>" style="padding: 15px;">
+                                    <h4 class="text-success bolder">PRÊMIO</h4>
                                     <h1>
                                         <span class="text-info">                                                                             
                                             <?php echo $this->currency($this->montante($partida->partida_id)); ?>*
@@ -339,10 +342,31 @@
                                         <?php endif; ?>   
                                         
                                     </p>
+                                    <!--
+                                    <p>
+                                        <a href="" class="btn btn-block btn-warning">
+                                            <i class="fa fa-bar-chart"></i> Estatísticas
+                                        </a>
+                                    </p>
+                                    -->
                                 </div>  
                             </div>
                             
-                        </div>                        
+                        </div>
+                        
+                        <div class="row" id="buttom-apostar-mobile">                         
+                            <?php if (Plugin_Auth::check()) : ?>                                                                
+                            <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
+                                <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
+                                <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
+                            </div>
+                            <?php else : ?>
+                            <div class="col-lg-12 text-center">
+                                <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
+                            </div>
+                            <?php endif; ?>
+                        </div>  
+                        
                     </div>                    
                 </div> 
             

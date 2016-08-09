@@ -50,12 +50,6 @@ class Site_ResgateController extends Zend_Controller_Action {
         /**
          * verifica se ja possui conta
          */
-        $modelUsuarioConta = new Model_DbTable_UsuarioConta();
-        $conta = $modelUsuarioConta->getContaUsuario(Zend_Auth::getInstance()->getIdentity()->usuario_id);
-        
-        if ($conta) {
-            $formResgate->populate($conta->toArray());
-        }
         
         $this->view->formResgate = $formResgate;
         
@@ -66,19 +60,14 @@ class Site_ResgateController extends Zend_Controller_Action {
                 $data = $formResgate->getValues();
                 $data['usuario_id'] = Zend_Auth::getInstance()->getIdentity()->usuario_id;
                 $data['resgate_data_limite'] = $this->calculaDataLimite();
+                $data['resgate_valor'] = App_Helper_Currency::toCurrencyDb($data['resgate_valor']);
                 
                 try {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
                     
-                    // insere a conta (caso nao tenha)
-                    $data['usuario_conta_id'] = $this->salvaConta($data);
-                    
                     $data['resgate_taxa'] = ($data['resgate_valor'] / 100) * Zend_Registry::get("config")->resgate->porcentagem;
-                    $resgate_valor = $data['resgate_valor'] - $data['resgate_taxa'];                    
-                    unset($data['usuario_conta_banco']);
-                    unset($data['usuario_conta_agencia']);
-                    unset($data['usuario_conta_numero']);
+                    $resgate_valor = ($data['resgate_valor'] - $data['resgate_taxa']) * -1;                    
                     
                     $modelResgate = new Model_DbTable_Resgate();
                     $resgate_id = $modelResgate->insert($data);
@@ -86,8 +75,8 @@ class Site_ResgateController extends Zend_Controller_Action {
                     // lanca a movimentacao
                     $lancamento = array(
                         'usuario_id' => Zend_Auth::getInstance()->getIdentity()->usuario_id,
-                        'lancamento_valor' => $data['resgate_valor'] * -1,
-                        'lancamento_descricao' => 'RESGATE - COD: ' . $resgate_id
+                        'lancamento_valor' => $resgate_valor,
+                        'lancamento_descricao' => 'SOLICITAÇÃO DE RESGATE'
                     );
                     $modelLancamento = new Model_DbTable_Lancamento();
                     $modelLancamento->insert($lancamento);
@@ -124,31 +113,6 @@ class Site_ResgateController extends Zend_Controller_Action {
         $zendDate->addDay(Zend_Registry::get("config")->resgate->dias);
         
         return $zendDate->get("YYYY-MM-dd");        
-    }
-    
-    protected function salvaConta($data) {
-        
-        $usuario_conta_banco = $data['usuario_conta_banco'];
-        $usuario_conta_agencia = $data['usuario_conta_agencia'];
-        $usuario_conta_numero = $data['usuario_conta_numero'];
-        
-        $modelUsuarioConta = new Model_DbTable_UsuarioConta();
-        $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;
-        $conta = $modelUsuarioConta->fetchRow("usuario_id = {$usuario_id} and usuario_conta_numero = '{$usuario_conta_numero}'");
-        
-        if (!$conta) {
-            $insert = array(
-                'usuario_conta_banco' => $usuario_conta_banco,
-                'usuario_conta_agencia' => $usuario_conta_agencia,
-                'usuario_conta_numero' => $usuario_conta_numero,
-                'usuario_id' => $usuario_id
-            );
-            $usuario_conta_id = $modelUsuarioConta->insert($insert);
-            return $usuario_conta_id;
-        } else {
-            return $conta->usuario_conta_id;
-        }
-        
     }
     
 }

@@ -1,0 +1,134 @@
+<style>
+    ul li {
+        list-style: inside;
+    }
+</style>
+
+<!-- MODAL DE COMO FUNCIONA -->
+<div class="modal fade" id="modal-como-funciona" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Como Funciona?</h4>                
+            </div>
+            <div class="modal-body">                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Como jogar?</h5>
+                        <ul>
+                            <li>Ao logar ou se cadastrar, clique no botão APOSTAR;</li>
+                            <li>Informe o placar da partida;</li>
+                            <li>Cada partida tem um valor de aposta;</li>
+                            <li>O valor da aposta será debitado na sua conta;</li>
+                            <li>Você pode editar ou excluir sua aposta;</li>
+                            <li>Caso exclua a aposta o valor debitado na sua conta será cancelado;</li>
+                            <li>Você pode apostar até o horário de início da partida;</li>
+                            <li>
+                                Você pode apostar quantas vezes quiser na mesma partida;*                             
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Como Ganhar</h5>
+                        <ul>
+                            <li>São trê formas de sua aposta ser vencedora:</li>
+                            <ul type="1">
+                                <li> 1 - Acertando o placar da partida (mandante e visitante);</li>
+                                <li> 2 - Acertando um dos placares da partida (mandante ou visitante);</li>
+                                <li> 3 - Acertando a equipe vencedora ou empate.</li>
+                            </ul>
+                            <li>
+                                A eferição dos resultados será automática, podendo ser realizada até o
+                                final da rodada;
+                            </li>
+                            <li>
+                                Caso sua aposta seja vencedora o prêmio será credita em sua conta
+                                e você será notificado por email;                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Premiações</h5>
+                        <ul>
+                            <li>O BrasileirãoBet usa os seguintes cálculos para as premiações;</li>
+                            <ul>
+                                <li>MONTANTE = (valor da partida * quantidade de apostas) + valor inicial**</li>
+                                <li>1º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio1; ?>% do MONTANTE;</li>
+                                <li>2º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio2; ?>% do MONTANTE;</li>
+                                <li>3º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio3; ?>% do MONTANTE;</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Depósitos</h5>
+                        <ul>
+                            <li>Para poder apostar nas partidas você precisa ter crédito em sua conta;</li>
+                            <li>Os créditos são adquiridos através dos depósitos;</li>
+                            <li>Os depósitos tem valores pré-determinados;</li>
+                            <li>Cada valor de depósito tem um valor de bônus;</li>
+                            <li>Os depósitos são realizados através de boleto bancário;</li>
+                            <li>
+                                O vencimento do boleto é de 
+                                <b><?php echo Zend_Registry::get("config")->boleto->vencimento->dias; ?> dias</b>;
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Resgates</h5>
+                        <ul>
+                            <li>
+                                Para fazer resgates você precisar ter o saldo mínimo de
+                                <b><?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?></b>
+                                em sua conta;
+                            </li>
+                            <li>
+                                Haverá uma taxa de <b><?php echo Zend_Registry::get("config")->emprestimo->taxa; ?>%</b>
+                                sobre o valor do resgate para despesas administrativas;
+                            </li>
+                            <li>
+                                Você deve informar uma conta bancária em nome do títular da conta
+                                do BrasileirãoBet para efetuar os resgates;
+                            </li>
+                            <li>
+                                Os resgates tem um prazo de 
+                                <b><?php echo Zend_Registry::get("config")->resgate->dias; ?> dias</b>
+                                para ser credito em sua conta bancária, contados apartir da data
+                                de solicitação;
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>BOA SORTE!!!</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="small text-muted">* Não nos responsabilizamos por apostas iguais na mesma partida.</p> 
+                        <p class="small text-muted">** Prêmio inicial pode ser um valor aleatório, inclusive 0.</p> 
+                    </div>
+                </div>
+
+            </div>                            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
