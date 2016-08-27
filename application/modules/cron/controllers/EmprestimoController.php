@@ -55,7 +55,7 @@ class Cron_EmprestimoController extends Zend_Controller_Action {
              */
             $modelLancamento = new Model_DbTable_Lancamento();
             //saldo para apostas
-            $saldo = $modelLancamento->getSaldoUsuario($usuario->usuario_id);
+            $saldo = $modelLancamento->getSaldoUsuario($usuario->usuario_id, 0);
             
             // calcula o valor a ser pago
             $valor_taxa = $emprestimo->emprestimo_valor * ($emprestimo->emprestimo_taxa / 100);

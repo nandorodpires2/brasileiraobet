@@ -22,6 +22,11 @@ class Site_EmprestimoController extends Zend_Controller_Action {
             $this->_redirect("/");
         }
         
+        $this->_helper->flashMessenger->addMessage(array(
+            'danger' => 'Página não encontrada!'
+        ));
+        $this->_redirect("/");
+        
         /**
          * Saldo Usuario
          */                        

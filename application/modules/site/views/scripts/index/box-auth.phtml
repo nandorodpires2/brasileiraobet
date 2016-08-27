@@ -1,0 +1,31 @@
+<div class="panel panel-info">
+    <div class="panel-heading">Acesse sua conta</div>
+    <div class="panel-body">
+        <?php echo $this->formLogin; ?>
+        <p>
+            <a href="<?php echo $this->url(array("controller" => "auth", "action" => "esqueci")); ?>">Esqueci a senha</a>
+        </p>
+    </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">Cadastre-se grátis</div>
+    <div class="panel-body text-center">
+        <?php if (Zend_Registry::get("config")->bonus->cadastro > 0) : ?>
+        <p>
+            <label>Faça seu cadastro e ganhe</label> 
+            <h2><?php echo $this->currency(Zend_Registry::get("config")->bonus->cadastro); ?> de BÔNUS</h2>
+        </p>
+        <?php else : ?>
+        <p>
+            <label>
+                Faça seu cadastro <span class="bolder text-danger">GRÁTIS</span>.
+                É rápidinho!!!
+            </label>
+
+        </p>
+        <?php endif; ?>
+        <p>
+            <a href="<?php echo $this->url(array("controller" => "cadastro", "action" => "index")); ?>" class="btn btn-primary">CADASTRAR</a>
+        </p>
+    </div>
+</div>

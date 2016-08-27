@@ -10,7 +10,7 @@ from		aposta a
 			inner join partida p on a.partida_id = p.partida_id
 			inner join time t1 on p.time_id_mandante = t1.time_id
 			inner join time t2 on p.time_id_visitante = t2.time_id
-where		p.partida_rodada = 16
+where		p.partida_rodada = 19
 			and p.partida_serie = 1
 			and a.aposta_vencedora = 1
 order by a.aposta_vencedora_premio asc

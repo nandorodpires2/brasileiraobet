@@ -32,7 +32,9 @@ class Plugin_Auth extends Zend_Controller_Plugin_Abstract {
     
     public function checkAdmin() {
         
-        if (!Zend_Auth::getInstance()->hasIdentity() && !isset(Zend_Auth::getInstance()->getIdentity()->admin_id)) {
+        //Zend_Debug::dump(Zend_Auth::getInstance()->getIdentity());
+        
+        if (!Zend_Auth::getInstance()->hasIdentity() || !isset(Zend_Auth::getInstance()->getIdentity()->admin_id)) {            
             $this->getRequest()->setModuleName("admin")
                     ->setControllerName("auth")
                     ->setActionName("login");

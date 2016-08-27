@@ -132,4 +132,26 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
     }
     
+    public function getPartidasMandante($time_id, $realizada = null) {
+        $select = $this->getQueryAll();
+        $select->where("time_id_mandante = ?", $time_id);
+        
+        if (null !== $realizada) {
+            $select->where("partida_realizada = ?", $realizada);
+        }
+        
+        return $this->fetchAll($select);               
+    }
+    
+    public function getPartidasVisitante($time_id, $realizada = null) {
+        $select = $this->getQueryAll();
+        $select->where("time_id_visitante = ?", $time_id);
+        
+        if (null !== $realizada) {
+            $select->where("partida_realizada = ?", $realizada);
+        }
+        
+        return $this->fetchAll($select);    
+    }
+    
 }

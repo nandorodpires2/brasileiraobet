@@ -74,13 +74,15 @@ h5 {
 }
 .navbar-default {
     font-size: 17px;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 1);
+    background-image: none;
     border-width: 0px;
     border-radius: 0px;
 }
+
 .navbar-default .navbar-nav > li > a {
     color: rgba(14, 130, 164, 1);
-    background-color: rgba(255, 255, 255, 1);
+    //background-color: rgba(255, 255, 255, 1);
 }
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
@@ -121,6 +123,10 @@ h5 {
     background-image: linear-gradient(to bottom, #0e82a4 0px, #265a88 100%);
     background-repeat: repeat-x;
     border-color: #245580;
+}
+
+.btn-block-messages {
+    width: 50%;
 }
 
 /* BACKGROUNDS */

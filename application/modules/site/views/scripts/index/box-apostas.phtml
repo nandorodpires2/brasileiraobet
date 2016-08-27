@@ -1,0 +1,89 @@
+<div class="panel panel-info">
+    <div class="panel-heading">                    
+        Minhas Apostas
+        <span class="badge"><?php echo $this->apostas->count(); ?></span>
+    </div>
+    <div class="panel-body">
+    <?php if ($this->apostas->count() > 0) : ?>
+        <?php foreach ($this->apostas as $aposta) : ?>
+        <table class="table">
+            <tr class="text-center">
+                <td><img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_mandante); ?>" class="img center-block" width="50" /></td>
+                <td><?php echo $aposta->aposta_placar_mandante; ?></td>
+                <td>X</td>
+                <td><?php echo $aposta->aposta_placar_visitante; ?></td>
+                <td><img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_visitante); ?>" class="img center-block" width="50" /></td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="5">
+                    <a href="#" data-toggle="modal" data-target="#modal-aposta-editar-<?php echo $aposta->aposta_id; ?>" class="btn btn-sm btn-info">
+                        <i class="fa fa-edit"></i> Alterar
+                    </a>                            
+                    <a href="<?php echo $this->url(array(
+                        'controller' => 'aposta',
+                        'action' => 'delete',
+                        'id' => $aposta->aposta_id
+                    ), null, true); ?>" class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i> Cancelar
+                    </a>
+                </td>
+            </tr>
+        </table><hr />
+
+        <!-- MODAL DE APOSTA EDITAR-->
+        <div class="modal fade" id="modal-aposta-editar-<?php echo $aposta->aposta_id; ?>" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">EDITAR APOSTA</h4>
+                    </div>
+                    <div class="modal-body">                                    
+                        <p>Informe o placar da partida e torça para sua aposta ser a vencedora!</p>  
+                        <?php $this->formApostarAlterar->setAction("aposta/alterar"); ?>
+                        <form method="<?php echo $this->formApostarAlterar->getMethod(); ?>" action="<?php echo $this->formApostarAlterar->getAction(); ?>">
+                            <table class="table">
+                                <tr class="text-center">
+                                    <td class="col-md-3">
+                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_mandante); ?>" class="img center-block" />
+                                    </td>                                            
+                                    <td class="col-md-2">
+                                        <?php $this->formApostarAlterar->aposta_placar_mandante->setValue($aposta->aposta_placar_mandante); ?>
+                                        <?php echo $this->formApostarAlterar->aposta_placar_mandante; ?>
+                                    </td>
+                                    <td class="col-md-2">X</td>
+                                    <td class="col-md-2">
+                                        <?php $this->formApostarAlterar->aposta_placar_visitante->setValue($aposta->aposta_placar_visitante); ?>
+                                        <?php echo $this->formApostarAlterar->aposta_placar_visitante; ?>
+                                    </td>                                            
+                                    <td class="col-md-3">
+                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $aposta->time_escudo_visitante); ?>" class="img center-block" />
+                                    </td>                            
+                                </tr>
+                                <tr>
+                                    <?php $this->formApostarAlterar->aposta_id->setValue($aposta->aposta_id); ?>
+                                    <?php echo $this->formApostarAlterar->aposta_id; ?>
+                                    <td colspan="5"><?php echo $this->formApostarAlterar->submit; ?></td>
+                                    <?php 
+
+                                        $this->formApostar->partida_id->setValue($aposta->partida_id);                                                
+                                        $this->formApostar->usuario_id->setValue(Zend_Auth::getInstance()->getIdentity()->usuario_id);
+                                        //$this->formApostar->usuario_id->setValue(1);                                               
+
+                                        echo $this->formApostar->partida_id;
+                                        echo $this->formApostar->usuario_id;
+
+                                    ?>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>                            
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <?php endforeach; ?>
+    <?php else : ?>
+        <div class="alert alert-warning">Nenhuma aposta realizada</div>
+    <?php endif; ?>
+    </div>
+</div>

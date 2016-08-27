@@ -1,0 +1,81 @@
+<?php
+
+//Zend_Debug::dump($this->notificacoes->count()); die(); 
+
+?>
+<div class="panel panel-info">
+    <div class="panel-heading">Minha Conta</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="<?php echo $this->baseUrl('views/img/user/' . Zend_Auth::getInstance()->getIdentity()->usuario_avatar); ?>" class="img center-block" width="50" />
+            </div>
+            <div class="col-md-9 text-center">
+                <label>
+                    <h4><?php echo Zend_Auth::getInstance()->getIdentity()->usuario_nome; ?></h4>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 site-menu">
+                <a href="<?php echo $this->url(array(
+                    "controller" => "usuario", 
+                    "action" => "index"
+                ), null, true); ?>"><p><i class="fa fa-user"></i> Minha Conta</p></a>
+                <a href="" data-toggle="modal" data-target="#modal-notificacao">
+                    <p>
+                        <i class="fa fa-bell"></i> Notificações 
+                        <?php if ($this->notificacoes->count() > 0) : ?>
+                        <span class="badge"><?php echo $this->notificacoes->count(); ?></span>
+                        <?php endif; ?>
+                    </p>
+                </a>
+                <a href="<?php echo $this->url(array(
+                    "controller" => "auth", 
+                    "action" => "logout"
+                )); ?>"><p><i class="fa fa-sign-out"></i> Sair</p></a>                                
+            </div>
+        </div>
+        <!-- MODAL DE APOSTA -->
+        <div class="modal fade" id="modal-notificacao" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Notificações <span class="badge"><?php echo $this->notificacoes->count(); ?></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <?php if ($this->notificacoes->count() > 0) : ?>
+                        <div class="row">
+                            <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+                                <a href="<?php echo $this->url(array(
+                                    'controller' => 'notificacao',
+                                    'action' => 'todas-lidas'
+                                ), null, true); ?>" class="btn btn-sm btn-warning">Marcar todas como lida</a>
+                            </div>
+                        </div>                                    
+                        <?php foreach ($this->notificacoes as $notificacao) : ?>
+                        <div class="row" id="row-<?php echo $notificacao->notificacao_id; ?>">
+                            <div class="col-md-12">
+                                <div class="well">
+                                    <p>
+                                        <?php echo $notificacao->notificacao_conteudo; ?>
+                                    </p>
+                                    <p class="text-right">
+                                        <a class="btn btn-primary message-lida" href="#" id="<?php echo $notificacao->notificacao_id; ?>">
+                                            <i class="fa fa-thumbs-up"> OK, entendi</i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        <?php else : ?>
+                        <div class="alert alert-warning">Nenhuma notificação</div>
+                        <?php endif; ?>
+                    </div>                            
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+</div>

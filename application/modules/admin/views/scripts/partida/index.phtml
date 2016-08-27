@@ -28,42 +28,43 @@
     </div>
     <?php endif; ?>
         
-    <div class="row">        
-        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
-            <a href="<?php echo $this->url(array(
-                'module' => 'admin',
-                'controller' => 'partida',
-                'action' => 'add'
-            ), null, true); ?>" class="btn btn-primary btn-block">Nova Partida</a>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well">
+                <div class="row">        
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'partida',
+                            'action' => 'add'
+                        ), null, true); ?>" class="btn btn-primary btn-block">Nova Partida</a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'partida',
+                            'action' => 'proccess'
+                        ), null, true); ?>" class="btn btn-warning btn-block">Partidas Processadas</a>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'admin',
+                            'controller' => 'partida',
+                            'action' => 'parciais'
+                        ), null, true); ?>" class="btn btn-default btn-block">Parciais</a>
+                    </div>        
+                </div>    
+            </div>
         </div>
-        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
-            <a href="<?php echo $this->url(array(
-                'module' => 'admin',
-                'controller' => 'partida',
-                'action' => 'proccess'
-            ), null, true); ?>" class="btn btn-warning btn-block">Partidas Processadas</a>
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
-            <a href="<?php echo $this->url(array(
-                'module' => 'admin',
-                'controller' => 'partida',
-                'action' => 'parciais'
-            ), null, true); ?>" class="btn btn-default btn-block">Parciais</a><hr />
-        </div>        
     </div>    
+    
     <div class="row">
         <div class="col-md-12">            
             <?php if ($this->partidas->count() > 0) : ?>
             <h4><?php echo $this->partidas->count(); ?> partidas</h4>
             <div class="table-responsive">
                 <table class="table">
-                    <?php $total = 0; ?>
-                    <?php $apostas = 0; ?>
-                    <?php foreach ($this->partidas as $partida) : ?>                
-                    <?php 
-                        $total += $this->montante($partida->partida_id); 
-                        $apostas += $this->apostas($partida->partida_id);
-                    ?>
+                    <?php foreach ($this->partidas as $partida) : ?>                                    
                     <tr class="text-center">
                         <td class="col-md-1">Série <?php echo $partida->partida_serie == 1 ? 'A' : 'B'; ?></td>
                         <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
@@ -196,14 +197,7 @@
                     </div><!-- /.modal -->
                     
                     <?php endforeach; ?>
-                    <tr class="text-center">
-                        <td colspan="6">TOTAL</td>
-                        <td>
-                            <?php echo $apostas; ?> apostas
-                            (<?php echo $this->currency($total); ?>)
-                        </td>
-                        <td></td>
-                    </tr>
+                    
                 </table>
             </div>
             <?php else : ?>

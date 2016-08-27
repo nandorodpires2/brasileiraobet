@@ -54,7 +54,12 @@ class Model_DbTable_Time extends App_Db_Table_Abstract {
         $select = $this->getQueryAll();
         
         if ($divisao) {
-            $select->where("time_divisao = ?", $divisao);
+            if (is_array($divisao)) {
+                $divisoes = implode(',', $divisao);
+                $select->where("time_divisao in ({$divisoes})");
+            } else {
+                $select->where("time_divisao = ?", $divisao);
+            }
         }
         
         $select->order("time_divisao asc");

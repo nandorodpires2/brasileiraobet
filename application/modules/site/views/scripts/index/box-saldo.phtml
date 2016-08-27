@@ -1,0 +1,70 @@
+<div class="panel panel-info">
+<div class="panel-heading">Saldo</div>
+<div class="panel-body">
+    <h1 class="text-center text-success"><b><?php echo $this->currency($this->saldo); ?></b></h1>
+    <p class="small text-center">
+        <a href="" data-toggle="modal" data-target="#modal-extrato">Ver Extrato</a>
+    </p>
+
+    <!-- EMPRESTIMO 
+    <?php if ($this->saldo <= Zend_Registry::get('config')->emprestimo->saldo->minimo) : ?>
+    <a href="<?php echo $this->url(array(
+        'controller' => 'emprestimo',
+        'action' => 'index'
+    ), null, true); ?>" class="btn btn-warning btn-block"><i class="fa fa-money"></i> EMPRÉSTIMO</a>
+    <?php endif; ?>
+    -->
+
+    <!-- DEPOSITO -->
+    <a href="<?php echo $this->url(array(
+        'controller' => 'deposito',
+        'action' => 'index'
+    ), null, true); ?>" class="btn btn-primary btn-block"><i class=""></i> DEPOSITAR</a>
+
+        <!-- RESGATE -->                    
+        <?php if ($this->saldo_resgate >= Zend_Registry::get("config")->resgate->minimo) : ?>
+        <a href="<?php echo $this->url(array(
+            'controller' => 'resgate',
+            'action' => 'index'
+        ), null, true); ?>" class="btn btn-success btn-block"><i class=""></i> RESGATAR</a>
+        <?php else : ?>
+        <a href="#" disabled class="btn btn-warning btn-block"><i class=""></i> RESGATAR*</a>
+        <p class="small text-muted">* Saldo mínimo: <?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?> em premiação</p>
+        <?php endif; ?>
+
+        <!-- MODAL DE APOSTA -->
+        <div class="modal fade" id="modal-extrato" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">EXTRATO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="text-success text-right">Saldo Atual: <?php echo $this->currency($this->saldo); ?></h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Crédito</th>
+                                <th>Débito</th>
+                            </tr>
+                            <?php foreach ($this->lancamentos as $lancamento) : ?>
+                            <tr>
+                                <td class="text-center"><?php echo App_Helper_Date::getDateView($lancamento->lancamento_data); ?></td>
+                                <td><?php echo $lancamento->lancamento_descricao; ?></td>
+                                <td class="text-success text-right">
+                                    <?php echo $lancamento->lancamento_valor > 0 ? $this->currency($lancamento->lancamento_valor) : ''; ?>
+                                </td>
+                                <td class="text-danger text-right">
+                                    <?php echo $lancamento->lancamento_valor < 0 ? $this->currency($lancamento->lancamento_valor) : ''; ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>                            
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+</div>

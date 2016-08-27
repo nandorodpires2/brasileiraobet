@@ -82,4 +82,8 @@ button.close {
     line-height: 1;
 }
 
+.well {
+    border-radius: 0;
+}
+
 

@@ -22,6 +22,40 @@ class Site_NotificacaoController extends Zend_Controller_Action {
         }
     }
     
+    public function lidaAction() {
+    
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        $notificacao_id = $this->getRequest()->getParam('id');
+        
+        $return = array();
+        
+        try {
+            $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;        
+            $modelNotificacao = new Model_DbTable_Notificacao();
+            $update = array(
+                'notificacao_lida' => 1,
+                'notificacao_data_lida' => date("Y-m-d H:i:s")
+            );
+            $where = " 
+                usuario_id = {$usuario_id}
+                and notificacao_lida = 0
+                and notificacao_id = {$notificacao_id}
+            ";
+            
+            $modelNotificacao->update($update, $where);
+            
+            $return['success'] = 1;
+            
+        } catch (Exception $ex) {
+            $return['success'] = 0;
+        } 
+        
+        echo Zend_Json::encode($return);
+        
+    }
+
     public function todasLidasAction() {
         
         $this->_helper->viewRenderer->setNoRender();

@@ -1,0 +1,68 @@
+<section class="bg-write"> 
+    <div class="row">
+        <div class="col-md-12 text-center">  
+              <h3>Classificação</h3>
+        </div>
+    </div>
+    
+    <!-- CLASSIFICACAO -->
+    <div class="row">
+        
+        <!-- SERIES -->
+        <?php foreach($this->series as $key => $serie) : ?>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <?php if ($serie->count() > 0) : ?>
+            <div class="panel panel-default">
+                <div class="panel-heading"><?php echo $key; ?></div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="text-center">                                
+                                    <th colspan="2">Classificação</th>
+                                    <th>P</th>
+                                    <th>J</th>
+                                    <th>V</th>
+                                    <th>E</th>
+                                    <th>D</th>
+                                    <th>GP</th>
+                                    <th>GC</th>
+                                    <th>SG</th>
+                                    <th>Apr (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($serie as $key => $serieA) : ?>
+                                <tr class="text-center">
+                                    <td>
+                                        <span><b><?php echo ++$key . 'º '; ?></b></span> 
+                                    </td>
+                                    <td class="text-left">
+                                        <span>
+                                            <img src="<?php echo $this->baseUrl('views/img/times/' . $serieA->time_escudo); ?>" width="25" class="img" />
+                                            <?php echo $serieA->time_nome; ?>
+                                        </span> 
+                                    </td>
+                                    <td class="bold"><?php echo $serieA->classificacao_pontos; ?></td>
+                                    <td><?php echo $serieA->classificacao_jogos; ?></td>
+                                    <td><?php echo $serieA->classificacao_vitorias; ?></td>
+                                    <td><?php echo $serieA->classificacao_empates; ?></td>
+                                    <td><?php echo $serieA->classificacao_derrotas; ?></td>
+                                    <td><?php echo $serieA->classificacao_golspro; ?></td>
+                                    <td><?php echo $serieA->classificacao_golscontra; ?></td>
+                                    <td><?php echo $serieA->classificacao_saldogols; ?></td>
+                                    <td><?php echo $serieA->classificacao_aprov; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>            
+            <?php else : ?>
+            <div class="alert alert-warning">Nunhuma classificação disponível - Série A</div>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>
