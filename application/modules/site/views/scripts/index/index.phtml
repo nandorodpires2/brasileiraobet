@@ -33,12 +33,29 @@
             <?php endif; ?>
         </div>
         
-        <!-- PARTIDAS -->
-        <?php echo $this->partial('index/box-partidas.phtml', array(
-            'partidas' => $this->partidas,
-            'saldo' => $this->saldo,
-            'formApostar' => $this->formApostar
-        )); ?>
+        <div class="col-md-9">            
+            <?php if (Plugin_Auth::check()) : ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- FILTROS PARTIDA -->
+                    <?php echo $this->partial('index/box-filtros-partida.phtml', array(
+                        'formFiltrosPartida' => $this->formFiltrosPartida
+                    )); ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- PARTIDAS -->
+                    <?php echo $this->partial('index/box-partidas.phtml', array(
+                        'partidas' => $this->partidas,
+                        'saldo' => $this->saldo,
+                        'formApostar' => $this->formApostar
+                    )); ?>
+                </div>
+            </div>
+        </div>
         
     </div>
 </section>

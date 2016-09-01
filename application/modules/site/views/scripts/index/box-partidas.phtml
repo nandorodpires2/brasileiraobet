@@ -1,161 +1,159 @@
-<div class="col-md-9">            
-    <?php if ($this->partidas->count() > 0) : ?>            
-        <?php foreach ($this->partidas as $partida) : ?>                
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row">                            
-                    <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12 text-center" style="border-right: 1px solid #3c763d">                                
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <label>
-                                    <?php echo $this->serie($partida->partida_serie); ?> - 
-                                    <?php echo $partida->partida_rodada; ?>ª Rodada -
-                                    <?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h
-                                </label>
+<?php if ($this->partidas->count() > 0) : ?>            
+    <?php foreach ($this->partidas as $partida) : ?>                
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">                            
+                <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12 text-center" style="border-right: 1px solid #3c763d">                                
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>
+                                <?php echo $this->serie($partida->partida_serie); ?> - 
+                                <?php echo $partida->partida_rodada; ?>ª Rodada -
+                                <?php echo App_Helper_Date::getDate($partida->partida_data, Zend_Date::DATETIME_SHORT); ?>h
+                            </label>
 
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tr class="text-center">
-                                            <td class="col-md-2">
-                                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
-                                            </td>
-                                            <td class="col-md-3" id="time_mandante_nome" style="font-size: 20px;"><b><?php echo $partida->time_mandante_nome; ?></b></td>
-                                            <td class="col-md-2" style="font-size: 20px;"><b>X</b></td>
-                                            <td class="col-md-3" id="time_visitante_nome" style="font-size: 20px;"><b><?php echo $partida->time_visitante_nome; ?></b></td>
-                                            <td class="col-md-2">
-                                                <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
-                                            </td>                            
-                                        </tr>
-                                    </table>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr class="text-center">
+                                        <td class="col-md-2">
+                                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                                        </td>
+                                        <td class="col-md-3" id="time_mandante_nome" style="font-size: 20px;"><b><?php echo $partida->time_mandante_nome; ?></b></td>
+                                        <td class="col-md-2" style="font-size: 20px;"><b>X</b></td>
+                                        <td class="col-md-3" id="time_visitante_nome" style="font-size: 20px;"><b><?php echo $partida->time_visitante_nome; ?></b></td>
+                                        <td class="col-md-2">
+                                            <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                                        </td>                            
+                                    </tr>
+                                </table>
                             </div>
-                        </div>                                
-                        <div class="row" id="buttom-apostar-desktop">                         
-                            <?php if (Plugin_Auth::check()) : ?>                                                                
-                            <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
-                                <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
-                                <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
-                            </div>
-                            <?php else : ?>
-                            <div class="col-lg-12 text-center">
-                                <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
-                            </div>
-                            <?php endif; ?>
-                        </div>  
-                    </div>                             
-                    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12 text-center">
-                        <div class=" <?php echo $partida->partida_coringa_valor > 1 ? 'bg-success' : ''; ?>" style="padding: 15px;">
-                            <h4 class="text-success bolder">PRÊMIO</h4>
-                            <h1>
-                                <span class="text-info">                                                                             
-                                    <?php echo $this->currency($this->montante($partida->partida_id)); ?>*
-                                </span>
-                            </h1>
-                            <p>
-                                <span class="text-center small bolder">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></span>
-                            </p>
-                            <p class="small text-muted">                                        
-                                * Valor do 1ª prêmio. Apostas computadas até o presente momento.
-                                <?php if ($partida->partida_coringa_valor > 1) : ?>                                                                                                                  
-                                Aposta coringa: prêmio multiplicado <?php echo $partida->partida_coringa_valor; ?>X 
-                                <?php endif; ?>   
+                        </div>
+                    </div>                                
+                    <div class="row" id="buttom-apostar-desktop">                         
+                        <?php if (Plugin_Auth::check()) : ?>                                                                
+                        <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
+                            <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
+                            <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
+                        </div>
+                        <?php else : ?>
+                        <div class="col-lg-12 text-center">
+                            <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
+                        </div>
+                        <?php endif; ?>
+                    </div>  
+                </div>                             
+                <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12 text-center">
+                    <div class=" <?php echo $partida->partida_coringa_valor > 1 ? 'bg-success' : ''; ?>" style="padding: 15px;">
+                        <h4 class="text-success bolder">PRÊMIO</h4>
+                        <h1>
+                            <span class="text-info">                                                                             
+                                <?php echo $this->currency($this->montante($partida->partida_id)); ?>*
+                            </span>
+                        </h1>
+                        <p>
+                            <span class="text-center small bolder">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></span>
+                        </p>
+                        <p class="small text-muted">                                        
+                            * Valor do 1ª prêmio. Apostas computadas até o presente momento.
+                            <?php if ($partida->partida_coringa_valor > 1) : ?>                                                                                                                  
+                            Aposta coringa: prêmio multiplicado <?php echo $partida->partida_coringa_valor; ?>X 
+                            <?php endif; ?>   
 
-                            </p>
-                            <!--
-                            <p>
-                                <a href="" class="btn btn-block btn-warning">
-                                    <i class="fa fa-bar-chart"></i> Estatísticas
-                                </a>
-                            </p>
-                            -->
-                        </div>  
-                    </div>
-
+                        </p>
+                    </div>  
+                    <!--
+                    <p>
+                        <a href="" class="btn btn-block btn-default">
+                            <i class="fa fa-bar-chart"></i> Estatísticas
+                        </a>
+                    </p>
+                    -->
                 </div>
 
-                <div class="row" id="buttom-apostar-mobile">                         
-                    <?php if (Plugin_Auth::check()) : ?>                                                                
-                    <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
-                        <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
-                        <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
-                    </div>
+            </div>
+
+            <div class="row" id="buttom-apostar-mobile">                         
+                <?php if (Plugin_Auth::check()) : ?>                                                                
+                <div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 10px;">
+                    <p class="small"><?php echo $this->apostas($partida->partida_id); ?></p>
+                    <a href="" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#modal-aposta-<?php echo $partida->partida_id; ?>">APOSTAR</a>
+                </div>
+                <?php else : ?>
+                <div class="col-lg-12 text-center">
+                    <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
+                </div>
+                <?php endif; ?>
+            </div>  
+
+        </div>                    
+    </div> 
+
+    <!-- MODAL DE APOSTA -->
+    <div class="modal fade" id="modal-aposta-<?php echo $partida->partida_id; ?>" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">APOSTAR</h4>
+                </div>
+                <div class="modal-body">
+                    <?php if ($this->saldo >= $partida->partida_valor) : ?>
+                    <p>Informe o placar da partida e torça para sua aposta ser a vencedora!</p>
+                    <h5 class="bolder">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></h5>   
+                    <form method="<?php echo $this->formApostar->getMethod(); ?>" action="<?php echo $this->formApostar->getAction(); ?>">
+                        <table class="table">
+                            <tr class="text-center">
+                                <td class="col-md-3">
+                                    <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
+                                </td>                                            
+                                <td class="col-md-2">
+
+                                    <?php echo $this->formApostar->aposta_placar_mandante; ?>
+                                </td>
+                                <td class="col-md-2">X</td>
+                                <td class="col-md-2">
+                                    <?php echo $this->formApostar->aposta_placar_visitante; ?>
+                                </td>                                            
+                                <td class="col-md-3">
+                                    <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
+                                </td>                            
+                            </tr>
+                            <tr>
+                                <td colspan="5"><?php echo $this->formApostar->submit; ?></td>
+                                <?php 
+
+                                    $this->formApostar->partida_id->setValue($partida->partida_id);                                                
+                                    $this->formApostar->usuario_id->setValue(Zend_Auth::getInstance()->getIdentity()->usuario_id);
+                                    //$this->formApostar->usuario_id->setValue(1);                                               
+
+                                    echo $this->formApostar->partida_id;
+                                    echo $this->formApostar->usuario_id;
+
+                                ?>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <!-- APOSTAS REALIZADAS PELO USUARIO NA PARTIDA -->
+                    <?php echo $this->apostas($partida->partida_id, 'label'); ?>
+
                     <?php else : ?>
-                    <div class="col-lg-12 text-center">
-                        <p class="text-info">Faça o login ou se cadastre para apostar nesta partida</p>
+                    <div class="alert alert-danger">
+                        Desculpe, você não tem saldo suficiente para
+                        apostar nesta partida.                                    
                     </div>
+                    <hr />
+                    <p>Faça um depósito para continuar suas apostas.</p>
+                    <a href="<?php echo $this->url(array(
+                        'controller' => 'deposito',
+                        'action' => 'index'
+                    ), null, true); ?>" class="btn btn-primary">DEPOSITAR</a>
                     <?php endif; ?>
-                </div>  
-
-            </div>                    
-        </div> 
-
-        <!-- MODAL DE APOSTA -->
-        <div class="modal fade" id="modal-aposta-<?php echo $partida->partida_id; ?>" data-backdrop="static" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">APOSTAR</h4>
-                    </div>
-                    <div class="modal-body">
-                        <?php if ($this->saldo >= $partida->partida_valor) : ?>
-                        <p>Informe o placar da partida e torça para sua aposta ser a vencedora!</p>
-                        <h5 class="bolder">Valor da aposta: <?php echo $this->currency($partida->partida_valor); ?></h5>   
-                        <form method="<?php echo $this->formApostar->getMethod(); ?>" action="<?php echo $this->formApostar->getAction(); ?>">
-                            <table class="table">
-                                <tr class="text-center">
-                                    <td class="col-md-3">
-                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_mandante_escudo); ?>" class="img center-block" />
-                                    </td>                                            
-                                    <td class="col-md-2">
-
-                                        <?php echo $this->formApostar->aposta_placar_mandante; ?>
-                                    </td>
-                                    <td class="col-md-2">X</td>
-                                    <td class="col-md-2">
-                                        <?php echo $this->formApostar->aposta_placar_visitante; ?>
-                                    </td>                                            
-                                    <td class="col-md-3">
-                                        <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
-                                    </td>                            
-                                </tr>
-                                <tr>
-                                    <td colspan="5"><?php echo $this->formApostar->submit; ?></td>
-                                    <?php 
-
-                                        $this->formApostar->partida_id->setValue($partida->partida_id);                                                
-                                        $this->formApostar->usuario_id->setValue(Zend_Auth::getInstance()->getIdentity()->usuario_id);
-                                        //$this->formApostar->usuario_id->setValue(1);                                               
-
-                                        echo $this->formApostar->partida_id;
-                                        echo $this->formApostar->usuario_id;
-
-                                    ?>
-                                </tr>
-                            </table>
-                        </form>
-
-                        <!-- APOSTAS REALIZADAS PELO USUARIO NA PARTIDA -->
-                        <?php echo $this->apostas($partida->partida_id, 'label'); ?>
-
-                        <?php else : ?>
-                        <div class="alert alert-danger">
-                            Desculpe, você não tem saldo suficiente para
-                            apostar nesta partida.                                    
-                        </div>
-                        <hr />
-                        <p>Faça um depósito para continuar suas apostas.</p>
-                        <a href="<?php echo $this->url(array(
-                            'controller' => 'deposito',
-                            'action' => 'index'
-                        ), null, true); ?>" class="btn btn-primary">DEPOSITAR</a>
-                        <?php endif; ?>
-                    </div>                            
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <?php endforeach; ?>            
-    <?php else : ?>
-        <div class="alert alert-warning">No momento ainda não temos nenhuma partida para apostar. Por favor aguarde!</div>
-    <?php endif; ?>
-</div>
+                </div>                            
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <?php endforeach; ?>            
+<?php else : ?>
+    <div class="alert alert-warning">No momento ainda não temos nenhuma partida para apostar. Por favor aguarde!</div>
+<?php endif; ?>

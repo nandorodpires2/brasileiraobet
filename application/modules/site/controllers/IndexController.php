@@ -9,20 +9,43 @@ class Site_IndexController extends Zend_Controller_Action {
     public function mailAction() {
         $this->_helper->viewRenderer->setNoRender();
         $pluginMail = new Plugin_Mail();
-        $pluginMail->send('padrao.phtml', 'Teste', 'nandorodpires@gmail.com');
+        $send = $pluginMail->send('padrao.phtml', 'Teste', 'nandorodpires@gmail.com');        
+        Zend_Debug::dump($send); die();
     }
 
     public function indexAction() {
         
         /**
-         * Partidas (nao realizadas)
+         * Form filros partida
          */
-        $modelPartida = new Model_DbTable_Partida();
+        $formFiltrosPartida = new Form_Site_FiltrosPartida();
+        $formFiltrosPartida->submit->setLabel('FILTRAR');
+        $this->view->formFiltrosPartida = $formFiltrosPartida;
+        
+        // filtros para as partidas
         $where = array(
             'vencida' => 0,
             'realizada' => 0,
             'processada' => 0
         );
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if ($formFiltrosPartida->isValid($data)) {
+                
+                $data = $formFiltrosPartida->getValues();
+                
+                $where = array_merge($where, $data);
+                
+                // popula o form de filtros 
+                $formFiltrosPartida->populate($data);
+            }
+        }
+                
+        /**
+         * Partidas (nao realizadas)
+         */
+        $modelPartida = new Model_DbTable_Partida();        
         $partidas = $modelPartida->getPartidas($where);
         $this->view->partidas = $partidas;
         
@@ -86,6 +109,8 @@ class Site_IndexController extends Zend_Controller_Action {
             $this->view->notificacoes = $notificacoes;
             
         }
+        
+        
         
         
     }

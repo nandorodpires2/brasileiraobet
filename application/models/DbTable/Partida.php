@@ -65,6 +65,16 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
                 $select->where($where['custom']);
             }
             
+            // time_id
+            if (isset($where['time_id']) && '' !== $where['time_id']) {
+                $select->where("partida.time_id_mandante = ? or partida.time_id_visitante = ?", $where['time_id']);
+            }
+            
+            // partida_valor
+            if (isset ($where['partida_valor']) && '' !== $where['partida_valor']) {
+                $select->where("partida_valor <= ?", (float)$where['partida_valor']);
+            }
+            
         }
         
         if ($order) {
@@ -76,7 +86,7 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         if (null !== $limit) {
             $select->limit($limit);
         }
-        
+        //echo $select->__toString(); die();
         return $this->fetchAll($select);               
     }
     

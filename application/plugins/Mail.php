@@ -44,7 +44,7 @@ class Plugin_Mail {
      */
     public function send($layout, $subject, $addTo, $from = null, $reply = null) {
         
-        if (!$this->_sendMailOn) {
+        if (!$this->_sendMailOn) {            
             return;
         }
         //Zend_Debug::dump(Zend_Registry::get('config')->mail->sender_name); die();
@@ -68,7 +68,7 @@ class Plugin_Mail {
         $transport = Zend_Registry::get('mail_transport');
         
         try {
-            $this->_zendMail->send($transport);
+            return $this->_zendMail->send($transport);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }

@@ -61,10 +61,24 @@
     <div class="row">
         <div class="col-md-12">            
             <?php if ($this->partidas->count() > 0) : ?>
+            
+            <?php $total_apostas = 0; $total_montante = 0; ?>
+            
             <h4><?php echo $this->partidas->count(); ?> partidas</h4>
             <div class="table-responsive">
                 <table class="table">
-                    <?php foreach ($this->partidas as $partida) : ?>                                    
+                    <?php foreach ($this->partidas as $partida) : ?>        
+                    
+                    <?php 
+                    
+                        $apostas = $this->apostas($partida->partida_id);
+                        $montante = $this->montante($partida->partida_id);
+                        
+                        $total_apostas += $apostas;
+                        $total_montante += $montante;
+                    
+                    ?>
+                    
                     <tr class="text-center">
                         <td class="col-md-1">Série <?php echo $partida->partida_serie == 1 ? 'A' : 'B'; ?></td>
                         <td class="col-md-1"><?php echo $partida->partida_rodada; ?>ª rodada</td>
@@ -77,8 +91,8 @@
                             <img src="<?php echo $this->baseUrl('views/img/times/' . $partida->time_visitante_escudo); ?>" class="img center-block" />
                         </td>
                         <td class="col-md-2">
-                            <?php echo $this->apostas($partida->partida_id); ?> Apostas
-                            (<?php echo $this->currency($this->montante($partida->partida_id)); ?>)
+                            <?php echo $apostas; ?> Apostas
+                            (<?php echo $this->currency($montante); ?>)
                         </td>
                         <td class="col-md-2">                            
                             <a href="#" data-toggle="modal" data-target="#modal-resultado-<?php echo $partida->partida_id; ?>" class="btn btn-sm btn-success">Resultado</a>                      
@@ -197,6 +211,15 @@
                     </div><!-- /.modal -->
                     
                     <?php endforeach; ?>
+                    
+                    <tr class="alert alert-success">
+                        <td colspan="6" class="col-md-8 text-center">TOTAL: </td>
+                        <td class="col-md-2 text-center">
+                            <?php echo $total_apostas; ?> apostas
+                            (<?php echo $this->currency($total_montante); ?>)
+                        </td>
+                        <td class="col-md-2"></td>
+                    </tr>
                     
                 </table>
             </div>

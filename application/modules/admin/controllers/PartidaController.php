@@ -33,7 +33,7 @@ class Admin_PartidaController extends Zend_Controller_Action {
         );
         $partidas = $modelPartida->getPartidas($where);
         $this->view->partidas = $partidas;
-        
+                
     }
     
     public function addAction() {
@@ -174,6 +174,8 @@ class Admin_PartidaController extends Zend_Controller_Action {
             
             unset($data['submit']);
             
+            //Zend_Debug::dump($data); die();
+            
             try {
 
                 Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
@@ -194,7 +196,19 @@ class Admin_PartidaController extends Zend_Controller_Action {
 
                 $modelPartida = new Model_DbTable_Partida();
                 $modelPartida->updateById($data, $data['partida_id']);
-
+                
+                /**
+                 * Atualiza a tabela
+                 */                
+                // busca dados da partida
+                $partida = $modelPartida->getById($data['partida_id']);                
+                // mandante
+                $pluginClassificacaoMandante = new Plugin_Classificacao($partida->time_id_mandante);
+                $pluginClassificacaoMandante->atualizar();
+                // visitante
+                $pluginClassificacaoVisitante = new Plugin_Classificacao($partida->time_id_visitante);
+                $pluginClassificacaoVisitante->atualizar();
+                                
                 $this->_helper->flashMessenger->addMessage(array(
                     'success' => 'Resultado cadastrado com sucesso'
                 ));
