@@ -22,14 +22,14 @@
     ), null, true); ?>" class="btn btn-primary btn-block"><i class=""></i> DEPOSITAR</a>
 
         <!-- RESGATE -->                    
-        <?php if ($this->saldo_resgate >= Zend_Registry::get("config")->resgate->minimo) : ?>
+        <?php if ($this->saldo_resgate >= Plugin_Config::getValorBySlug("RESGATE_MINIMO")) : ?>
         <a href="<?php echo $this->url(array(
             'controller' => 'resgate',
             'action' => 'index'
         ), null, true); ?>" class="btn btn-success btn-block"><i class=""></i> RESGATAR</a>
         <?php else : ?>
         <a href="#" disabled class="btn btn-warning btn-block"><i class=""></i> RESGATAR*</a>
-        <p class="small text-muted">* Saldo mínimo: <?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?> em premiação</p>
+        <p class="small text-muted">* Saldo mínimo: <?php echo $this->currency(Plugin_Config::getValorBySlug("RESGATE_MINIMO")); ?> em premiação</p>
         <?php endif; ?>
 
         <!-- MODAL DE APOSTA -->

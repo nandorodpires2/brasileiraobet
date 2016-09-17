@@ -6,5 +6,6 @@ select	p.partida_rodada,
 from		aposta a 
 			inner join partida p on a.partida_id = p.partida_id
 where		p.partida_serie = 1
+			and p.partida_processada = 1
 group by p.partida_rodada
 order by p.partida_rodada desc

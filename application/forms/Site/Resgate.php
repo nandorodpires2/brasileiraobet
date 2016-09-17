@@ -16,6 +16,33 @@ class Form_Site_Resgate extends App_Forms_Form {
     public function init() {
         
         /**
+         * usuario_nome
+         */
+        $usuario_nome = new Zend_Form_Element_Text("usuario_nome");
+        $usuario_nome->setLabel("Titular da Conta:");
+        $usuario_nome->setRequired(false);
+        $usuario_nome->setDecorators(App_Forms_Decorators::$simpleElementDecorators);        
+        $usuario_nome->setAttribs(array(
+            'class' => 'form-control',
+            'disabled' => true
+        ));
+        $this->addElement($usuario_nome);
+        
+        /**
+         * usuario_cpf
+         */
+        $usuario_cpf = new Zend_Form_Element_Text("usuario_cpf");
+        $usuario_cpf->setLabel("CPF do Titular:");
+        $usuario_cpf->setRequired(false);
+        $usuario_cpf->setDecorators(App_Forms_Decorators::$simpleElementDecorators);                
+        $usuario_cpf->setAttribs(array(
+            'class' => 'form-control',
+            'disabled' => true
+        ));
+        $usuario_cpf->addValidator(new Form_Validate_Cpf());
+        $this->addElement($usuario_cpf);
+        
+        /**
          * resgate_valor
          */
         $resgate_valor = new Zend_Form_Element_Text("resgate_valor");

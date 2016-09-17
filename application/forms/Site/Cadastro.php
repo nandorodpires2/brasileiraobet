@@ -46,11 +46,12 @@ class Form_Site_Cadastro extends App_Forms_Form {
          */
         $usuario_cpf = new Zend_Form_Element_Text("usuario_cpf");
         $usuario_cpf->setLabel("CPF:");
-        $usuario_cpf->setRequired(false);
+        $usuario_cpf->setRequired();
         $usuario_cpf->setDecorators(App_Forms_Decorators::$simpleElementDecorators);                
         $usuario_cpf->setAttribs(array(
             'class' => 'form-control',
         ));
+        $usuario_cpf->addValidator(new Form_Validate_Cpf());
         $this->addElement($usuario_cpf);
         
         /**

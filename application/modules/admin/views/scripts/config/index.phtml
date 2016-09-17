@@ -1,0 +1,59 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Configurações</h3><hr />
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a href="" class="btn btn-success" data-toggle="modal" data-target="#modal-novo-registro"><i class="fa fa-plus"></i> Novo Registro</a>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php if ($this->configs->count() > 0) : ?>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col-md-4">Slug</th>
+                            <th class="col-md-5">Descrição</th>
+                            <th class="col-md-2 text-center">Valor</th>
+                            <th class="col-md-1 text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->configs as $config) : ?>                        
+                        <tr>
+                            <td><?php echo $config->config_slug; ?></td>
+                            <td><?php echo $config->config_descricao; ?></td>
+                            <td class="text-center"><?php echo $config->config_valor; ?></td>
+                            <td class="text-center">
+                                <a href="" class="btn btn-info"><i class="fa fa-edit"></i> Alterar</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php else : ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL DE NOVO REGISTRO -->
+<div class="modal fade" id="modal-novo-registro" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">NOVO REGISTRO DE CONFIG</h4>
+            </div>
+            <div class="modal-body">
+                <?php echo $this->formConfig; ?>
+            </div>                            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

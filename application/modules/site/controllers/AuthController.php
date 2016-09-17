@@ -58,6 +58,9 @@ class Site_AuthController extends Zend_Controller_Action {
                     
                     Zend_Auth::getInstance()->getStorage()->write($usuario);
                     
+                    // log
+                    Plugin_Log::setLoginAcesso();
+                    
                     $this->_redirect("/");
                     
                 } else {
@@ -86,6 +89,9 @@ class Site_AuthController extends Zend_Controller_Action {
         
         $this->_helper->layout->disableLayout(true);
         $this->_helper->viewRenderer->setNoRender(true);
+
+        // log
+        Plugin_Log::setLogoutAcesso();
         
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy();

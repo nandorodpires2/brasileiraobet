@@ -21,11 +21,13 @@ class Model_DbTable_Partida extends App_Db_Table_Abstract {
         
         $select->joinInner(array('time1' => 'time'), 'partida.time_id_mandante = time1.time_id', array(
             'time_mandante_nome' => 'time1.time_nome',
-            'time_mandante_escudo' => 'time1.time_escudo'
+            'time_mandante_escudo' => 'time1.time_escudo',
+            'time_mandante_abrv' => 'time1.time_abrv'
         ));
         $select->joinInner(array('time2' => 'time'), 'partida.time_id_visitante = time2.time_id', array(
             'time_visitante_nome' => 'time2.time_nome',
-            'time_visitante_escudo' => 'time2.time_escudo'
+            'time_visitante_escudo' => 'time2.time_escudo',
+            'time_visitante_abrv' => 'time2.time_abrv'
         ));
         
         return $select;

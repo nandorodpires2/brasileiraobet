@@ -55,10 +55,14 @@ class Admin_PartidaController extends Zend_Controller_Action {
                 
                 /**
                  * Percentuais
-                 */
-                $data['partida_perc_premio1'] = Zend_Registry::get("config")->banca->perc->premio1;
-                $data['partida_perc_premio2'] = Zend_Registry::get("config")->banca->perc->premio2;
-                $data['partida_perc_premio3'] = Zend_Registry::get("config")->banca->perc->premio3;
+                 */                
+                $partida_perc_premio1 = Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_1");
+                $partida_perc_premio2 = Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_2");
+                $partida_perc_premio3 = Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_3");
+                
+                $data['partida_perc_premio1'] = $partida_perc_premio1 ? $partida_perc_premio1 : Zend_Registry::get("config")->banca->perc->premio1;
+                $data['partida_perc_premio2'] = $partida_perc_premio2 ? $partida_perc_premio2 : Zend_Registry::get("config")->banca->perc->premio2;
+                $data['partida_perc_premio3'] = $partida_perc_premio3 ? $partida_perc_premio3 : Zend_Registry::get("config")->banca->perc->premio3;
                 
                 unset($data['partida_horario']);
                 

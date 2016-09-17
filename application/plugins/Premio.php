@@ -108,8 +108,6 @@ class Plugin_Premio {
             ),
         );
         
-        Zend_Debug::dump($calculo);
-        
     }
     
 }

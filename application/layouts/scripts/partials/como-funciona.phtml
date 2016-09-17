@@ -60,9 +60,9 @@
                             <li>O BrasileirãoBet usa os seguintes cálculos para as premiações;</li>
                             <ul>
                                 <li>MONTANTE = (valor da partida * quantidade de apostas) + valor inicial**</li>
-                                <li>1º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio1; ?>% do MONTANTE;</li>
-                                <li>2º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio2; ?>% do MONTANTE;</li>
-                                <li>3º Prêmio = <?php echo Zend_Registry::get("config")->banca->perc->premio3; ?>% do MONTANTE;</li>
+                                <li>1º Prêmio = <?php echo Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_1"); ?>% do MONTANTE;</li>
+                                <li>2º Prêmio = <?php echo Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_2"); ?>% do MONTANTE;</li>
+                                <li>3º Prêmio = <?php echo Plugin_Config::getValorBySlug("BANCA_PERC_PREMIO_3"); ?>% do MONTANTE;</li>
                             </ul>
                         </ul>
                     </div>
@@ -91,7 +91,7 @@
                         <ul>
                             <li>
                                 Para fazer resgates você precisar ter o saldo mínimo de
-                                <b><?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?></b>
+                                <b><?php echo $this->currency(Plugin_Config::getValorBySlug("RESGATE_MINIMO")); ?></b>
                                 em sua conta;
                             </li>
                             <li>

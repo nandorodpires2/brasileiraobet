@@ -22,14 +22,21 @@ class Site_ResgateController extends Zend_Controller_Action {
             $this->_redirect("/");
         }
         
+        if (!Zend_Auth::getInstance()->getIdentity()->usuario_validado) {
+            $this->_helper->flashMessenger->addMessage(array(
+                'warning' => 'Você precisa validar seu email para realizar o resgate!'
+            ));
+            $this->_redirect("/");
+        }
+        
         /**
          * Saldo
          */
         $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;
         $modelLancamento = new Model_DbTable_Lancamento();
-        $saldo = $modelLancamento->getSaldoUsuario($usuario_id, 0);
+        $saldo = $modelLancamento->getSaldoUsuario($usuario_id);
         
-        if ($saldo < Zend_Registry::get("config")->resgate->minimo) {
+        if ($saldo < Plugin_Config::getValorBySlug("RESGATE_MINIMO")) {
             $this->_helper->flashMessenger->addMessage(array(
                 'warning' => 'Saldo inferior ao mínimo necessário!'
             ));
@@ -48,9 +55,13 @@ class Site_ResgateController extends Zend_Controller_Action {
         $formResgate->submit->setLabel("RESGATAR");
         
         /**
-         * verifica se ja possui conta
+         * Busca os dados do usuario para popular alguns campos
          */
-        
+        $modelUsuario = new Model_DbTable_Usuario();
+        $usuario = $modelUsuario->getById(Zend_Auth::getInstance()->getIdentity()->usuario_id);
+        $formResgate->usuario_nome->setValue($usuario->usuario_nome);
+        $formResgate->usuario_cpf->setValue($usuario->usuario_cpf);
+                
         $this->view->formResgate = $formResgate;
         
         if ($this->getRequest()->isPost()) {
@@ -62,12 +73,16 @@ class Site_ResgateController extends Zend_Controller_Action {
                 $data['resgate_data_limite'] = $this->calculaDataLimite();
                 $data['resgate_valor'] = App_Helper_Currency::toCurrencyDb($data['resgate_valor']);
                 
+                //unsets
+                unset($data['usuario_nome']);
+                unset($data['usuario_cpf']);
+                
                 try {
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->beginTransaction();
                     
                     $data['resgate_taxa'] = ($data['resgate_valor'] / 100) * Zend_Registry::get("config")->resgate->porcentagem;
-                    $resgate_valor = ($data['resgate_valor'] - $data['resgate_taxa']) * -1;                    
+                    $resgate_valor = ($data['resgate_valor'] + $data['resgate_taxa']) * -1;                    
                     
                     $modelResgate = new Model_DbTable_Resgate();
                     $resgate_id = $modelResgate->insert($data);

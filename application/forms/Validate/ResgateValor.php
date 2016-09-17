@@ -32,9 +32,9 @@ class Form_Validate_ResgateValor extends Zend_Validate_Abstract {
          */
         $usuario_id = Zend_Auth::getInstance()->getIdentity()->usuario_id;
         $modelLancamento = new Model_DbTable_Lancamento();
-        $saldo = $modelLancamento->getSaldoUsuario($usuario_id, 0);
+        $saldo = $modelLancamento->getSaldoUsuario($usuario_id);
         
-        if ($value < Zend_Registry::get("config")->resgate->minimo) {
+        if ($value < Plugin_Config::getValorBySlug("RESGATE_MINIMO")) {
             $this->_error(self::NOT_MIN);
             return false;
         }

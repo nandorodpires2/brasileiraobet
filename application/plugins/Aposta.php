@@ -30,6 +30,8 @@ class Plugin_Aposta {
         $zendDateNow = new Zend_Date();
         $zendDatePartida = new Zend_Date($this->_partida->partida_data);        
         
+        //Zend_Debug::dump($zendDateNow->get(Zend_Date::DATETIME_SHORT)); die();
+        
         if ($zendDatePartida->isEarlier($zendDateNow)) {
             return false;
         }

@@ -26,6 +26,7 @@ class Admin_IndexController extends Zend_Controller_Action {
         /**
          * Premiacoes
          */
+        // premios (R$)
         $premio1 = $modelAposta->getTotalPremio(1);
         $premio2 = $modelAposta->getTotalPremio(2);
         $premio3 = $modelAposta->getTotalPremio(3);
@@ -35,6 +36,26 @@ class Admin_IndexController extends Zend_Controller_Action {
         $this->view->premio2 = $premio2->premio;
         $this->view->premio3 = $premio3->premio; 
         $this->view->premio_total = $premio_total->premio;
+        
+        // apostas (qtde)        
+        $where1 = $modelAposta->getDefaultAdapter()->quoteInto('aposta_vencedora_premio = ?', 1);
+        $apostasPremio1 = $modelAposta->fetchAll($where1);
+        $where2 = $modelAposta->getDefaultAdapter()->quoteInto('aposta_vencedora_premio = ?', 2);
+        $apostasPremio2 = $modelAposta->fetchAll($where2);
+        $where3 = $modelAposta->getDefaultAdapter()->quoteInto('aposta_vencedora_premio = ?', 3);
+        $apostasPremio3 = $modelAposta->fetchAll($where3);
+        
+        $this->view->total_apostas_premio1 = $apostasPremio1->count();
+        $this->view->total_apostas_premio2 = $apostasPremio2->count();
+        $this->view->total_apostas_premio3 = $apostasPremio3->count();        
+        
+        $this->view->total_apostas_premio = $this->view->total_apostas_premio1 + $this->view->total_apostas_premio2 + $this->view->total_apostas_premio3;
+        
+        // porcentagem        
+        $total_apostas = $modelAposta->getCount();        
+        $this->view->porc_premio1 = number_format(($apostasPremio1->count() * 100) / $total_apostas->count, 2);
+        $this->view->porc_premio2 = number_format(($apostasPremio2->count() * 100) / $total_apostas->count, 2);
+        $this->view->porc_premio3 = number_format(($apostasPremio3->count() * 100) / $total_apostas->count, 2);
         
         /**
          * Depositos

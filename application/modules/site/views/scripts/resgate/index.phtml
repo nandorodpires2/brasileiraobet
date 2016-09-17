@@ -10,7 +10,7 @@
                 <h4>Saldo disponível: <b class="text-success"><?php echo $this->currency($this->saldo); ?></b></h4>
             </div>
             <p class="text-danger">
-                Prezado, o valor mínimo para resgate é de <b><?php echo $this->currency(Zend_Registry::get("config")->resgate->minimo); ?></b>
+                Prezado, o valor mínimo para resgate é de <b><?php echo $this->currency(Plugin_Config::getValorBySlug("RESGATE_MINIMO")); ?></b>
                 e o valor máximo é de <b><?php echo $this->currency(Zend_Registry::get("config")->resgate->maximo); ?></b>.
             </p>
             <p class="small text-muted">

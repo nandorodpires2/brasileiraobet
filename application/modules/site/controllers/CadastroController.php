@@ -20,7 +20,7 @@ class Site_CadastroController extends Zend_Controller_Action {
     public function indexAction() {
         
         $formCadastro = new Form_Site_Cadastro();
-        $formCadastro->removeElement('usuario_cpf');
+        //$formCadastro->removeElement('usuario_cpf');
         $formCadastro->removeElement('usuario_datanascimento');
         $this->view->formCadastro = $formCadastro;
         
@@ -81,6 +81,9 @@ class Site_CadastroController extends Zend_Controller_Action {
                      * Autentica
                      */
                     Zend_Auth::getInstance()->getStorage()->write($usuario);
+                    
+                    // log
+                    Plugin_Log::setLoginAcesso();
                     
                     Zend_Db_Table_Abstract::getDefaultAdapter()->commit();
                     
@@ -166,6 +169,9 @@ class Site_CadastroController extends Zend_Controller_Action {
             $total_bonus = $modelLancamento->getTotalBonus($usuario->usuario_id);
             
             if ($total_bonus >= Zend_Registry::get("config")->bonus->limite) {
+                
+                // informa quem indicou que ele já atingiu o limite de bonus
+                
                 return;
             }
             

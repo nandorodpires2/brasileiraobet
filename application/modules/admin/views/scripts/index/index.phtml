@@ -93,16 +93,31 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Premiações</div>
                 <div class="panel-body text-center">
-                    <p>1ºPrêmio</p>
+                    <p>1º Prêmio</p>
                     <h4><?php echo $this->currency($this->premio1); ?></h4>
+                    <p class="small text-muted">
+                        <span><?php echo $this->total_apostas_premio1; ?> apostas</span>
+                        <span> - <?php echo $this->porc_premio1; ?>%</span>
+                    </p>
                     <hr />
-                    <p>1ºPrêmio</p>
+                    <p>2º Prêmio</p>
                     <h4><?php echo $this->currency($this->premio2); ?></h4>
+                    <p class="small text-muted">
+                        <span><?php echo $this->total_apostas_premio2; ?> apostas</span> 
+                        <span> - <?php echo $this->porc_premio2; ?>%</span>
+                    </p>
                     <hr />
-                    <p>1ºPrêmio</p>
+                    <p>3º Prêmio</p>
                     <h4><?php echo $this->currency($this->premio3); ?></h4>
+                    <p class="small text-muted">
+                        <span><?php echo $this->total_apostas_premio3; ?> apostas</span> 
+                        <span> - <?php echo $this->porc_premio3; ?>%</span>
+                    </p>
                     <hr />
-                    <h2><?php echo $this->currency($this->premio_total); ?></h2>
+                    <h2><?php echo $this->currency($this->premio_total); ?></h2>   
+                    <p class="small text-muted">
+                        <span><?php echo $this->total_apostas_premio; ?> apostas</span>
+                    </p>
                 </div>
             </div>
         </div>

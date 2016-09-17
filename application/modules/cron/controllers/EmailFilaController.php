@@ -75,6 +75,12 @@ class Cron_EmailFilaController extends Zend_Controller_Action {
                 $log .= "[".date('d/m/Y H:i:s')."] email {$email->email_id} - {$email->email_destinatario} enviado; \r\n";
                 
             } catch (Exception $ex) {
+                $update = array(
+                    'email_enviado' => 2,
+                    'email_error_log' => $ex->getTraceAsString()
+                );
+
+                $modelEmail->updateById($update, $email->email_id);
                 $log .= "[".date('d/m/Y H:i:s')."] Erro email {$email->email_id} - {$email->email_destinatario} | " . $ex->getMessage() . "; \r\n";
             }
         }

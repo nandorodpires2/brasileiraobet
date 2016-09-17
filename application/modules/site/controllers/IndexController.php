@@ -5,13 +5,6 @@ class Site_IndexController extends Zend_Controller_Action {
     public function init() {
         
     }
-    
-    public function mailAction() {
-        $this->_helper->viewRenderer->setNoRender();
-        $pluginMail = new Plugin_Mail();
-        $send = $pluginMail->send('padrao.phtml', 'Teste', 'nandorodpires@gmail.com');        
-        Zend_Debug::dump($send); die();
-    }
 
     public function indexAction() {
         
@@ -92,7 +85,7 @@ class Site_IndexController extends Zend_Controller_Action {
             $saldo = $modelLancamento->getSaldoUsuario($usuario_id);
             $this->view->saldo = $saldo;
             // saldo para resgate
-            $saldo_resgate = $modelLancamento->getSaldoUsuario($usuario_id, 0);
+            $saldo_resgate = $modelLancamento->getSaldoUsuario($usuario_id);
             $this->view->saldo_resgate = $saldo_resgate;
             
             /**
